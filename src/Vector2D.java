@@ -1,6 +1,10 @@
 public class Vector2D {
     private double deltaX;
     private double deltaY;
+    public Vector2D() {
+        this.deltaX=0;
+        this.deltaY=0;
+    }
     public Vector2D(double xDelta, double yDelta) {
         this.deltaX=xDelta;
         this.deltaY=yDelta;
