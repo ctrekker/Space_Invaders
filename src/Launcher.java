@@ -1,5 +1,7 @@
 public class Launcher {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        /* GUI INIT GOES HERE! */
+        // new GameGUI();
+        /* AND ENDS HERE */
     }
 }
