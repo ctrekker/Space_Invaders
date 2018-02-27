@@ -2,7 +2,6 @@ import java.awt.Color;
 
 
 public class Bullet {
-	
 	private int x;
 	private int y;
 	private int width;
