@@ -6,12 +6,13 @@ public class Bullet {
 	private int y;
 	private int width;
 	private int height;
-    private int speed;
+    private Vector2D direction;
 	private Color color;
 	
 	public Bullet(int x, int y) {
 		this.x=x;
 		this.y=y;
+		this.direction=new Vector2D();
 	}
 
     public int getX() {
@@ -38,12 +39,12 @@ public class Bullet {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-    public int getSpeed() {
-        return speed;
-    }
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
+	public Vector2D getDirection() {
+		return direction;
+	}
+	public void setDirection(Vector2D direction) {
+		this.direction = direction;
+	}
 	public Color getColor() {
 		return color;
 	}
