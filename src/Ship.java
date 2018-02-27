@@ -1,11 +1,7 @@
-import static java.lang.System.*;
-import java.util.Scanner;
-import javax.swing.*;
+import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
 	
 public class Ship {
-
 	private int pointValue;
 	private int x;
 	private int y;
@@ -15,7 +11,12 @@ public class Ship {
 	private int height;
 	private Color color;
 	
-	private Bullet bullet;
+	private ArrayList<Bullet> bullets;
+
+    public Ship(int x, int y) {
+        this.x=x;
+        this.y=y;
+    }
 
 	public int getXSpeed() {
 		return xSpeed;
@@ -55,16 +56,6 @@ public class Ship {
 
 	public void setColor(Color color) {
 		this.color = color;
-	}
-
-	public Ship() {
-		
-	}
-	
-	public Ship(int x, int y) {
-		setX(x);
-		setY(y);
-		
 	}
 	
 	public int getX() {
