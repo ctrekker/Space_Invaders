@@ -18,7 +18,7 @@ public class GameGUI extends JFrame {
         this.setVisible(true);
     }
     
-    public void addToGrid(double position){
+    public void addToGrid(int position){
     	shipGrid.get(position).add(new Ship());
     }
     
