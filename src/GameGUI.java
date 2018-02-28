@@ -7,6 +7,7 @@ public class GameGUI extends JFrame {
     public static int canvasWidth;
     public static int canvasHeight;
 
+
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
@@ -20,6 +21,7 @@ public class GameGUI extends JFrame {
     class GameGraphics extends Component {
         DynamicBackground background;
         boolean firstTime=true;
+        private Player player = new Player("name");
         public GameGraphics() {
             background=new DynamicBackground();
 
@@ -45,6 +47,7 @@ public class GameGUI extends JFrame {
             }
 
             background.draw(g2, true);
+            player.draw(g2);
         }
     }
 }
