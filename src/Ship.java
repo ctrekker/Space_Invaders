@@ -48,7 +48,7 @@ public class Ship {
     public void draw(Graphics2D g2) {
 	    // Insert draw code here
         g2.setColor(Color.ORANGE);
-        g2.drawRect(x-width/2, y-height/2, width, height);
+        g2.fillRect(x-width/2, y-height/2, width, height);
     }
 
     public int getX() {
