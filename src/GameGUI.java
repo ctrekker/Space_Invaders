@@ -6,6 +6,7 @@ import java.util.TimerTask;
 public class GameGUI extends JFrame {
     public static int canvasWidth;
     public static int canvasHeight;
+    private ArrayList<ArrayList<Ship>> shipGrid = new ArrayList<ArrayList<Ship>>();
 
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,7 +17,11 @@ public class GameGUI extends JFrame {
 
         this.setVisible(true);
     }
-
+    
+    public void addToGrid(Ship x){
+    	shipGrid.get(0).add(new Ship());
+    }
+    
     class GameGraphics extends Component {
         DynamicBackground background;
         boolean firstTime=true;
