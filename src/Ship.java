@@ -48,6 +48,7 @@ public class Ship {
     public void draw(Graphics2D g2) {
 	    // Insert draw code here
         g2.drawRect(x, y, width, height);
+        //hi
     }
 
     public int getX() {
