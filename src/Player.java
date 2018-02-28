@@ -1,4 +1,4 @@
-public class Player {
+public class Player extends Ship {
     private Ship ship;
     private String name;
     private int score;
