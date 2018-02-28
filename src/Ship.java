@@ -45,6 +45,10 @@ public class Ship {
 	    this.direction=direction;
     }
 
+    public void draw(Graphics2D g2) {
+	    // Insert draw code here
+    }
+
     public int getX() {
         return x;
     }
