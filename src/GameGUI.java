@@ -48,6 +48,10 @@ public class GameGUI extends JFrame {
                 for(int i=0; i<getHeight()/2; i++) {
                     background.draw(g2, false);
                 }
+                this.player.setWidth(100);
+                this.player.setHeight(100);
+                this.player.setX(getWidth()/2);
+                this.player.setY(getHeight()/2);
 
                 firstTime=false;
             }
