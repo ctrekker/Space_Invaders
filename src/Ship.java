@@ -67,10 +67,9 @@ public class Ship {
     }
 
     public void draw(Graphics2D g2) {
-	    // Insert draw code here
-
+	    x+=direction.getDeltaX();
+	    y+=direction.getDeltaY();
         g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
-
     }
 
 
@@ -122,5 +121,17 @@ public class Ship {
     }
     public void setBullets(ArrayList<Bullet> bullets) {
         this.bullets = bullets;
+    }
+    public double getDeltaX() {
+        return direction.getDeltaX();
+    }
+    public double getDeltaY() {
+        return direction.getDeltaY();
+    }
+    public void setDeltaX(double deltaX) {
+	    direction.setDeltaX(deltaX);
+    }
+    public void setDeltaY(double deltaY) {
+	    direction.setDeltaY(deltaY);
     }
 }

@@ -2,6 +2,7 @@ public class Player extends Ship {
     private Ship ship;
     private String name;
     private int score;
+    private int speed;
 
     public Player(String name) {
         this.ship=new Ship();
@@ -26,5 +27,11 @@ public class Player extends Ship {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

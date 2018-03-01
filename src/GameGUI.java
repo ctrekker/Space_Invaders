@@ -16,6 +16,7 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasHeight;
     private BufferedImage image;
     private ArrayList<ArrayList<Ship>> shipGrid = new ArrayList<ArrayList<Ship>>();
+    private Player player = new Player("name");
 
 
     public GameGUI() {
@@ -39,7 +40,6 @@ public class GameGUI extends JFrame implements KeyListener {
         DynamicBackground background;
         boolean firstTime=true;
 
-        private Player player = new Player("name");
         public GameGraphics() {
             background=new DynamicBackground();
 
@@ -73,10 +73,11 @@ public class GameGUI extends JFrame implements KeyListener {
                 for(int i=0; i<getHeight()/2; i++) {
                     background.draw(g2, false);
                 }
-                this.player.setWidth(100);
-                this.player.setHeight(100);
-                this.player.setX(getWidth()/2);
-                this.player.setY(getHeight()/2);
+                player.setWidth(100);
+                player.setHeight(100);
+                player.setX(getWidth()/2);
+                player.setY(getHeight()/2);
+                player.setSpeed(5);
 
                 firstTime=false;
             }
@@ -87,66 +88,38 @@ public class GameGUI extends JFrame implements KeyListener {
         }
     }
     public void keyPressed(KeyEvent e) {
-
-        //Up arrow
+        System.out.println(e.getKeyCode());
+        // Left arrow
+        if (e.getKeyCode() == 37 ) {
+            player.setDeltaX(-Math.abs(player.getSpeed()));
+        }
+        // Up arrow
         if (e.getKeyCode() == 38 ) {
-
-            this.getX() = x;
-
+            player.setDeltaY(-Math.abs(player.getSpeed()));
+        }
+        // Right arrow
+        if (e.getKeyCode() == 39 ) {
+            player.setDeltaX(Math.abs(player.getSpeed()));
         }
         // Down arrow
         if (e.getKeyCode() == 40 ) {
-
-
-
-
+            player.setDeltaY(Math.abs(player.getSpeed()));
         }
-        // W
-        if (e.getKeyCode() == 87 ) {
-
-
-
-        }
-        // S
-        if (e.getKeyCode() == 83 ) {
-            System.out.println("1");
-        }
-
     }
 
 
-    public void keyReleased(KeyEvent e) { //Make the paddles stop when the key is released
-        // Up arrow
-        if (e.getKeyCode() == 38) {
-
-
-
+    public void keyReleased(KeyEvent e) {
+        // Left arrow or right arrow
+        if (e.getKeyCode() == 37 || e.getKeyCode() == 39 ) {
+            player.setDeltaX(0);
         }
-        // Down arrow
-        if (e.getKeyCode() == 40) {
-
-
-
-
-        }
-        // W
-        if (e.getKeyCode() == 87) {
-
-
-
-        }
-        // S
-        if (e.getKeyCode() == 83) {
-
-
-
-
+        // Up arrow or down arrow
+        if (e.getKeyCode() == 38 || e.getKeyCode() == 40 ) {
+            player.setDeltaY(0);
         }
     }
 
     public void keyTyped(KeyEvent e) {
 
     }
-
-
 }
