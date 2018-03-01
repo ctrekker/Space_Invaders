@@ -73,11 +73,11 @@ public class GameGUI extends JFrame implements KeyListener {
                 for(int i=0; i<getHeight()/2; i++) {
                     background.draw(g2, false);
                 }
-                player.setWidth(100);
-                player.setHeight(100);
+                player.setWidth(75);
+                player.setHeight(75);
                 player.setX(getWidth()/2);
                 player.setY(getHeight()/2);
-                player.setSpeed(5);
+                player.setSpeed(3);
 
                 firstTime=false;
             }
