@@ -1,3 +1,7 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.*;
 	
@@ -10,6 +14,8 @@ public class Ship {
     private static final int DEFAULT_VALUE=1;
     private static final Vector2D DEFAULT_DIRECTION=new Vector2D();
     private static final Color DEFAULT_COLOR=Color.WHITE;
+
+    private static BufferedImage playerShip = null;
 
 	private int x;
 	private int y;
@@ -36,6 +42,7 @@ public class Ship {
         this(x, y, width, height, variation, value, DEFAULT_DIRECTION);
     }
     public Ship(int x, int y, int width, int height, int variation, int value, Vector2D direction) {
+
 	    this.x=x;
 	    this.y=y;
 	    this.width=width;
@@ -43,13 +50,30 @@ public class Ship {
 	    this.variation=variation;
 	    this.value=value;
 	    this.direction=direction;
+
+        try
+        {
+            if(playerShip == null)
+            {
+                playerShip = ImageIO.read( new File("Space_Invader_Pics/pixil-layer-Background.png" ));
+            }
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("no");
+
+        }
     }
 
     public void draw(Graphics2D g2) {
 	    // Insert draw code here
-        g2.setColor(Color.ORANGE);
-        g2.fillRect(x-width/2, y-height/2, width, height);
+
+        g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
+
     }
+
+
 
     public int getX() {
         return x;
