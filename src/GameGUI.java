@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameGUI extends JFrame {
+public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
     private BufferedImage image;
@@ -20,8 +22,8 @@ public class GameGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
         this.setResizable(false);
-
-        add(new GameGraphics());
+        this.addKeyListener(this);
+        this.add(new GameGraphics());
 
         this.setVisible(true);
     }
@@ -71,8 +73,8 @@ public class GameGUI extends JFrame {
                 for(int i=0; i<getHeight()/2; i++) {
                     background.draw(g2, false);
                 }
-                this.player.setWidth(600);
-                this.player.setHeight(600);
+                this.player.setWidth(100);
+                this.player.setHeight(100);
                 this.player.setX(getWidth()/2);
                 this.player.setY(getHeight()/2);
 
@@ -84,4 +86,67 @@ public class GameGUI extends JFrame {
             player.draw(g2);
         }
     }
+    public void keyPressed(KeyEvent e) {
+
+        //Up arrow
+        if (e.getKeyCode() == 38 ) {
+
+            this.getX() = x;
+
+        }
+        // Down arrow
+        if (e.getKeyCode() == 40 ) {
+
+
+
+
+        }
+        // W
+        if (e.getKeyCode() == 87 ) {
+
+
+
+        }
+        // S
+        if (e.getKeyCode() == 83 ) {
+            System.out.println("1");
+        }
+
+    }
+
+
+    public void keyReleased(KeyEvent e) { //Make the paddles stop when the key is released
+        // Up arrow
+        if (e.getKeyCode() == 38) {
+
+
+
+        }
+        // Down arrow
+        if (e.getKeyCode() == 40) {
+
+
+
+
+        }
+        // W
+        if (e.getKeyCode() == 87) {
+
+
+
+        }
+        // S
+        if (e.getKeyCode() == 83) {
+
+
+
+
+        }
+    }
+
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+
 }
