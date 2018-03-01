@@ -67,8 +67,13 @@ public class Ship {
     }
 
     public void draw(Graphics2D g2) {
-	    x+=direction.getDeltaX();
-	    y+=direction.getDeltaY();
+	    if((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0))) {
+	        x+=direction.getDeltaX();
+        }
+        if((y-height/2>=0||(y-height/2<=0&&getDeltaY()>0))&&(y+height/2<=GameGUI.canvasHeight||(y+height/2>=GameGUI.canvasHeight&&getDeltaY()<0))) {
+	        y+=direction.getDeltaY();
+        }
+
         g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
     }
 

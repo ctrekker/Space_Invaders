@@ -88,7 +88,6 @@ public class GameGUI extends JFrame implements KeyListener {
         }
     }
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
         // Left arrow
         if (e.getKeyCode() == 37 ) {
             player.setDeltaX(-Math.abs(player.getSpeed()));
