@@ -1,13 +1,15 @@
-import java.awt.Color;
+import java.awt.*;
 
 
 public class Bullet {
+    public static final double DEFAULT_SPEED=12;
+
 	private static final int DEFAULT_X=0;
 	private static final int DEFAULT_Y=0;
-	private static final int DEFAULT_WIDTH=10;
-	private static final int DEFAULT_HEIGHT=10;
-	private static final Vector2D DEFAULT_DIRECTION=new Vector2D();
-	private static final Color DEFAULT_COLOR=Color.WHITE;
+	private static final int DEFAULT_WIDTH=5;
+	private static final int DEFAULT_HEIGHT=15;
+	private static final Color DEFAULT_COLOR=Color.RED;
+    private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED);
 
 	private int x;
 	private int y;
@@ -35,6 +37,13 @@ public class Bullet {
 		this.height=height;
 		this.direction=direction;
 		this.color=color;
+	}
+	public void draw(Graphics2D g2) {
+	    x+=direction.getDeltaX();
+	    y+=direction.getDeltaY();
+
+	    g2.setColor(color);
+		g2.fillRect(x-width/2, y-height/2, width, height);
 	}
 
     public int getX() {

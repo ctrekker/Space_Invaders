@@ -89,31 +89,35 @@ public class GameGUI extends JFrame implements KeyListener {
     }
     public void keyPressed(KeyEvent e) {
         // Left arrow
-        if (e.getKeyCode() == 37 ) {
+        if (e.getKeyCode() == 37 || e.getKeyCode() == 65) {
             player.setDeltaX(-Math.abs(player.getSpeed()));
         }
         // Up arrow
-        if (e.getKeyCode() == 38 ) {
+        if (e.getKeyCode() == 38 || e.getKeyCode() == 87 ) {
             player.setDeltaY(-Math.abs(player.getSpeed()));
         }
         // Right arrow
-        if (e.getKeyCode() == 39 ) {
+        if (e.getKeyCode() == 39 || e.getKeyCode() == 68 ) {
             player.setDeltaX(Math.abs(player.getSpeed()));
         }
         // Down arrow
-        if (e.getKeyCode() == 40 ) {
+        if (e.getKeyCode() == 40 || e.getKeyCode() == 83 ) {
             player.setDeltaY(Math.abs(player.getSpeed()));
+        }
+        // Space bar
+        if (e.getKeyCode() == 32 ) {
+            player.shootBullet();
         }
     }
 
 
     public void keyReleased(KeyEvent e) {
         // Left arrow or right arrow
-        if (e.getKeyCode() == 37 || e.getKeyCode() == 39 ) {
+        if (e.getKeyCode() == 37 || e.getKeyCode() == 39 || e.getKeyCode() == 65 || e.getKeyCode() == 68 ) {
             player.setDeltaX(0);
         }
         // Up arrow or down arrow
-        if (e.getKeyCode() == 38 || e.getKeyCode() == 40 ) {
+        if (e.getKeyCode() == 38 || e.getKeyCode() == 40 || e.getKeyCode() == 87 || e.getKeyCode() == 83 ) {
             player.setDeltaY(0);
         }
     }

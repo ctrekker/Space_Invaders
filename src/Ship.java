@@ -25,6 +25,7 @@ public class Ship {
 	private int value;
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
+    private int lastBullet=0;
 
 	public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, DEFAULT_DIRECTION);
@@ -55,18 +56,18 @@ public class Ship {
         {
             if(playerShip == null)
             {
-                playerShip = ImageIO.read( new File("Space_Invader_Pics/pixil-layer-Background.png" ));
+                playerShip = ImageIO.read( new File("Space_Invader_Pics/ship_player.png" ));
             }
 
         }
         catch (IOException e)
         {
-            System.out.println("no");
-
+            System.out.println("Missing image resource!");
         }
     }
-
     public void draw(Graphics2D g2) {
+	    lastBullet++;
+
 	    if((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0))) {
 	        x+=direction.getDeltaX();
         }
@@ -74,7 +75,18 @@ public class Ship {
 	        y+=direction.getDeltaY();
         }
 
+        for(Bullet bullet : bullets) {
+	        bullet.draw(g2);
+        }
+
         g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
+    }
+
+    public void shootBullet() {
+	    if(lastBullet>15) {
+	        bullets.add(new Bullet(x, y));
+	        lastBullet=0;
+        }
     }
 
 
