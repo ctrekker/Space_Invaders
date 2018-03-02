@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-//Testlol
+
 public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
