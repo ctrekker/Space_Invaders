@@ -16,6 +16,7 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasHeight;
     private BufferedImage image;
     private ArrayList<ArrayList<Ship>> shipGrid = new ArrayList<ArrayList<Ship>>();
+	private ArrayList<Ship> rows = new ArrayList<Ship>();
     private Player player = new Player("name");
 
 
@@ -30,7 +31,12 @@ public class GameGUI extends JFrame implements KeyListener {
     }
     
     public void addToGrid(int position){
-    	shipGrid.get(position).add(new Ship());
+    	for(int i = 0; i < 3; i++){
+    		shipGrid.add(i, rows);
+    		for(int j = 0; j < 3; j++){
+    			rows.add(j, new Ship());
+    		}
+    	}
     }
 
 
