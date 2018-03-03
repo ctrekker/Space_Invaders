@@ -10,6 +10,11 @@ public class Player extends Ship {
         this.score=0;
     }
 
+    @Override
+    public void setDirection(Vector2D v2) {
+        System.out.println(v2);
+    }
+
     public Ship getShip() {
         return ship;
     }

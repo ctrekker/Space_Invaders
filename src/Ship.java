@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.awt.*;
 	
 public class Ship {
+    public static final int DEFAULT_SPEED=5;
+
     private static final int DEFAULT_X=0;
     private static final int DEFAULT_Y=0;
-    private static final int DEFAULT_WIDTH=10;
-    private static final int DEFAULT_HEIGHT=10;
+    private static final int DEFAULT_WIDTH =50;
+    private static final int DEFAULT_HEIGHT=50;
     private static final int DEFAULT_VARIATION=0;
     private static final int DEFAULT_VALUE=1;
-    private static final Vector2D DEFAULT_DIRECTION=new Vector2D();
     private static final Color DEFAULT_COLOR=Color.WHITE;
 
     private static BufferedImage playerShip = null;
@@ -26,21 +27,29 @@ public class Ship {
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
+    /*
+    State:
+    0 -> passive
+    1 -> attacking
+    2 -> init
+     */
+    private int state=0;
+    private boolean pathMode=false;
 
-	public Ship() {
-	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, DEFAULT_DIRECTION);
+    public Ship() {
+	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
     }
     public Ship(int x, int y) {
-        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, DEFAULT_DIRECTION);
+        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
     }
     public Ship(int x, int y, int width, int height) {
-        this(x, y, width, height, DEFAULT_VARIATION, DEFAULT_VALUE, DEFAULT_DIRECTION);
+        this(x, y, width, height, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
     }
     public Ship(int x, int y, int width, int height, int variation) {
-        this(x, y, width, height, variation, DEFAULT_VALUE, DEFAULT_DIRECTION);
+        this(x, y, width, height, variation, DEFAULT_VALUE, new Vector2D());
     }
     public Ship(int x, int y, int width, int height, int variation, int value) {
-        this(x, y, width, height, variation, value, DEFAULT_DIRECTION);
+        this(x, y, width, height, variation, value, new Vector2D());
     }
     public Ship(int x, int y, int width, int height, int variation, int value, Vector2D direction) {
 
@@ -68,10 +77,10 @@ public class Ship {
     public void draw(Graphics2D g2) {
 	    lastBullet++;
 
-	    if((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0))) {
+	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
 	        x+=direction.getDeltaX();
         }
-        if((y-height/2>=0||(y-height/2<=0&&getDeltaY()>0))&&(y+height/2<=GameGUI.canvasHeight||(y+height/2>=GameGUI.canvasHeight&&getDeltaY()<0))) {
+        if(((y-height/2>=0||(y-height/2<=0&&getDeltaY()>0))&&(y+height/2<=GameGUI.canvasHeight||(y+height/2>=GameGUI.canvasHeight&&getDeltaY()<0)))||variation!=0) {
 	        y+=direction.getDeltaY();
         }
 
@@ -79,7 +88,17 @@ public class Ship {
 	        bullet.draw(g2);
         }
 
-        g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
+        if(variation==0) {
+            g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
+        }
+        else {
+	        Color c;
+	        if(variation==1) c=Color.BLUE;
+	        if(variation==2) c=Color.RED;
+	        else c=Color.GREEN;
+	        g2.setColor(c);
+            g2.fillRect(x-width/2, y-height/2, width, height);
+        }
     }
 
     public void shootBullet() {
@@ -133,6 +152,10 @@ public class Ship {
     public void setDirection(Vector2D direction) {
         this.direction = direction;
     }
+    public void setDirection(double dX, double dY) {
+	    direction.setDeltaX(dX);
+	    direction.setDeltaY(dY);
+    }
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
@@ -150,5 +173,19 @@ public class Ship {
     }
     public void setDeltaY(double deltaY) {
 	    direction.setDeltaY(deltaY);
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+    public void setPathMode(boolean mode) {
+        pathMode=mode;
+    }
+    public boolean isPathMode() {
+        return pathMode;
     }
 }

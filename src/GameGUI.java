@@ -14,35 +14,22 @@ import java.util.TimerTask;
 public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
-    private BufferedImage image;
-    private ArrayList<ArrayList<Ship>> shipGrid = new ArrayList<ArrayList<Ship>>();
-	private ArrayList<Ship> rows = new ArrayList<Ship>();
     private Player player = new Player("name");
 
 
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(800, 700);
         this.setResizable(false);
         this.addKeyListener(this);
         this.add(new GameGraphics());
 
         this.setVisible(true);
     }
-    
-    public void addToGrid(int position){
-    	for(int i = 0; i < 3; i++){
-    		shipGrid.add(i, rows);
-    		for(int j = 0; j < 3; j++){
-    			rows.add(j, new Ship());
-    		}
-    	}
-    }
-
-
 
     
     class GameGraphics extends Component {
+        public ShipManager shipManager;
         DynamicBackground background;
         boolean firstTime=true;
 
@@ -58,15 +45,6 @@ public class GameGUI extends JFrame implements KeyListener {
             }, 10, (int)(1000.0/60));
         }
 
-        public void DrawPanel() {
-            URL resource = getClass().getResource("pixil-layer-Background.png");
-            try {
-                image = ImageIO.read(resource);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         public void paint(Graphics g) {
             Graphics2D g2=(Graphics2D)g;
             super.paint(g);
@@ -76,21 +54,38 @@ public class GameGUI extends JFrame implements KeyListener {
                 canvasWidth=getWidth();
                 canvasHeight=getHeight();
 
+                shipManager=new ShipManager();
+
                 for(int i=0; i<getHeight()/2; i++) {
                     background.draw(g2, false);
                 }
                 player.setWidth(75);
                 player.setHeight(75);
                 player.setX(getWidth()/2);
-                player.setY(getHeight()/2);
+                player.setY(getHeight()-player.getWidth());
                 player.setSpeed(3);
+                player.setDirection(0, 0);
+
+                // 20 variant 1
+                // 16 variant 2
+                // 4 variant 3
+
+                // 5 waves, 8 each
+                // First wave: top-left=1 go right, top-right=2 go left
+                // Second wave: bottom-left=2/3 alternate go right
+                // Third wave: bottom-right=2 go left
+                // Fourth wave: top-center=1 go left
+                // Fifth wave: top-center=1 go right
 
                 firstTime=false;
             }
 
+            shipManager.moveShips();
+
             background.draw(g2, true);
 
             player.draw(g2);
+            shipManager.drawShips(g2);
         }
     }
     public void keyPressed(KeyEvent e) {
