@@ -38,6 +38,9 @@ public class ShipManager {
                 s2.setVariation(1);
                 s1.setDirection(Ship.DEFAULT_SPEED, Ship.DEFAULT_SPEED/1.5);
                 s2.setDirection(-Ship.DEFAULT_SPEED, Ship.DEFAULT_SPEED/1.5);
+                s1.setDesiredLocation(new Point(GameGUI.canvasWidth/2-100, shipAddCount*40+50));
+                s2.setDesiredLocation(new Point(GameGUI.canvasWidth/2+100, shipAddCount*40+50));
+                System.out.println(shipAddCount*20);
                 ships.add(s1);
                 ships.add(s2);
                 shipAddCount+=2;
@@ -63,7 +66,14 @@ public class ShipManager {
                     }
                 }
                 else {
-                    s.setDirection(0, 0);
+                    final int speed=90;
+
+                    if(!s.hasCalculatedVector()) s.calculateVector(speed);
+                    else s.setCalculatedVectorCount(s.getCalculatedVectorCount()+1);
+
+                    if(s.getCalculatedVectorCount()>=speed) {
+                        s.setDirection(0, 0);
+                    }
                 }
             }
             lastShipReleaseCounter++;

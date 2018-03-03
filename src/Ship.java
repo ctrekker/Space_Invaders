@@ -18,15 +18,18 @@ public class Ship {
 
     private static BufferedImage playerShip = null;
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int width;
 	private int height;
 	private int variation;
 	private int value;
     private Vector2D direction;
+    private boolean calculatedVector=false;
+    private int calculatedVectorCount=0;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
+    private Point desiredLocation=null;
     /*
     State:
     0 -> passive
@@ -89,7 +92,7 @@ public class Ship {
         }
 
         if(variation==0) {
-            g2.drawImage(playerShip , x-width/2, y-height/2,width, height, null);
+            g2.drawImage(playerShip , (int)(x-width/2), (int)(y-height/2), width, height, null);
         }
         else {
 	        Color c;
@@ -97,29 +100,38 @@ public class Ship {
 	        if(variation==2) c=Color.RED;
 	        else c=Color.GREEN;
 	        g2.setColor(c);
-            g2.fillRect(x-width/2, y-height/2, width, height);
+            g2.fillRect((int)(x-width/2), (int)(y-height/2), width, height);
         }
+    }
+    // Calculates the ship directional vector based on a desiredLocation and a speed (in frames it takes to get to location)
+    public void calculateVector(int speed) {
+        Vector2D newVector=new Vector2D();
+        newVector.setDeltaX((desiredLocation.x-x)/(double)speed);
+        newVector.setDeltaY((desiredLocation.y-y)/(double)speed);
+        System.out.println(newVector.getDeltaX()+","+newVector.getDeltaY());
+        direction=newVector;
+        calculatedVector=true;
     }
 
     public void shootBullet() {
 	    if(lastBullet>15) {
-	        bullets.add(new Bullet(x, y));
+	        bullets.add(new Bullet((int)x, (int)y));
 	        lastBullet=0;
         }
     }
 
 
 
-    public int getX() {
+    public double getX() {
         return x;
     }
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
-    public int getY() {
+    public double getY() {
         return y;
     }
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 	public int getWidth() {
@@ -187,5 +199,29 @@ public class Ship {
     }
     public boolean isPathMode() {
         return pathMode;
+    }
+
+    public Point getDesiredLocation() {
+        return desiredLocation;
+    }
+
+    public void setDesiredLocation(Point desiredLocation) {
+        this.desiredLocation = desiredLocation;
+    }
+
+    public boolean hasCalculatedVector() {
+        return calculatedVector;
+    }
+
+    public void setCalculatedVector(boolean calculatedVector) {
+        this.calculatedVector = calculatedVector;
+    }
+
+    public int getCalculatedVectorCount() {
+        return calculatedVectorCount;
+    }
+
+    public void setCalculatedVectorCount(int calculatedVectorCount) {
+        this.calculatedVectorCount = calculatedVectorCount;
     }
 }
