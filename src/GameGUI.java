@@ -15,6 +15,9 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
     private Player player = new Player("name");
+    private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
+    private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
+    private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
 
 
     public GameGUI() {
@@ -66,6 +69,21 @@ public class GameGUI extends JFrame implements KeyListener {
                 player.setSpeed(3);
                 player.setDirection(0, 0);
 
+                scoreInvaders.setWidth(50);
+                scoreInvaders.setHeight(50);
+                scoreInvaders.setX(getWidth()/10);
+                scoreInvaders.setY(getHeight()-50);
+
+                scoreInvadersL1.setWidth(50);
+                scoreInvadersL1.setHeight(50);
+                scoreInvadersL1.setX(getWidth()/10 + 50);
+                scoreInvadersL1.setY(getHeight()-50);
+
+                scoreInvadersL2.setWidth(50);
+                scoreInvadersL2.setHeight(50);
+                scoreInvadersL2.setX(getWidth()/10 + 100);
+                scoreInvadersL2.setY(getHeight()-50);
+
                 // 20 variant 1
                 // 16 variant 2
                 // 4 variant 3
@@ -86,6 +104,14 @@ public class GameGUI extends JFrame implements KeyListener {
 
             player.draw(g2);
             shipManager.drawShips(g2);
+
+            scoreInvaders.draw(g2);
+
+            scoreInvadersL1.draw(g2);
+
+            scoreInvadersL2.draw(g2);
+
+
         }
     }
     public void keyPressed(KeyEvent e) {
