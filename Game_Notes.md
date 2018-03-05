@@ -1,0 +1,20 @@
+- Bees do loop when they reach the bottom
+- Butterflies continue and overflow to top
+- Claws have a chance of opening tractor beam
+- Behave as butterflies in movement style
+- Bees travel at 30 degrees
+- Butterflies/claws ata 45 degrees
+- After stage 3, ships have a chance to dive bomb during intro cycle
+- More bullets/more ships
+- Every 20,000 point a new ship is gotten
+- Start with 3 lives
+- Butterflies 200 points
+- Ships get faster as levels progress
+- Higher tick-chance of divebomb/attack
+- 3 or less ships means constant bombing with bottom overflow
+- Bees get the player 50 points (double in bonus levels)
+- Butterflies get the player 80 points (double in bonus levels)
+- Claws get the player 400 points
+- Claws get the player 1600 points if it was holding a ship
+- Ship is tecnically an enemy until it is re-obtained when it is held by a claw
+- After bonus, show statistics
