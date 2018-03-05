@@ -11,6 +11,8 @@ public class ShipManager {
     private int lastShipReleaseCounter=0;
     // Current number of ships added during init
     private int shipAddCount=0;
+    // The number of ships which have reached their final position
+    private int shipsComplete=0;
     public ShipManager() {
 
     }
@@ -31,57 +33,63 @@ public class ShipManager {
 
     public void moveShips() {
         if(initStage==0) {
-            if(lastShipReleaseCounter>20&&shipAddCount<8) {
-                final int shipSpeed=7;
-                Ship s1=new Ship(GameGUI.canvasWidth/2-200, -50);
-                Ship s2=new Ship(GameGUI.canvasWidth/2+200, -50);
-                s1.setVariation(2);
-                s2.setVariation(1);
-                s1.setDirection(shipSpeed, shipSpeed/1.5);
-                s2.setDirection(-shipSpeed, shipSpeed/1.5);
-                s1.setDesiredLocation(new Point(GameGUI.canvasWidth/2-100, shipAddCount*40+50));
-                s2.setDesiredLocation(new Point(GameGUI.canvasWidth/2+100, shipAddCount*40+50));
-                ships.add(s1);
-                ships.add(s2);
-                shipAddCount+=2;
-                lastShipReleaseCounter=0;
-            }
-            else if(lastShipReleaseCounter>60&&shipAddCount>=8) {
-                //initStage++;
-            }
 
-            for(Ship s : ships) {
-                if(!s.isPathMode()) {
-                    double curveFactor = 0.3;
-                    if (s.getX() < 150) {
-                        s.setDeltaX(s.getDeltaX() + curveFactor);
-                    } else if (s.getX() > GameGUI.canvasWidth - 150) {
-                        s.setDeltaX(s.getDeltaX() - curveFactor);
-                    }
-                    if (s.getY() > GameGUI.canvasHeight / 2) {
-                        s.setDeltaY(s.getDeltaY() - curveFactor/1.75);
-                        if(s.getY()+s.getDeltaY() < GameGUI.canvasHeight/2) {
-                            s.setPathMode(true);
-                        }
-                    }
-                }
-                else {
-                    final int speed=45;
-
-                    if(!s.hasCalculatedVector()) s.calculateVector(speed);
-                    else s.setCalculatedVectorCount(s.getCalculatedVectorCount()+1);
-
-                    if(s.getCalculatedVectorCount()>=speed) {
-                        s.setDirection(0, 0);
-                    }
-                }
-            }
-            lastShipReleaseCounter++;
         }
         else if(initStage==1) {
 
         }
         frame++;
+    }
+    public boolean doShipFrame() {
+        boolean returnVal=false;
+
+        if(lastShipReleaseCounter>20&&shipAddCount<8) {
+            final int shipSpeed=7;
+            Ship s1=new Ship(GameGUI.canvasWidth/2-200, -50);
+            Ship s2=new Ship(GameGUI.canvasWidth/2+200, -50);
+            s1.setVariation(2);
+            s2.setVariation(1);
+            s1.setDirection(shipSpeed, shipSpeed/1.5);
+            s2.setDirection(-shipSpeed, shipSpeed/1.5);
+            s1.setDesiredLocation(new Point(GameGUI.canvasWidth/2-100, shipAddCount*40+50));
+            s2.setDesiredLocation(new Point(GameGUI.canvasWidth/2+100, shipAddCount*40+50));
+            ships.add(s1);
+            ships.add(s2);
+            shipAddCount+=2;
+            lastShipReleaseCounter=0;
+        }
+
+        for(Ship s : ships) {
+            if(!s.isPathMode()&&!s.isFinished()) {
+                double curveFactor = 0.3;
+                if (s.getX() < 150) {
+                    s.setDeltaX(s.getDeltaX() + curveFactor);
+                } else if (s.getX() > GameGUI.canvasWidth - 150) {
+                    s.setDeltaX(s.getDeltaX() - curveFactor);
+                }
+                if (s.getY() > GameGUI.canvasHeight / 2) {
+                    s.setDeltaY(s.getDeltaY() - curveFactor/1.75);
+                    if(s.getY()+s.getDeltaY() < GameGUI.canvasHeight/2) {
+                        s.setPathMode(true);
+                    }
+                }
+            }
+            else if(!s.isFinished()) {
+                final int speed=45;
+
+                if(!s.hasCalculatedVector()) s.calculateVector(speed);
+                else s.setCalculatedVectorCount(s.getCalculatedVectorCount()+1);
+
+                if(s.getCalculatedVectorCount()>=speed) {
+                    s.setDirection(0, 0);
+                    s.setFinished(true);
+                    shipsComplete++;
+                    if(shipsComplete%8==0) returnVal=true;
+                }
+            }
+        }
+        lastShipReleaseCounter++;
+        return returnVal;
     }
     public void drawShips(Graphics2D g2) {
         for(Ship s : ships) {
