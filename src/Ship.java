@@ -3,18 +3,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.*;
+import java.awt.*;// A Pacakge that has already been premade and we can just call them
 	
 public class Ship {
     public static final int DEFAULT_SPEED=6;
 
-    private static final int DEFAULT_X=0;
-    private static final int DEFAULT_Y=0;
-    private static final int DEFAULT_WIDTH =50;
-    private static final int DEFAULT_HEIGHT=50;
+    private static final int DEFAULT_X=0;//Setting the X Value of the ship
+    private static final int DEFAULT_Y=0;//Setting the Y Value of the ship
+    private static final int DEFAULT_WIDTH =50;//Setting the Width Value of the ship
+    private static final int DEFAULT_HEIGHT=50;//Setting the Height Value of the ship
     private static final int DEFAULT_VARIATION=0;
     private static final int DEFAULT_VALUE=1;
-    private static final Color DEFAULT_COLOR=Color.WHITE;
+    private static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
     private static BufferedImage playerShip = null;
 
