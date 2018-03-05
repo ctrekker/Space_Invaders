@@ -32,6 +32,7 @@ public class Ship {
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private Point desiredLocation=null;
+    private boolean finished=false;
     /*
     State:
     0 -> passive
@@ -243,5 +244,13 @@ public class Ship {
 
     public void setCalculatedVectorCount(int calculatedVectorCount) {
         this.calculatedVectorCount = calculatedVectorCount;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }
