@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.awt.*;
 	
 public class Ship {
-    public static final int DEFAULT_SPEED=5;
+    public static final int DEFAULT_SPEED=6;
 
     private static final int DEFAULT_X=0;
     private static final int DEFAULT_Y=0;
@@ -108,7 +108,6 @@ public class Ship {
         Vector2D newVector=new Vector2D();
         newVector.setDeltaX((desiredLocation.x-x)/(double)speed);
         newVector.setDeltaY((desiredLocation.y-y)/(double)speed);
-        System.out.println(newVector.getDeltaX()+","+newVector.getDeltaY());
         direction=newVector;
         calculatedVector=true;
     }

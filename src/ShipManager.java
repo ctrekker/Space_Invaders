@@ -32,15 +32,15 @@ public class ShipManager {
     public void moveShips() {
         if(initStage==0) {
             if(lastShipReleaseCounter>20&&shipAddCount<8) {
+                final int shipSpeed=7;
                 Ship s1=new Ship(GameGUI.canvasWidth/2-200, -50);
                 Ship s2=new Ship(GameGUI.canvasWidth/2+200, -50);
                 s1.setVariation(2);
                 s2.setVariation(1);
-                s1.setDirection(Ship.DEFAULT_SPEED, Ship.DEFAULT_SPEED/1.5);
-                s2.setDirection(-Ship.DEFAULT_SPEED, Ship.DEFAULT_SPEED/1.5);
+                s1.setDirection(shipSpeed, shipSpeed/1.5);
+                s2.setDirection(-shipSpeed, shipSpeed/1.5);
                 s1.setDesiredLocation(new Point(GameGUI.canvasWidth/2-100, shipAddCount*40+50));
                 s2.setDesiredLocation(new Point(GameGUI.canvasWidth/2+100, shipAddCount*40+50));
-                System.out.println(shipAddCount*20);
                 ships.add(s1);
                 ships.add(s2);
                 shipAddCount+=2;
@@ -59,14 +59,14 @@ public class ShipManager {
                         s.setDeltaX(s.getDeltaX() - curveFactor);
                     }
                     if (s.getY() > GameGUI.canvasHeight / 2) {
-                        s.setDeltaY(s.getDeltaY() - curveFactor);
+                        s.setDeltaY(s.getDeltaY() - curveFactor/1.75);
                         if(s.getY()+s.getDeltaY() < GameGUI.canvasHeight/2) {
                             s.setPathMode(true);
                         }
                     }
                 }
                 else {
-                    final int speed=90;
+                    final int speed=45;
 
                     if(!s.hasCalculatedVector()) s.calculateVector(speed);
                     else s.setCalculatedVectorCount(s.getCalculatedVectorCount()+1);
