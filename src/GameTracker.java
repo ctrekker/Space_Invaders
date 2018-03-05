@@ -1,11 +1,16 @@
-import java.util.ArrayList;
+import java.util.*;
+import javax.swing.JOptionPane;
 
 public class GameTracker {
 	private int score = 0;
 	private ArrayList<String> leaderboard = new ArrayList<String>();
+	private String name;
 	
 	public GameTracker(){
-		
+		setName();
+		addToLeaderboard();
+		sortScore();
+		System.out.println(leaderboard);
 	}
 	
 	public void setScore(Ship ship){
@@ -16,10 +21,31 @@ public class GameTracker {
 		return score;
 	}
 	
-	public void setLeaderboard(){
-		//prompt name and score
-		//return string in format "name" + "score"
-		//compare scores with top 10
+	public void setName(){
+		name = JOptionPane.showInputDialog("Enter your name:: ");
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void addToLeaderboard(){
+		leaderboard.add(getScore(), getName());
+	}
+	
+	public void sortScore(){
+		for(int i = 0; i < leaderboard.size() - 1; i++){
+			String temporary = leaderboard.get(i);
+			int thisNumber = Integer.parseInt(temporary.substring(0, temporary.indexOf(" ")));
+
+			String temporary2 = leaderboard.get(i+1);
+			int nextNumber = Integer.parseInt(temporary2.substring(0, temporary2.indexOf(" ")));
+			
+			if(thisNumber < nextNumber){
+				leaderboard.set(i, temporary2);
+				leaderboard.set(i+1, temporary);
+			}
+		}
 	}
 	
 	public ArrayList<String> getLeaderboard(){
@@ -27,6 +53,6 @@ public class GameTracker {
 	}
 	
 	public static void main(String[] args){
-		GameTracker wtfSonia = new GameTracker();
+		GameTracker testing = new GameTracker();
 	}
 }
