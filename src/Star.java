@@ -1,13 +1,14 @@
-import java.awt.*;
+import java.awt.*;// A Pacakge that has already been premade and we can just call them
 
-public class Star extends Point {
-    private Color color;
-    private int radius;
-    public Star(int x, int y, int radius, Color color) {
-        super(x, y);
+public class Star extends Point { //This class is when we start to make the stars
+    private Color color; //Starting to set the color
+    private int radius; //Making an int radius
+    public Star(int x, int y, int radius, Color color)//Saying the demension units for the star 
+     {
+        super(x, y); //Call it from another class
 
-        this.radius=radius;
-        this.color=color;
+        this.radius=radius; //Instantiated the radius
+        this.color=color; //Instantiated the color
     }
 
     public void draw(Graphics2D g2) {
