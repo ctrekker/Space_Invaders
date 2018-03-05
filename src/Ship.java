@@ -17,6 +17,8 @@ public class Ship {
     private static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
     private static BufferedImage playerShip = null;
+    private static BufferedImage enemyShip1 = null;
+    private static BufferedImage enemyShip2 = null;
 
 	private double x;
 	private double y;
@@ -70,6 +72,14 @@ public class Ship {
             {
                 playerShip = ImageIO.read( new File("Space_Invader_Pics/ship_player.png" ));
             }
+            if(enemyShip1 == null)
+            {
+                enemyShip1= ImageIO.read( new File("Space_Invader_Pics/EnemyShip1.png" ));
+            }
+            if(enemyShip2 == null)
+            {
+                enemyShip2= ImageIO.read( new File("Space_Invader_Pics/EnemyShip2.png" ));
+            }
 
         }
         catch (IOException e)
@@ -94,6 +104,15 @@ public class Ship {
 
         if(variation==0) {
             g2.drawImage(playerShip , (int)(x-width/2), (int)(y-height/2), width, height, null);
+
+        }
+        else if(variation==1)
+        {
+            g2.drawImage(enemyShip1 , (int)(x-width/2), (int)(y-height/2), width, height, null);
+        }
+        else if(variation==2)
+        {
+            g2.drawImage(enemyShip2 , (int)(x-width/2), (int)(y-height/2), width, height, null);
         }
         else {
 	        Color c;
