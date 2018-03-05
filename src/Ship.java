@@ -78,6 +78,7 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
+
 	    lastBullet++;
 
 	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
@@ -110,6 +111,7 @@ public class Ship {
         newVector.setDeltaY((desiredLocation.y-y)/(double)speed);
         direction=newVector;
         calculatedVector=true;
+        
     }
 
     public void shootBullet() {
