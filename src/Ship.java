@@ -3,20 +3,22 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.*;
+import java.awt.*;// A Pacakge that has already been premade and we can just call them
 	
 public class Ship {
     public static final int DEFAULT_SPEED=6;
 
-    private static final int DEFAULT_X=0;
-    private static final int DEFAULT_Y=0;
-    private static final int DEFAULT_WIDTH =50;
-    private static final int DEFAULT_HEIGHT=50;
+    private static final int DEFAULT_X=0;//Setting the X Value of the ship
+    private static final int DEFAULT_Y=0;//Setting the Y Value of the ship
+    private static final int DEFAULT_WIDTH =50;//Setting the Width Value of the ship
+    private static final int DEFAULT_HEIGHT=50;//Setting the Height Value of the ship
     private static final int DEFAULT_VARIATION=0;
     private static final int DEFAULT_VALUE=1;
-    private static final Color DEFAULT_COLOR=Color.WHITE;
+    private static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
     private static BufferedImage playerShip = null;
+    private static BufferedImage enemyShip1 = null;
+    private static BufferedImage enemyShip2 = null;
 
 	private double x;
 	private double y;
@@ -30,7 +32,6 @@ public class Ship {
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private Point desiredLocation=null;
-    private boolean finished=false;
     /*
     State:
     0 -> passive
@@ -71,6 +72,15 @@ public class Ship {
             {
                 playerShip = ImageIO.read( new File("Space_Invader_Pics/ship_player.png" ));
             }
+            if(enemyShip1 == null)
+            {
+                enemyShip1= ImageIO.read( new File("Space_Invader_Pics/EnemyShip1.png" ));
+            }
+            if(enemyShip2 == null)
+            {
+                enemyShip2= ImageIO.read( new File("Space_Invader_Pics/EnemyShip2.png" ));
+            }
+
         }
         catch (IOException e)
         {
@@ -78,6 +88,7 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
+
 	    lastBullet++;
 
 	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
@@ -93,6 +104,15 @@ public class Ship {
 
         if(variation==0) {
             g2.drawImage(playerShip , (int)(x-width/2), (int)(y-height/2), width, height, null);
+
+        }
+        else if(variation==1)
+        {
+            g2.drawImage(enemyShip1 , (int)(x-width/2), (int)(y-height/2), width, height, null);
+        }
+        else if(variation==2)
+        {
+            g2.drawImage(enemyShip2 , (int)(x-width/2), (int)(y-height/2), width, height, null);
         }
         else {
 	        Color c;
@@ -110,6 +130,7 @@ public class Ship {
         newVector.setDeltaY((desiredLocation.y-y)/(double)speed);
         direction=newVector;
         calculatedVector=true;
+        
     }
 
     public void shootBullet() {
@@ -222,13 +243,5 @@ public class Ship {
 
     public void setCalculatedVectorCount(int calculatedVectorCount) {
         this.calculatedVectorCount = calculatedVectorCount;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
     }
 }

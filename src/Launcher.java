@@ -1,6 +1,8 @@
 public class Launcher {
     public static void main(String[] args) throws Exception  {
-        GameGUI run = new GameGUI();
+        //GameGUI run = new GameGUI();
+        TitleScreen run = new TitleScreen();
+
 
         // TEST#1
         // Tests for inclusive range of Util.random method

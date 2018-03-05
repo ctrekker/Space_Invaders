@@ -1,14 +1,14 @@
-import java.awt.*;
+import java.awt.*; // A Pacakge that has already been premade and we can just call them
 
 
 public class Bullet {
     public static final double DEFAULT_SPEED=12;
 
-	private static final int DEFAULT_X=0;
-	private static final int DEFAULT_Y=0;
-	private static final int DEFAULT_WIDTH=5;
-	private static final int DEFAULT_HEIGHT=15;
-	private static final Color DEFAULT_COLOR=Color.RED;
+	private static final int DEFAULT_X=0; //Setting the X Value Of The Bullet
+	private static final int DEFAULT_Y=0; //Setting the Y Value Of The Bullet
+	private static final int DEFAULT_WIDTH=5;//Setting the Width Value Of The Bullet
+	private static final int DEFAULT_HEIGHT=15;//Setting the Height Value Of The Bullet
+	private static final Color DEFAULT_COLOR=Color.RED;//Setting The Color To Red
     private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED);
 
 	private int x;
