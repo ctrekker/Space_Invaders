@@ -1,5 +1,5 @@
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.*;// A Pacakge that has already been premade and we can just call them
+import java.util.ArrayList;//We Are Importing an array list from the package
 
 public class DynamicBackground {
     private double entropy=0.3;

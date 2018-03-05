@@ -1,5 +1,5 @@
-public class Player extends Ship {
-    private Ship ship;
+public class Player extends Ship {  //This is the class where we are making the ship
+    private Ship ship; //Instantiating The Ship
     private String name;
     private int score;
     private int speed;
