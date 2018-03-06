@@ -2,7 +2,6 @@ public class Player extends Ship {  //This is the class where we are making the 
     private Ship ship; //Instantiating The Ship
     private String name;
     private int score;
-    private int speed;
 
     public Player(String name) {
         this.ship=new Ship();
@@ -27,11 +26,5 @@ public class Player extends Ship {  //This is the class where we are making the 
     }
     public void setScore(int score) {
         this.score = score;
-    }
-    public int getSpeed() {
-        return speed;
-    }
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 }

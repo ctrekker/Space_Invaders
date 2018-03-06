@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class PathMaker extends JFrame {
 
     private PathMakerGraphics graphics;
     private ArrayList<DoublePoint> points;
+    private int lastPoint=0;
 
     public PathMaker() {
         setSize(800, 700);
@@ -22,11 +24,12 @@ public class PathMaker extends JFrame {
         graphics=new PathMakerGraphics();
         add(graphics);
         graphics.addMouseListener(graphics);
+        graphics.addMouseMotionListener(graphics);
 
         setVisible(true);
     }
 
-    private class PathMakerGraphics extends Component implements MouseListener {
+    private class PathMakerGraphics extends Component implements MouseListener, MouseMotionListener {
         public PathMakerGraphics() {
             points=new ArrayList<>();
         }
@@ -60,6 +63,7 @@ public class PathMaker extends JFrame {
         public void mousePressed(MouseEvent e) {
             System.out.println(e);
             if(e.getButton()==1) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
+            if(e.getButton()==2) points.clear();
             if(e.getButton()==3) {
                 File file=new File("latest_path.dat");
                 DataOutputStream out=null;
@@ -95,7 +99,7 @@ public class PathMaker extends JFrame {
         }
         @Override
         public void mouseReleased(MouseEvent e) {
-
+            lastPoint=0;
         }
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -103,6 +107,16 @@ public class PathMaker extends JFrame {
         }
         @Override
         public void mouseExited(MouseEvent e) {
+
+        }
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if(lastPoint%10==0) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
+            lastPoint++;
+            repaint();
+        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
 
         }
     }

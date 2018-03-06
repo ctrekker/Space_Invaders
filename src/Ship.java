@@ -7,14 +7,13 @@ import java.awt.*;// A Pacakge that has already been premade and we can just cal
 	
 public class Ship {
     public static final int DEFAULT_SPEED=6;
-
-    private static final int DEFAULT_X=0;//Setting the X Value of the ship
-    private static final int DEFAULT_Y=0;//Setting the Y Value of the ship
-    private static final int DEFAULT_WIDTH =50;//Setting the Width Value of the ship
-    private static final int DEFAULT_HEIGHT=50;//Setting the Height Value of the ship
-    private static final int DEFAULT_VARIATION=0;
-    private static final int DEFAULT_VALUE=1;
-    private static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
+    public static final int DEFAULT_X=0;//Setting the X Value of the ship
+    public static final int DEFAULT_Y=0;//Setting the Y Value of the ship
+    public static final int DEFAULT_WIDTH =50;//Setting the Width Value of the ship
+    public static final int DEFAULT_HEIGHT=50;//Setting the Height Value of the ship
+    public static final int DEFAULT_VARIATION=0;
+    public static final int DEFAULT_VALUE=1;
+    public static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
     private static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
@@ -26,21 +25,12 @@ public class Ship {
 	private int height;
 	private int variation;
 	private int value;
+    private int speed=4;
+
     private Vector2D direction;
-    private boolean calculatedVector=false;
-    private int calculatedVectorCount=0;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
-    private Point desiredLocation=null;
-    private boolean finished=false;
-    /*
-    State:
-    0 -> passive
-    1 -> attacking
-    2 -> init
-     */
-    private int state=0;
-    private boolean pathMode=false;
+    private int currentPoint=0;
 
     public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
@@ -124,21 +114,47 @@ public class Ship {
             g2.fillRect((int)(x-width/2), (int)(y-height/2), width, height);
         }
     }
-    // Calculates the ship directional vector based on a desiredLocation and a speed (in frames it takes to get to location)
-    public void calculateVector(int speed) {
-        Vector2D newVector=new Vector2D();
-        newVector.setDeltaX((desiredLocation.x-x)/(double)speed);
-        newVector.setDeltaY((desiredLocation.y-y)/(double)speed);
-        direction=newVector;
-        calculatedVector=true;
-        
-    }
 
     public void shootBullet() {
 	    if(lastBullet>15) {
 	        bullets.add(new Bullet((int)x, (int)y));
 	        lastBullet=0;
         }
+    }
+
+    public boolean followPath(Path path) {
+        double offsetX=path.getRealPoint(currentPoint).getX()-(x);
+        double offsetY=path.getRealPoint(currentPoint).getY()-(y);
+        System.out.println(offsetX+","+offsetY);
+        System.out.println(path.getRealPoint(currentPoint));
+        int distanceTotal=(int)Math.sqrt(Math.pow(offsetX, 2)+Math.pow(offsetY, 2));
+        System.out.println(distanceTotal+"--"+speed+"--"+currentPoint);
+        if(Math.abs(distanceTotal)<speed) {
+            Point d=path.getRealPoint(currentPoint);
+            x=d.getX();
+            y=d.getY();
+            currentPoint++;
+            if(currentPoint>path.size()-1) {
+                currentPoint=0;
+                return true;
+            }
+        }
+        else {
+            double xSpeed;
+            if(offsetX!=0) xSpeed = speed*(offsetX/distanceTotal);
+            else xSpeed=0;
+            double ySpeed;
+            if(offsetY!=0) ySpeed = speed*(offsetY/distanceTotal);
+            else ySpeed=0;
+
+            System.out.println(xSpeed+","+ySpeed);
+//            System.out.println(distanceTotal);
+//            System.out.println(offsetX + "," + offsetY);
+            //        System.out.println(path.getRealPoint(currentPoint));
+            setDirection(xSpeed, ySpeed);
+        }
+        System.out.println("-----");
+        return false;
     }
 
 
@@ -207,50 +223,17 @@ public class Ship {
     public void setDeltaY(double deltaY) {
 	    direction.setDeltaY(deltaY);
     }
-
-    public int getState() {
-        return state;
+    public int getSpeed() {
+        return speed;
+    }
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public int getCurrentPoint() {
+        return currentPoint;
     }
-    public void setPathMode(boolean mode) {
-        pathMode=mode;
-    }
-    public boolean isPathMode() {
-        return pathMode;
-    }
-
-    public Point getDesiredLocation() {
-        return desiredLocation;
-    }
-
-    public void setDesiredLocation(Point desiredLocation) {
-        this.desiredLocation = desiredLocation;
-    }
-
-    public boolean hasCalculatedVector() {
-        return calculatedVector;
-    }
-
-    public void setCalculatedVector(boolean calculatedVector) {
-        this.calculatedVector = calculatedVector;
-    }
-
-    public int getCalculatedVectorCount() {
-        return calculatedVectorCount;
-    }
-
-    public void setCalculatedVectorCount(int calculatedVectorCount) {
-        this.calculatedVectorCount = calculatedVectorCount;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setCurrentPoint(int currentPoint) {
+        this.currentPoint = currentPoint;
     }
 }
