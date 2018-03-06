@@ -20,6 +20,7 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
 
 
+
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 700);
@@ -135,9 +136,11 @@ public class GameGUI extends JFrame implements KeyListener {
             player.setDeltaY(Math.abs(player.getSpeed()));
         }
         // Space bar
-        if (e.getKeyCode() == 32 ) {
+        if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
+
         }
+
     }
 
 

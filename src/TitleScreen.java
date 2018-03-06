@@ -40,7 +40,7 @@ public class TitleScreen extends JFrame implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-//Enter
+        //Enter
         if(e.getKeyCode() == KeyEvent.VK_ENTER)
         {
             this.dispose();
