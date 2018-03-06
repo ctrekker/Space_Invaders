@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.*;
 import java.util.ArrayList;
 
 public class PathMaker extends JFrame {
@@ -59,8 +60,36 @@ public class PathMaker extends JFrame {
         public void mousePressed(MouseEvent e) {
             System.out.println(e);
             if(e.getButton()==1) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
-            if(e.getButton()==2) {
-
+            if(e.getButton()==3) {
+                File file=new File("latest_path.dat");
+                DataOutputStream out=null;
+                try {
+                    out=new DataOutputStream(
+                            new BufferedOutputStream(
+                                    new FileOutputStream(file, false)));
+                }
+                catch(FileNotFoundException err) {
+                    err.printStackTrace();
+                }
+                if(out!=null) {
+                    for(DoublePoint p : points) {
+                        try {
+                            out.writeDouble(p.getX());
+                            out.writeDouble(p.getY());
+                        }
+                        catch(IOException err) {
+                            err.printStackTrace();
+                        }
+                    }
+                }
+                try {
+                    out.flush();
+                    out.close();
+                }
+                catch(IOException err) {
+                    err.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(null, "Saved!");
             }
             repaint();
         }

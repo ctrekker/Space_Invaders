@@ -71,15 +71,15 @@ public class Ship {
         {
             if(playerShip == null)
             {
-                playerShip = ImageIO.read( new File("Space_Invader_Pics/ship_player.png" ));
+                playerShip = ImageIO.read( new File("res/img/ship_player.png" ));
             }
             if(enemyShip1 == null)
             {
-                enemyShip1= ImageIO.read( new File("Space_Invader_Pics/EnemyShip1.png" ));
+                enemyShip1= ImageIO.read( new File("res/img/EnemyShip1.png" ));
             }
             if(enemyShip2 == null)
             {
-                enemyShip2= ImageIO.read( new File("Space_Invader_Pics/EnemyShip2.png" ));
+                enemyShip2= ImageIO.read( new File("res/img/EnemyShip2.png" ));
             }
 
         }
