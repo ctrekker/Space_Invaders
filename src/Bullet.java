@@ -38,6 +38,7 @@ public class Bullet {
 		this.direction=direction;
 		this.color=color;
 	}
+
 	public void draw(Graphics2D g2) {
 	    x+=direction.getDeltaX();
 	    y+=direction.getDeltaY();
