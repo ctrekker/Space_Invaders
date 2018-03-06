@@ -65,7 +65,7 @@ public class PathMaker extends JFrame {
             if(e.getButton()==1) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
             if(e.getButton()==2) points.clear();
             if(e.getButton()==3) {
-                File file=new File("latest_path.dat");
+                File file=new File("res/path/latest_path.dat");
                 DataOutputStream out=null;
                 try {
                     out=new DataOutputStream(
@@ -99,7 +99,7 @@ public class PathMaker extends JFrame {
         }
         @Override
         public void mouseReleased(MouseEvent e) {
-            lastPoint=0;
+            lastPoint=10;
         }
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -111,7 +111,7 @@ public class PathMaker extends JFrame {
         }
         @Override
         public void mouseDragged(MouseEvent e) {
-            if(lastPoint%10==0) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
+            if(lastPoint%25==0) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
             lastPoint++;
             repaint();
         }

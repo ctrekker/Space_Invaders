@@ -30,6 +30,7 @@ public class Ship {
 	private int value;
     private int speed=4;
     private double rotation=0;
+    private double desiredRotation=0;
 
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
@@ -83,8 +84,16 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
-
 	    lastBullet++;
+
+	    if(desiredRotation<0) {
+	        desiredRotation+=360;
+        }
+        if(desiredRotation>360) {
+	        desiredRotation-=360;
+        }
+	    rotation+=(desiredRotation-rotation)/5;
+
 
 	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
 	        x+=direction.getDeltaX();
@@ -159,8 +168,10 @@ public class Ship {
         if(x<ending.x) {
             addAngle=180;
         }
-        double angle=-Math.toDegrees(Math.atan((ending.y-y)/(x-ending.x)))+addAngle;
-        rotation=angle;
+
+        double angle=rotation;
+        if(x-ending.x!=0) angle=-Math.toDegrees(Math.atan((ending.y-y)/(x-ending.x)))+addAngle;
+        desiredRotation=angle;
 
         return false;
     }
