@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class Ship {
     public static final int DEFAULT_VALUE=1;
     public static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
+    private static final int[] rotationOffsets={0, 90, 90, 90};
+
     private static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
     private static BufferedImage enemyShip2 = null;
@@ -26,6 +29,7 @@ public class Ship {
 	private int variation;
 	private int value;
     private int speed=4;
+    private double rotation=0;
 
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
@@ -93,26 +97,28 @@ public class Ship {
 	        bullet.draw(g2);
         }
 
-        if(variation==0) {
-            g2.drawImage(playerShip , (int)(x-width/2), (int)(y-height/2), width, height, null);
+        AffineTransform preTransform=g2.getTransform();
+	    g2.translate(x, y);
+	    g2.rotate(Math.toRadians(rotation+rotationOffsets[variation]));
 
+        if(variation==0) {
+            g2.drawImage(playerShip , -width/2, -height/2, width, height, null);
         }
         else if(variation==1)
         {
-            g2.drawImage(enemyShip1 , (int)(x-width/2), (int)(y-height/2), width, height, null);
+            g2.drawImage(enemyShip1 , -width/2, -height/2, width, height, null);
         }
         else if(variation==2)
         {
-            g2.drawImage(enemyShip2 , (int)(x-width/2), (int)(y-height/2), width, height, null);
+            g2.drawImage(enemyShip2 , -width/2, -height/2, width, height, null);
         }
         else {
-	        Color c;
-	        if(variation==1) c=Color.BLUE;
-	        if(variation==2) c=Color.RED;
-	        else c=Color.GREEN;
+	        Color c=Color.GREEN;
 	        g2.setColor(c);
-            g2.fillRect((int)(x-width/2), (int)(y-height/2), width, height);
+            g2.fillRect(-width/2, -height/2, width, height);
         }
+
+        g2.setTransform(preTransform);
     }
 
     public void shootBullet() {
@@ -123,12 +129,11 @@ public class Ship {
     }
 
     public boolean followPath(Path path) {
-        double offsetX=path.getRealPoint(currentPoint).getX()-(x);
-        double offsetY=path.getRealPoint(currentPoint).getY()-(y);
-        System.out.println(offsetX+","+offsetY);
-        System.out.println(path.getRealPoint(currentPoint));
+        Point ending=path.getRealPoint(currentPoint);
+        double offsetX=ending.getX()-(x);
+        double offsetY=ending.getY()-(y);
         int distanceTotal=(int)Math.sqrt(Math.pow(offsetX, 2)+Math.pow(offsetY, 2));
-        System.out.println(distanceTotal+"--"+speed+"--"+currentPoint);
+
         if(Math.abs(distanceTotal)<speed) {
             Point d=path.getRealPoint(currentPoint);
             x=d.getX();
@@ -147,13 +152,16 @@ public class Ship {
             if(offsetY!=0) ySpeed = speed*(offsetY/distanceTotal);
             else ySpeed=0;
 
-            System.out.println(xSpeed+","+ySpeed);
-//            System.out.println(distanceTotal);
-//            System.out.println(offsetX + "," + offsetY);
-            //        System.out.println(path.getRealPoint(currentPoint));
             setDirection(xSpeed, ySpeed);
         }
-        System.out.println("-----");
+
+        int addAngle=0;
+        if(x<ending.x) {
+            addAngle=180;
+        }
+        double angle=-Math.toDegrees(Math.atan((ending.y-y)/(x-ending.x)))+addAngle;
+        rotation=angle;
+
         return false;
     }
 
@@ -228,6 +236,12 @@ public class Ship {
     }
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+    public double getRotation() {
+        return rotation;
+    }
+    public void setRotation(double rotation) {
+        this.rotation=rotation;
     }
 
     public int getCurrentPoint() {
