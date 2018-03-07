@@ -18,6 +18,7 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
+    private Bullet bullet = new Bullet();
 
 
 
@@ -86,6 +87,8 @@ public class GameGUI extends JFrame implements KeyListener {
                 scoreInvadersL2.setX(getWidth()/10 + 100);
                 scoreInvadersL2.setY(getHeight()-50);
 
+
+
                 testPath=Path.load("latest_path");
 
                 // 20 variant 1
@@ -138,6 +141,7 @@ public class GameGUI extends JFrame implements KeyListener {
         // Space bar
         if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
+
 
         }
 
