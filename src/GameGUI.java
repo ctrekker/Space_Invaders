@@ -138,7 +138,6 @@ public class GameGUI extends JFrame implements KeyListener {
         // Space bar
         if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
-
         }
 
     }

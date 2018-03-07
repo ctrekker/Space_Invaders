@@ -28,7 +28,7 @@ public class Ship {
 	private int height;
 	private int variation;
 	private int value;
-    private int speed=4;
+    private int speed=3;
     private double rotation=0;
     private double desiredRotation=0;
 
@@ -86,13 +86,17 @@ public class Ship {
     public void draw(Graphics2D g2) {
 	    lastBullet++;
 
-	    if(desiredRotation<0) {
-	        desiredRotation+=360;
-        }
-        if(desiredRotation>360) {
-	        desiredRotation-=360;
-        }
-	    rotation+=(desiredRotation-rotation)/5;
+//        if(rotation<0&&desiredRotation>0) {
+//            rotation+=360;
+//        }
+//        else if(rotation>0&&desiredRotation<0) {
+//            rotation-=360;
+//        }
+//
+//        rotation+=(desiredRotation-rotation)/5;
+//        System.out.println(desiredRotation);
+	    //else rotation+=-(360-Math.abs(desiredRotation-rotation))/5;
+        rotation=desiredRotation;
 
 
 	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
