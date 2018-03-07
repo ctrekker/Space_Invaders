@@ -21,6 +21,8 @@ public class Ship {
     private static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
     private static BufferedImage enemyShip2 = null;
+    private static BufferedImage enemyShip3a = null;
+    private static BufferedImage enemyShip3b = null;
 
 	private double x;
 	private double y;
@@ -76,6 +78,14 @@ public class Ship {
             {
                 enemyShip2= ImageIO.read( new File("res/img/EnemyShip2.png" ));
             }
+            if(enemyShip3a == null)
+            {
+                enemyShip3a= ImageIO.read( new File("res/img/EnemyShip3a.png" ));
+            }
+            if(enemyShip3b == null)
+            {
+                enemyShip3b= ImageIO.read( new File("res/img/EnemyShip3b.png" ));
+            }
 
         }
         catch (IOException e)
@@ -120,6 +130,14 @@ public class Ship {
         else if(variation==2)
         {
             g2.drawImage(enemyShip2 , -width/2, -height/2, width, height, null);
+        }
+        else if(variation==3)
+        {
+            g2.drawImage(enemyShip3a , -width/2, -height/2, width, height, null);
+        }
+        else if(variation==4)
+        {
+            g2.drawImage(enemyShip3b , -width/2, -height/2, width, height, null);
         }
         else {
 	        Color c=Color.GREEN;
