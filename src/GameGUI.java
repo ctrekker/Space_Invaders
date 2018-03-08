@@ -87,7 +87,7 @@ public class GameGUI extends JFrame implements KeyListener {
                 scoreInvadersL2.setX(getWidth()/10 + 100);
                 scoreInvadersL2.setY(getHeight()-50);
 
-                testPath=Path.load("latest_path");
+                //testPath=Path.load("1-1a");
 
                 // 20 variant 1
                 // 16 variant 2
@@ -116,7 +116,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
             scoreInvadersL2.draw(g2);
 
-            testPath.draw(g2);
+            //testPath.draw(g2);
         }
     }
     public void keyPressed(KeyEvent e) {

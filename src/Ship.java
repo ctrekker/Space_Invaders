@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.*;// A Pacakge that has already been premade and we can just call them
-	
+
 public class Ship {
     public static final int DEFAULT_SPEED=6;
     public static final int DEFAULT_X=0;//Setting the X Value of the ship
@@ -16,7 +16,7 @@ public class Ship {
     public static final int DEFAULT_VALUE=1;
     public static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
-    private static final int[] rotationOffsets={0, 90, 90, 90};
+    private static final int[] rotationOffsets={90, 90, 90, 90};
 
     private static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
@@ -38,6 +38,8 @@ public class Ship {
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private int currentPoint=0;
+    private String path=null;
+    private boolean pathfinding=false;
 
     public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
@@ -94,6 +96,11 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
+        if(path!=null) {
+            Path path=Path.load(this.path);
+            pathfinding=followPath(path);
+        }
+
 	    lastBullet++;
 
 //        if(rotation<0&&desiredRotation>0) {
@@ -189,6 +196,12 @@ public class Ship {
     }*/
 
     public boolean followPath(Path path) {
+        if(currentPoint==0) {
+            x=path.getRealPoint(0).x;
+            y=path.getRealPoint(0).y;
+        }
+        if(path==null) return false;
+
         Point ending=path.getRealPoint(currentPoint);
         double offsetX=ending.getX()-(x);
         double offsetY=ending.getY()-(y);
@@ -311,5 +324,27 @@ public class Ship {
     }
     public void setCurrentPoint(int currentPoint) {
         this.currentPoint = currentPoint;
+    }
+
+    public void setPath(String path) {
+        if(path!=null) pathfinding=true;
+        else pathfinding=false;
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public boolean isPathfinding() {
+        return pathfinding;
+    }
+
+    public void setPathfinding(boolean pathfinding) {
+        this.pathfinding = pathfinding;
+    }
+
+    public void calculateDirection(int dX, int dY) {
+
     }
 }

@@ -61,6 +61,7 @@ public class Path extends ArrayList<DoublePoint> {
             System.out.println("Missing resource with name of \""+name+"\"");
         }
 
+        System.out.println(out);
         return out;
     }
 }
