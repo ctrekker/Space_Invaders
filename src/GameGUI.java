@@ -18,6 +18,7 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
+    private Bullet bullet = new Bullet();
 
 
 

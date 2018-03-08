@@ -5,20 +5,13 @@ public class GameTracker {
 	private int score = 0;
 	private ArrayList<String> leaderboard = new ArrayList<String>();
 	private String name;
-	
+	private int lives = 3;
+
 	public GameTracker(){
 		setName();
 		addToLeaderboard();
 		sortScore();
 		System.out.println(leaderboard);
-	}
-	
-	public void setScore(Ship ship){
-		score += ship.getVariation() * 100;
-	}
-	
-	public int getScore(){
-		return score;
 	}
 	
 	public void setName(){
@@ -27,6 +20,22 @@ public class GameTracker {
 	
 	public String getName(){
 		return name;
+	}
+	
+	public int getLives() {
+		return lives;
+	}
+
+	public void killLife() {
+		lives -= 1;
+	}
+	
+	public void setScore(Ship ship){
+		score += ship.getVariation() * 100;
+	}
+	
+	public int getScore(){
+		return score;
 	}
 	
 	public void addToLeaderboard(){

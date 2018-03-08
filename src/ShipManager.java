@@ -15,6 +15,7 @@ public class ShipManager {
     private int shipsComplete=0;
     public ShipManager() {
         ships.add(new Ship(0, 0, Ship.DEFAULT_WIDTH, Ship.DEFAULT_HEIGHT, 1));
+        this.getShips().get(0).shootBullet();
     }
 
     public void addShip(Ship s) {

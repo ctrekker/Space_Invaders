@@ -1,4 +1,8 @@
+import javax.imageio.ImageIO;
 import java.awt.*; // A Pacakge that has already been premade and we can just call them
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Bullet {
@@ -17,6 +21,8 @@ public class Bullet {
 	private int height;
     private Vector2D direction;
 	private Color color;
+
+	private static BufferedImage bullet = null;
 
 	public Bullet() {
 		this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIRECTION, DEFAULT_COLOR);
@@ -37,6 +43,16 @@ public class Bullet {
 		this.height=height;
 		this.direction=direction;
 		this.color=color;
+
+		try {
+			if (bullet == null) {
+				bullet = ImageIO.read(new File("res/img/Bullet.png"));
+			}
+		}
+		catch (IOException e)
+		{
+			System.out.println("Missing image resource!");
+		}
 	}
 
 	public void draw(Graphics2D g2) {
