@@ -16,7 +16,7 @@ public class Ship {
     public static final int DEFAULT_VALUE=1;
     public static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
-    private static final int[] rotationOffsets={90, 90, 90, 90};
+    private static final int[] rotationOffsets={0, 90, 90, 90};
 
     private static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
@@ -38,7 +38,7 @@ public class Ship {
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private int currentPoint=0;
-    private String path=null;
+    private Path path=null;
     private boolean pathfinding=false;
 
     public Ship() {
@@ -96,9 +96,8 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
-        if(path!=null) {
-            Path path=Path.load(this.path);
-            pathfinding=followPath(path);
+        if(path!=null&&pathfinding) {
+            pathfinding=!followPath(path);
         }
 
 	    lastBullet++;
@@ -144,11 +143,11 @@ public class Ship {
         }
         else if(variation==3)
         {
-            g2.drawImage(enemyShip3a , -width/2, -height/2, width, height, null);
+            g2.drawImage(enemyShip3b , -width/2, -height/2, width, height, null);
         }
         else if(variation==4)
         {
-            g2.drawImage(enemyShip3b , -width/2, -height/2, width, height, null);
+            g2.drawImage(enemyShip3a , -width/2, -height/2, width, height, null);
         }
         else {
 	        Color c=Color.GREEN;
@@ -207,6 +206,7 @@ public class Ship {
         double offsetY=ending.getY()-(y);
         int distanceTotal=(int)Math.sqrt(Math.pow(offsetX, 2)+Math.pow(offsetY, 2));
 
+        System.out.println("Still pathflinding");
         if(Math.abs(distanceTotal)<speed) {
             Point d=path.getRealPoint(currentPoint);
             x=d.getX();
@@ -317,6 +317,7 @@ public class Ship {
     }
     public void setRotation(double rotation) {
         this.rotation=rotation;
+        this.desiredRotation=rotation;
     }
 
     public int getCurrentPoint() {
@@ -326,13 +327,15 @@ public class Ship {
         this.currentPoint = currentPoint;
     }
 
-    public void setPath(String path) {
-        if(path!=null) pathfinding=true;
-        else pathfinding=false;
+    public void setPath(Path path) {
+        pathfinding = path != null;
         this.path = path;
     }
+    public void setPath(String strPath) {
+        setPath(Path.load(strPath));
+    }
 
-    public String getPath() {
+    public Path getPath() {
         return path;
     }
 

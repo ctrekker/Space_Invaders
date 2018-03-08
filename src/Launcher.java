@@ -1,7 +1,7 @@
 public class Launcher {
     public static void main(String[] args) throws Exception  {
-        //GameGUI run = new GameGUI();
-        TitleScreen run = new TitleScreen();
+        GameGUI run = new GameGUI();
+        //TitleScreen run = new TitleScreen();
 
 
         // TEST#1

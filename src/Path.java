@@ -7,6 +7,8 @@ import java.util.TreeMap;
 public class Path extends ArrayList<DoublePoint> {
     private static TreeMap<String, Path> loaded=new TreeMap<>();
 
+    private String name="";
+
     public Path() {
         super();
     }
@@ -60,8 +62,16 @@ public class Path extends ArrayList<DoublePoint> {
         catch(FileNotFoundException e) {
             System.out.println("Missing resource with name of \""+name+"\"");
         }
+        out.setName(name);
 
-        System.out.println(out);
         return out;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
