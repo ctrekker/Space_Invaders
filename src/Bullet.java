@@ -6,12 +6,12 @@ import java.io.IOException;
 
 
 public class Bullet {
-    public static final double DEFAULT_SPEED=12;
+    public static final double DEFAULT_SPEED=10;
 
 	private static final int DEFAULT_X=0; //Setting the X Value Of The Bullet
 	private static final int DEFAULT_Y=0; //Setting the Y Value Of The Bullet
-	private static final int DEFAULT_WIDTH=5;//Setting the Width Value Of The Bullet
-	private static final int DEFAULT_HEIGHT=15;//Setting the Height Value Of The Bullet
+	private static final int DEFAULT_WIDTH=11; //Setting the Width Value Of The Bullet
+	private static final int DEFAULT_HEIGHT=25;//Setting the Height Value Of The Bullet
 	private static final Color DEFAULT_COLOR=Color.RED;//Setting The Color To Red
     private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED);
 
@@ -58,13 +58,9 @@ public class Bullet {
 	public void draw(Graphics2D g2) {
 	    x+=direction.getDeltaX();
 	    y+=direction.getDeltaY();
-		if(bullet==null)
-		{
-			g2.drawImage(bullet , -width/2, -height/2, width, height, null);
-		}
 
-
- 	}
+		g2.drawImage(bullet, x-width/2, y-height/2, width, height, null);
+	}
 
     public int getX() {
         return x;

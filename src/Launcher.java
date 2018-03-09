@@ -12,7 +12,7 @@ public class Launcher {
 
     }
     public void launch() {
-        ResourceLoader.init();
+        //ResourceLoader.init();
         GameGUI run = new GameGUI();
         //TitleScreen run = new TitleScreen();
 

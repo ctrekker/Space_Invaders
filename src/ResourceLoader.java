@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class ResourceLoader {
     public static void init() {
@@ -9,6 +10,7 @@ public class ResourceLoader {
         try {
             while((line=in.readLine())!=null) {
                 String[] lineSplit=line.split(".");
+                System.out.println(Arrays.toString(lineSplit));
                 String extension=lineSplit[lineSplit.length-1];
                 String dirName="misc";
                 if(extension.equalsIgnoreCase("png")||extension.equalsIgnoreCase("jpeg")) {
@@ -18,7 +20,7 @@ public class ResourceLoader {
                     dirName="path";
                 }
                 String relativeRoot="res/"+dirName+"/";
-                System.out.println(line);
+                System.out.println(relativeRoot);
             }
         }
         catch(IOException e) {

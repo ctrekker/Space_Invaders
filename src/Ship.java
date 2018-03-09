@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.*;// A Pacakge that has already been premade and we can just call them
+import java.awt.*;// A Package that has already been premade and we can just call them
 
 public class Ship {
     public static final int DEFAULT_SPEED=6;
@@ -35,11 +35,15 @@ public class Ship {
     private double desiredRotation=0;
 
     private Vector2D direction;
-    public ArrayList<Bullet> bullets=new ArrayList<>();
+	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private int currentPoint=0;
     private Path path=null;
     private boolean pathfinding=false;
+    // Is -1 if the ship is not destroyed
+    // Is 0 or above if in destruction animation sequence
+    private int destroyed=-1;
+    private double randomTrigger=0.0003;
 
     public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
@@ -96,72 +100,105 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
-        if(path!=null&&pathfinding) {
-            pathfinding=!followPath(path);
+        if (path != null && pathfinding) {
+            pathfinding = !followPath(path);
+            if(!isDestroyed()) path.draw(g2);
         }
 
-	    lastBullet++;
+        lastBullet++;
 
-//        if(rotation<0&&desiredRotation>0) {
-//            rotation+=360;
-//        }
-//        else if(rotation>0&&desiredRotation<0) {
-//            rotation-=360;
-//        }
-//
-//        rotation+=(desiredRotation-rotation)/5;
-//        System.out.println(desiredRotation);
-	    //else rotation+=-(360-Math.abs(desiredRotation-rotation))/5;
-        rotation=desiredRotation;
+        //        if(rotation<0&&desiredRotation>0) {
+        //            rotation+=360;
+        //        }
+        //        else if(rotation>0&&desiredRotation<0) {
+        //            rotation-=360;
+        //        }
+        //
+        //        rotation+=(desiredRotation-rotation)/5;
+        //        System.out.println(desiredRotation);
+        //else rotation+=-(360-Math.abs(desiredRotation-rotation))/5;
+        rotation = desiredRotation;
 
 
-	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
-	        x+=direction.getDeltaX();
+        if (((x - width / 2 >= 0 || (x - width / 2 <= 0 && getDeltaX() > 0)) && (x + width / 2 <= GameGUI.canvasWidth || (x + width / 2 >= GameGUI.canvasWidth && getDeltaX() < 0))) || variation != 0) {
+            x += direction.getDeltaX();
         }
-        if(((y-height/2>=0||(y-height/2<=0&&getDeltaY()>0))&&(y+height/2<=GameGUI.canvasHeight||(y+height/2>=GameGUI.canvasHeight&&getDeltaY()<0)))||variation!=0) {
-	        y+=direction.getDeltaY();
-        }
-
-        for(Bullet bullet : bullets) {
-	        bullet.draw(g2);
+        if (((y - height / 2 >= 0 || (y - height / 2 <= 0 && getDeltaY() > 0)) && (y + height / 2 <= GameGUI.canvasHeight || (y + height / 2 >= GameGUI.canvasHeight && getDeltaY() < 0))) || variation != 0) {
+            y += direction.getDeltaY();
         }
 
-        AffineTransform preTransform=g2.getTransform();
-	    g2.translate(x, y);
-	    g2.rotate(Math.toRadians(rotation+rotationOffsets[variation]));
+        for (Bullet bullet : bullets) {
+            bullet.draw(g2);
+        }
 
-        if(variation==0) {
-            g2.drawImage(playerShip , -width/2, -height/2, width, height, null);
-        }
-        else if(variation==1)
-        {
-            g2.drawImage(enemyShip1 , -width/2, -height/2, width, height, null);
-        }
-        else if(variation==2)
-        {
-            g2.drawImage(enemyShip2 , -width/2, -height/2, width, height, null);
-        }
-        else if(variation==3)
-        {
-            g2.drawImage(enemyShip3b , -width/2, -height/2, width, height, null);
-        }
-        else if(variation==4)
-        {
-            g2.drawImage(enemyShip3a , -width/2, -height/2, width, height, null);
-        }
-        else {
-	        Color c=Color.GREEN;
-	        g2.setColor(c);
-            g2.fillRect(-width/2, -height/2, width, height);
+        AffineTransform preTransform = g2.getTransform();
+        g2.translate(x, y);
+        g2.rotate(Math.toRadians(rotation + rotationOffsets[variation]));
+        if(!isDestroyed()) {
+            if (variation == 0) {
+                g2.drawImage(playerShip, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 1) {
+                g2.drawImage(enemyShip1, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 2) {
+                g2.drawImage(enemyShip2, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 3) {
+                g2.drawImage(enemyShip3b, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 4) {
+                g2.drawImage(enemyShip3a, -width / 2, -height / 2, width, height, null);
+            } else {
+                Color c = Color.GREEN;
+                g2.setColor(c);
+                g2.fillRect(-width / 2, -height / 2, width, height);
+            }
         }
 
         g2.setTransform(preTransform);
+    }
+    public void destroy() {
+        destroyed=0;
     }
 
     public void shootBullet() {
 	    if(lastBullet>15) {
 	        bullets.add(new Bullet((int)x, (int)y));
 	        lastBullet=0;
+        }
+    }
+
+    public void randomTick() {
+        if(path==null&&!pathfinding) {
+            double rand=Math.random();
+            if(rand<randomTrigger) {
+                speed/=2;
+                Path attackPath;
+                attackPath=Path.load("arc-turn-left");
+                attackPath.join(Path.load("arc-turn-right"));
+                attackPath.translate((int)x, (int)y);
+                setPath(attackPath);
+            }
+        }
+    }
+
+
+	 public void checkBulletCollisions(ShipManager ships){
+       for(int i = 0; i < ships.getShips().size(); i++){
+          Ship s = ships.getShips().get(i);
+
+          if(s.equals(this)||s.isDestroyed()) continue;
+
+          for(int j = 0; j < bullets.size(); j++){
+             Bullet b = bullets.get(j);
+
+             // Check for x axis bounds
+             if(b.getX()+b.getWidth()/2>s.getX()-s.getWidth()/2&&b.getX()-b.getWidth()/2<s.getX()+s.getWidth()/2) {
+                 // Check for y axis bounds
+                 if(b.getY()+b.getHeight()/2>s.getY()-s.getHeight()/2&&b.getY()-b.getHeight()/2<s.getY()+s.getHeight()/2) {
+                     // Bullet collided, so handle bullet collision
+                     s.destroy();
+                     bullets.remove(j);
+                 }
+             }
+           }
         }
     }
 
@@ -322,5 +359,22 @@ public class Ship {
 
     public void calculateDirection(int dX, int dY) {
 
+    }
+
+    public int getDestroyed() {
+        return destroyed;
+    }
+    public boolean isDestroyed() {
+	     return destroyed>-1;
+    }
+
+    public void setDestroyed(int destroyed) {
+        this.destroyed = destroyed;
+    }
+    public double getRandomTrigger() {
+        return randomTrigger;
+    }
+    public void setRandomTrigger(double randomTrigger) {
+        this.randomTrigger=randomTrigger;
     }
 }

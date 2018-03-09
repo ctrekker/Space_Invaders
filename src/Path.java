@@ -26,6 +26,39 @@ public class Path extends ArrayList<DoublePoint> {
             previous=current;
         }
     }
+    public void join(Path other) {
+        DoublePoint connector=null;
+        double offsetX=0;
+        double offsetY=0;
+        for(int i=0; i<other.size(); i++) {
+            if(i==0) {
+                connector=other.get(i);
+                offsetX=get(size()-1).getX()-other.get(i).getX();
+                offsetY=get(size()-1).getY()-other.get(i).getY();
+            }
+
+            if(connector!=null&&i!=0) {
+                add(new DoublePoint(other.get(i).getX()+offsetX, other.get(i).getY()+offsetY));
+            }
+        }
+    }
+    public void translate(int baseX, int baseY) {
+        translate((double)baseX/GameGUI.canvasWidth, (double)baseY/GameGUI.canvasHeight);
+    }
+    public void translate(double baseX, double baseY) {
+        double offsetX=baseX-get(0).getX();
+        double offsetY=baseY-get(0).getY();
+
+        ArrayList<DoublePoint> newList=new ArrayList<DoublePoint>();
+        for(DoublePoint point : this) {
+            DoublePoint newPoint=new DoublePoint(0, 0);
+            newPoint.setX(point.getX()+offsetX);
+            newPoint.setY(point.getY()+offsetY);
+            newList.add(newPoint);
+        }
+        clear();
+        addAll(newList);
+    }
     public Point getRealPoint(int index) {
         return new Point((int)(get(index).getX()*GameGUI.canvasWidth), (int)(get(index).getY()*GameGUI.canvasHeight));
     }
@@ -33,7 +66,7 @@ public class Path extends ArrayList<DoublePoint> {
 
     public static Path load(String name) {
         if(loaded.containsKey(name)) {
-            return loaded.get(name);
+            return (Path)(loaded.get(name).clone());
         }
 
         Path out=new Path();
@@ -73,5 +106,14 @@ public class Path extends ArrayList<DoublePoint> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Path clone() {
+        Path out=new Path();
+        for(DoublePoint point : this) {
+            out.add(new DoublePoint(point.getX(), point.getY()));
+        }
+        return out;
     }
 }
