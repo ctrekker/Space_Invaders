@@ -1,5 +1,18 @@
 public class Launcher {
+    private static Launcher instance;
     public static void main(String[] args) throws Exception  {
+        instance=new Launcher();
+        instance.launch();
+    }
+    public static Launcher getInstance() {
+        return instance;
+    }
+
+    public Launcher() {
+
+    }
+    public void launch() {
+        ResourceLoader.init();
         GameGUI run = new GameGUI();
         //TitleScreen run = new TitleScreen();
 
