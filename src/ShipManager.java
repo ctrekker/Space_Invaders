@@ -66,7 +66,6 @@ public class ShipManager {
                     Path path=new Path();
                     path.add(new DoublePoint(s.getX()/GameGUI.canvasWidth, s.getY()/GameGUI.canvasHeight));
                     path.add(Path.load("ship_locations").get(i));
-                    System.out.println(Path.load("ship_locations").get(i));
                     path.setName("ship_final_location");
                     s.setPath(path);
                 }

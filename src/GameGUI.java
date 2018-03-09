@@ -87,7 +87,7 @@ public class GameGUI extends JFrame implements KeyListener {
                 scoreInvadersL2.setX(getWidth()/10 + 100);
                 scoreInvadersL2.setY(getHeight()-50);
 
-                //testPath=Path.load("1-1a");
+                testPath=Path.load("ship_locations");
 
                 // 20 variant 1
                 // 16 variant 2

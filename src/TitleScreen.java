@@ -17,7 +17,7 @@ public class TitleScreen extends JFrame implements KeyListener {
         setBackground(Color.BLACK);
         setResizable(false);
         this.addKeyListener(this);
-        label.setText("GALACTICA");
+        label.setText("GALAGA");
         label.setBackground(Color.BLACK);
         panel.setBackground(Color.BLACK);
         label.setFont(new Font("Courier New", Font.BOLD, 75));

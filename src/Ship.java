@@ -206,7 +206,6 @@ public class Ship {
         double offsetY=ending.getY()-(y);
         int distanceTotal=(int)Math.sqrt(Math.pow(offsetX, 2)+Math.pow(offsetY, 2));
 
-        System.out.println("Still pathflinding");
         if(Math.abs(distanceTotal)<speed) {
             Point d=path.getRealPoint(currentPoint);
             x=d.getX();
@@ -214,6 +213,9 @@ public class Ship {
             currentPoint++;
             if(currentPoint>path.size()-1) {
                 currentPoint=0;
+                x=ending.getX();
+                y=ending.getY();
+                setDirection(0, 0);
                 return true;
             }
         }
