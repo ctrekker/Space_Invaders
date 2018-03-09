@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.*;// A Pacakge that has already been premade and we can just call them
-	
+
 public class Ship {
     public static final int DEFAULT_SPEED=6;
     public static final int DEFAULT_X=0;//Setting the X Value of the ship
@@ -21,6 +21,8 @@ public class Ship {
     public static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
     private static BufferedImage enemyShip2 = null;
+    private static BufferedImage enemyShip3a = null;
+    private static BufferedImage enemyShip3b = null;
 
 	private double x;
 	private double y;
@@ -28,7 +30,7 @@ public class Ship {
 	private int height;
 	private int variation;
 	private int value;
-    private int speed=4;
+    private int speed=3;
     private double rotation=0;
     private double desiredRotation=0;
 
@@ -36,6 +38,8 @@ public class Ship {
 	private ArrayList<Bullet> bullets=new ArrayList<>();
     private int lastBullet=0;
     private int currentPoint=0;
+    private Path path=null;
+    private boolean pathfinding=false;
 
     public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
@@ -76,6 +80,14 @@ public class Ship {
             {
                 enemyShip2= ImageIO.read( new File("res/img/EnemyShip2.png" ));
             }
+            if(enemyShip3a == null)
+            {
+                enemyShip3a= ImageIO.read( new File("res/img/EnemyShip3a.png" ));
+            }
+            if(enemyShip3b == null)
+            {
+                enemyShip3b= ImageIO.read( new File("res/img/EnemyShip3b.png" ));
+            }
 
         }
         catch (IOException e)
@@ -84,15 +96,23 @@ public class Ship {
         }
     }
     public void draw(Graphics2D g2) {
+        if(path!=null&&pathfinding) {
+            pathfinding=!followPath(path);
+        }
+
 	    lastBullet++;
 
-	    if(desiredRotation<0) {
-	        desiredRotation+=360;
-        }
-        if(desiredRotation>360) {
-	        desiredRotation-=360;
-        }
-	    rotation+=(desiredRotation-rotation)/5;
+//        if(rotation<0&&desiredRotation>0) {
+//            rotation+=360;
+//        }
+//        else if(rotation>0&&desiredRotation<0) {
+//            rotation-=360;
+//        }
+//
+//        rotation+=(desiredRotation-rotation)/5;
+//        System.out.println(desiredRotation);
+	    //else rotation+=-(360-Math.abs(desiredRotation-rotation))/5;
+        rotation=desiredRotation;
 
 
 	    if(((x-width/2>=0||(x-width/2<=0&&getDeltaX()>0))&&(x+width/2<=GameGUI.canvasWidth||(x+width/2>=GameGUI.canvasWidth&&getDeltaX()<0)))||variation!=0) {
@@ -121,6 +141,14 @@ public class Ship {
         {
             g2.drawImage(enemyShip2 , -width/2, -height/2, width, height, null);
         }
+        else if(variation==3)
+        {
+            g2.drawImage(enemyShip3b , -width/2, -height/2, width, height, null);
+        }
+        else if(variation==4)
+        {
+            g2.drawImage(enemyShip3a , -width/2, -height/2, width, height, null);
+        }
         else {
 	        Color c=Color.GREEN;
 	        g2.setColor(c);
@@ -137,7 +165,42 @@ public class Ship {
         }
     }
 
+	 /*public boolean didCollideBullet(ShipManager ships){
+      boolean collided = false;
+       
+       for(int i = 0; i < ships.getShips().size(); i++){
+          Ship s = ships.getShips().get(i);
+          
+          for(int j = 0; j < bullets.size(); j++){
+             Bullet b = bullets.get(j);
+             
+             //on top and to the right
+             if(b.getX() + b.getWidth() >= s.getX() && b.getY() >= s.getY() &&
+                b.getY() <= s.getY() + s.getHeight() || b.getY() + b.getHeight() >= s.getY() &&
+                b.getY() + b.getHeight() <= s.getY() + s.getHeight()){
+                  collided = true;
+             }
+             
+             //on bottom and to the left
+             else if(b.getX() <= s.getX() + s.getWidth() &&
+               (b.getY() >= s.getY() && b.getY()<= s.getY() + s.getHeight() ||
+                b.getY() + b.getHeight() >= s.getY() && 
+                b.getY() + b.getHeight() <= s.getY() + s.getHeight())){
+                  collided = true;       
+             }
+           }
+        }
+        
+        return collided;
+    }*/
+
     public boolean followPath(Path path) {
+        if(currentPoint==0) {
+            x=path.getRealPoint(0).x;
+            y=path.getRealPoint(0).y;
+        }
+        if(path==null) return false;
+
         Point ending=path.getRealPoint(currentPoint);
         double offsetX=ending.getX()-(x);
         double offsetY=ending.getY()-(y);
@@ -150,6 +213,9 @@ public class Ship {
             currentPoint++;
             if(currentPoint>path.size()-1) {
                 currentPoint=0;
+                x=ending.getX();
+                y=ending.getY();
+                setDirection(0, 0);
                 return true;
             }
         }
@@ -253,6 +319,7 @@ public class Ship {
     }
     public void setRotation(double rotation) {
         this.rotation=rotation;
+        this.desiredRotation=rotation;
     }
 
     public int getCurrentPoint() {
@@ -260,5 +327,29 @@ public class Ship {
     }
     public void setCurrentPoint(int currentPoint) {
         this.currentPoint = currentPoint;
+    }
+
+    public void setPath(Path path) {
+        pathfinding = path != null;
+        this.path = path;
+    }
+    public void setPath(String strPath) {
+        setPath(Path.load(strPath));
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public boolean isPathfinding() {
+        return pathfinding;
+    }
+
+    public void setPathfinding(boolean pathfinding) {
+        this.pathfinding = pathfinding;
+    }
+
+    public void calculateDirection(int dX, int dY) {
+
     }
 }

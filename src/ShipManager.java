@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -6,15 +7,22 @@ public class ShipManager {
     // Current frame of the movement
     private int frame=0;
     // Stage of init
-    private int initStage=0;
-    // Counter per-frame of the last time a ship was released
-    private int lastShipReleaseCounter=0;
+    private int initStage=1;
     // Current number of ships added during init
     private int shipAddCount=0;
     // The number of ships which have reached their final position
     private int shipsComplete=0;
+    private int shipSpeed=9;
+
+    private int[] variants={
+            1, 2, 1, 2, 1, 2, 1, 2,
+            2, 3, 2, 3, 2, 3, 2, 3,
+            2, 2, 2, 2, 2, 2, 2, 2,
+            1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1
+    };
     public ShipManager() {
-        ships.add(new Ship(0, 0, Ship.DEFAULT_WIDTH, Ship.DEFAULT_HEIGHT, 1));
+
     }
 
     public void addShip(Ship s) {
@@ -32,26 +40,77 @@ public class ShipManager {
     }
 
     public void moveShips() {
-        if(initStage==0) {
-            doShipFrame("latest_path");
+        if(initStage==1) {
+            shipFrame("1-1a", "1-1b");
         }
-        else if(initStage==1) {
+        else if(initStage==2) {
+            shipFrame("1-2", null);
+        }
+        else if(initStage==3) {
+            shipFrame("1-3", null);
+        }
+        else if(initStage==4) {
+            shipFrame("1-4", null);
+        }
+        else if(initStage==5) {
+            shipFrame("1-5", null);
+        }
 
-        }
         frame++;
     }
-    public boolean doShipFrame(String pathName) {
-        Path path=Path.load(pathName);
-
+    private boolean shipFrame(String p1, String p2) {
+        int i=0;
         for(Ship s : ships) {
-            s.followPath(path);
-        }
+            if(!s.isPathfinding()) {
+                if(s.getPath()==null||!s.getPath().getName().equals("ship_final_location")) {
+                    Path path=new Path();
+                    path.add(new DoublePoint(s.getX()/GameGUI.canvasWidth, s.getY()/GameGUI.canvasHeight));
+                    path.add(Path.load("ship_locations").get(i));
+                    path.setName("ship_final_location");
+                    s.setPath(path);
+                }
 
+
+                if(s.getPath().getName().equals("ship_final_location")&&!s.isPathfinding()) {
+                    s.setPath((Path)null);
+                    s.setPathfinding(true);
+                    s.setRotation(-90);
+                    s.setDirection(0, 0);
+                    shipsComplete++;
+                    if(shipsComplete>=8) {
+                        initStage++;
+                        frame=0;
+                        shipAddCount=0;
+                        shipsComplete=0;
+                        return true;
+                    }
+                }
+            }
+            i++;
+        }
+        if(frame%(100/shipSpeed)==0&&shipAddCount<8) {
+            Ship s1 = new Ship();
+            s1.setPath(p1);
+            s1.setVariation(1);
+            s1.setSpeed(shipSpeed);
+            s1.setVariation(variants[ships.size()]);
+            ships.add(s1);
+            shipAddCount++;
+
+            if(p2!=null) {
+                Ship s2 = new Ship();
+                s2.setPath(p2);
+                s2.setVariation(2);
+                s2.setSpeed(shipSpeed);
+                s2.setVariation(variants[ships.size()]);
+                ships.add(s2);
+                shipAddCount++;
+            }
+        }
         return false;
     }
     public void drawShips(Graphics2D g2) {
         for(Ship s : ships) {
-
             s.draw(g2);
         }
     }
