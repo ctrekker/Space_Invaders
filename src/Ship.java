@@ -18,7 +18,7 @@ public class Ship {
 
     private static final int[] rotationOffsets={0, 90, 90, 90};
 
-    private static BufferedImage playerShip = null;
+    public static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
     private static BufferedImage enemyShip2 = null;
     private static BufferedImage enemyShip3a = null;
