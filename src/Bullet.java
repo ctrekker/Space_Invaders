@@ -58,10 +58,13 @@ public class Bullet {
 	public void draw(Graphics2D g2) {
 	    x+=direction.getDeltaX();
 	    y+=direction.getDeltaY();
+		if(bullet==null)
+		{
+			g2.drawImage(bullet , -width/2, -height/2, width, height, null);
+		}
 
-	    g2.setColor(color);
-		g2.fillRect(x-width/2, y-height/2, width, height);
-	}
+
+ 	}
 
     public int getX() {
         return x;

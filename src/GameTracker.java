@@ -1,11 +1,15 @@
+import java.awt.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 
-public class GameTracker {
+public class GameTracker  {
 	private int score = 0;
 	private ArrayList<String> leaderboard = new ArrayList<String>();
 	private String name;
 	private int lives = 3;
+	private int width;
+	private int height;
+
 
 	public GameTracker(){
 		setName();
@@ -56,7 +60,16 @@ public class GameTracker {
 			}
 		}
 	}
+
+	public void draw(Graphics2D g2){
+		for( int i= 0; i <= lives; i++)
+		{
+			g2.drawImage(Ship.playerShip , -width/2, -height/2, width, height, null);
+		}
+	}
+
 	
+
 	public ArrayList<String> getLeaderboard(){
 		return leaderboard;
 	}
@@ -64,4 +77,5 @@ public class GameTracker {
 	public static void main(String[] args){
 		GameTracker testing = new GameTracker();
 	}
+
 }

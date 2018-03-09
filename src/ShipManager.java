@@ -31,6 +31,35 @@ public class ShipManager {
     public void removeShip(int i) {
         ships.remove(i);
     }
+    
+    public boolean didCollideBullet(){
+      boolean collided = false;
+      // ArrayList<Bullet> bullets = getBullets();
+       for(int i = 0; i < ships.size(); i++){
+          Ship s = ships.get(i);
+          
+          for(int j = 0; j < bullets.size(); j++){
+             Bullet b = bullets.get(j);
+             
+             //on top and to the right
+             if(b.getX() + b.getWidth() >= s.getX() && b.getY() >= s.getY() &&
+                b.getY() <= s.getY() + s.getHeight() || b.getY() + b.getHeight() >= s.getY() &&
+                b.getY() + b.getHeight() <= s.getY() + s.getHeight()){
+                  collided = true;
+             }
+             
+             //on bottom and to the left
+             else if(b.getX() <= s.getX() + s.getWidth() &&
+               (b.getY() >= s.getY() && b.getY()<= s.getY() + s.getHeight() ||
+                b.getY() + b.getHeight() >= s.getY() && 
+                b.getY() + b.getHeight() <= s.getY() + s.getHeight())){
+                  collided = true;       
+             }
+           }
+        }
+        //System.out.println(collided);
+        return collided;
+    }
 
     public ArrayList<Ship> getShips() {
         return ships;

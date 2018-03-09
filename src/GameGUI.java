@@ -15,6 +15,7 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
     private Player player = new Player("name");
+    private ShipManager sm = new ShipManager();
     private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
@@ -139,6 +140,7 @@ public class GameGUI extends JFrame implements KeyListener {
         // Space bar
         if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
+            sm.didCollideBullet();
         }
 
     }
