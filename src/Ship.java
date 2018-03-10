@@ -44,6 +44,7 @@ public class Ship {
     // Is 0 or above if in destruction animation sequence
     private int destroyed=-1;
     private double randomTrigger=0.0003;
+    private double bulletTrigger=0.001;
 
     public Ship() {
 	    this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
@@ -102,7 +103,7 @@ public class Ship {
     public void draw(Graphics2D g2) {
         if (path != null && pathfinding) {
             pathfinding = !followPath(path);
-            if(!isDestroyed()) path.draw(g2);
+            if(Launcher.DEBUG_MODE&&!isDestroyed()) path.draw(g2);
         }
 
         lastBullet++;
@@ -159,22 +160,71 @@ public class Ship {
     }
 
     public void shootBullet() {
-	    if(lastBullet>15) {
-	        bullets.add(new Bullet((int)x, (int)y));
+	    if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
+	        Bullet b=new Bullet((int)x, (int)y);
+
+	        double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
+	        if(playerDirection>5) {
+	            playerDirection=5;
+            }
+
+	        b.setDirection(new Vector2D(playerDirection, 3));
+	        b.setVariant(1);
+	        bullets.add(b);
+	        lastBullet=0;
+        }
+        else if(variation==0&&lastBullet>15&&!isDestroyed()) {
+	        Bullet b=new Bullet((int)x, (int)y);
+	        bullets.add(b);
 	        lastBullet=0;
         }
     }
 
-    public void randomTick() {
+    public void randomTick(boolean shouldAttack) {
         if(path==null&&!pathfinding) {
-            double rand=Math.random();
-            if(rand<randomTrigger) {
+            double randTr=Math.random();
+            if(shouldAttack&&randTr<randomTrigger) {
+                double randPath=Math.random();
                 speed/=2;
-                Path attackPath;
-                attackPath=Path.load("arc-turn-left");
-                attackPath.join(Path.load("arc-turn-right"));
-                attackPath.translate((int)x, (int)y);
+                Path attackPath=null;
+                if(randPath<0.5) {
+                    attackPath = Path.load("arc-turn-right").scale(0.25, 0.4).deres(2);
+                    attackPath.join(Path.load("dive-loop-right").scale(0.9, 0.6));
+                    attackPath.join(Path.load("arc-turn-left").scale(0.6, 0.4));
+                    if(variation==1) {
+                        attackPath.join(Path.load("arc-turn-up").scale(0.8, 0.8).reverse());
+                        attackPath.join(Path.load("arc-tripple-right").scale(0.7, 0.62).reverse().pop());
+                    }
+                    else if(variation==2) {
+                        attackPath.join(Path.load("arc-turn-right").scale(0.6, 0.7).pop(5));
+                    }
+                    attackPath.translate((int) x, (int) y);
+                }
+                else if(randPath>=0.5) {
+                    attackPath = Path.load("arc-turn-left").scale(0.25, 0.4).deres(2);
+                    attackPath.join(Path.load("dive-loop-left").scale(0.9, 0.6));
+                    attackPath.join(Path.load("arc-turn-right").scale(0.6, 0.4));
+                    if(variation==1) {
+                        attackPath.join(Path.load("arc-turn-up").scale(0.8, 0.8));
+                        attackPath.join(Path.load("arc-tripple-left").scale(0.7, 0.62).reverse().pop());
+                    }
+                    else if(variation==2) {
+                        attackPath.join(Path.load("arc-turn-left").scale(0.6, 0.7).pop(5));
+                    }
+                    attackPath.translate((int) x, (int) y);
+                }
+                attackPath.setName("attack-run");
+
                 setPath(attackPath);
+            }
+        }
+        else if(path!=null&&pathfinding) {
+            double randBullet=Math.random();
+            double multiplier=1;
+            if(path.getName().equals("attack-run")) multiplier=10;
+
+            if(randBullet<bulletTrigger*multiplier) {
+                shootBullet();
             }
         }
     }

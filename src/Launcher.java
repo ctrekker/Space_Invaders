@@ -1,5 +1,8 @@
 public class Launcher {
+    public static final boolean DEBUG_MODE=false;
+
     private static Launcher instance;
+    public static GameGUI gui;
     public static void main(String[] args) throws Exception  {
         instance=new Launcher();
         instance.launch();
@@ -13,7 +16,7 @@ public class Launcher {
     }
     public void launch() {
         //ResourceLoader.init();
-        GameGUI run = new GameGUI();
+        gui = new GameGUI();
         //TitleScreen run = new TitleScreen();
 
 

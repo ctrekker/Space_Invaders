@@ -1,3 +1,5 @@
+import com.sun.org.glassfish.external.probe.provider.annotations.Probe;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class Path extends ArrayList<DoublePoint> {
             previous=current;
         }
     }
-    public void join(Path other) {
+    public Path join(Path other) {
         DoublePoint connector=null;
         double offsetX=0;
         double offsetY=0;
@@ -41,11 +43,25 @@ public class Path extends ArrayList<DoublePoint> {
                 add(new DoublePoint(other.get(i).getX()+offsetX, other.get(i).getY()+offsetY));
             }
         }
+
+        return this;
     }
-    public void translate(int baseX, int baseY) {
-        translate((double)baseX/GameGUI.canvasWidth, (double)baseY/GameGUI.canvasHeight);
+    public Path reverse() {
+        Path newPath=new Path();
+        for(DoublePoint point : this) {
+            newPath.add(0, new DoublePoint(point.getX(), point.getY()));
+        }
+        clear();
+        for(DoublePoint p : newPath) {
+            add(p);
+        }
+
+        return this;
     }
-    public void translate(double baseX, double baseY) {
+    public Path translate(int baseX, int baseY) {
+        return translate((double)baseX/GameGUI.canvasWidth, (double)baseY/GameGUI.canvasHeight);
+    }
+    public Path translate(double baseX, double baseY) {
         double offsetX=baseX-get(0).getX();
         double offsetY=baseY-get(0).getY();
 
@@ -57,8 +73,45 @@ public class Path extends ArrayList<DoublePoint> {
             newList.add(newPoint);
         }
         clear();
-        addAll(newList);
+        for(DoublePoint p : newList) {
+            add(p);
+        }
+
+        return this;
     }
+    public Path scale(double sX, double sY) {
+        for(int i=0; i<size(); i++) {
+            DoublePoint mod=get(i);
+            mod.setX(mod.getX()*sX);
+            mod.setY(mod.getY()*sY);
+            set(i, mod);
+        }
+
+        return this;
+    }
+    // De-resolution - Converts high-res to low-res
+    public Path deres(int degree) {
+        for(int i=0; i<size(); i++) {
+            if(i!=0&&i!=size()-1) {
+                if(i%degree==0) {
+                    remove(i);
+                }
+            }
+        }
+
+        return this;
+    }
+    public Path pop() {
+        return pop(1);
+    }
+    public Path pop(int num) {
+        for(int i=0; i<num; i++) {
+            remove(size()-1);
+        }
+
+        return this;
+    }
+
     public Point getRealPoint(int index) {
         return new Point((int)(get(index).getX()*GameGUI.canvasWidth), (int)(get(index).getY()*GameGUI.canvasHeight));
     }
@@ -66,7 +119,7 @@ public class Path extends ArrayList<DoublePoint> {
 
     public static Path load(String name) {
         if(loaded.containsKey(name)) {
-            return (Path)(loaded.get(name).clone());
+            return loaded.get(name).clone();
         }
 
         Path out=new Path();
@@ -97,7 +150,7 @@ public class Path extends ArrayList<DoublePoint> {
         }
         out.setName(name);
 
-        return out;
+        return out.clone();
     }
 
     public String getName() {
@@ -110,6 +163,7 @@ public class Path extends ArrayList<DoublePoint> {
 
     @Override
     public Path clone() {
+        super.clone();
         Path out=new Path();
         for(DoublePoint point : this) {
             out.add(new DoublePoint(point.getX(), point.getY()));

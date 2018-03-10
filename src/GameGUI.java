@@ -14,7 +14,7 @@ import java.util.TimerTask;
 public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
-    private Player player = new Player("name");
+    public Player player = new Player("name");
     private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");

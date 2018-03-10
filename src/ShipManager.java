@@ -147,16 +147,44 @@ public class ShipManager {
     }
     public void drawShips(Graphics2D g2) {
         int destroyedCount=0;
+        int attackingCount=0;
         for(Ship s : ships) {
             if(s.isDestroyed()) {
                 destroyedCount++;
             }
+            if(s.getPath()!=null) {
+                if(s.getPath().getName().equals("attack-run")) {
+                    attackingCount++;
+                }
+            }
         }
         if(destroyedCount==0) destroyedCount=1;
+
+        int i=0;
         for(Ship s : ships) {
+            if(s.getPath()!=null) {
+                if(s.getPath().getName().equals("attack-run")&&!s.isPathfinding()) {
+                    if(s.getY()>GameGUI.canvasHeight) {
+                        s.setY(-50);
+                    }
+
+                    Path toSpot=new Path();
+                    toSpot.add(new DoublePoint(s.getX()/GameGUI.canvasWidth, s.getY()/GameGUI.canvasHeight));
+                    toSpot.add(Path.load("ship_locations").get(i));
+                    toSpot.setName("attack-retreat");
+                    s.setPath(toSpot);
+                }
+                if(s.getPath().getName().equals("attack-retreat")&&!s.isPathfinding()) {
+                    s.setPath((Path)null);
+                    s.setRotation(-90);
+                    s.setSpeed(s.getSpeed()*2);
+                }
+            }
             s.draw(g2);
             s.setRandomTrigger((0.005/ships.size())*destroyedCount);
-            s.randomTick();
+            s.randomTick(attackingCount<2);
+
+            i++;
         }
         if(destroyedCount>=ships.size()) {
             initStage=1;

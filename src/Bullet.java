@@ -21,8 +21,10 @@ public class Bullet {
 	private int height;
     private Vector2D direction;
 	private Color color;
+	private int variant=0;
 
-	private static BufferedImage bullet = null;
+    private static BufferedImage bullet = null;
+    private static BufferedImage bulletFlipped = null;
 
 	public Bullet() {
 		this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIRECTION, DEFAULT_COLOR);
@@ -48,6 +50,9 @@ public class Bullet {
 			if (bullet == null) {
 				bullet = ImageIO.read(new File("res/img/Bullet.png"));
 			}
+			if(bulletFlipped == null) {
+			    bulletFlipped=ImageIO.read(new File("res/img/BulletFlipped.png"));
+            }
 		}
 		catch (IOException e)
 		{
@@ -59,7 +64,8 @@ public class Bullet {
 	    x+=direction.getDeltaX();
 	    y+=direction.getDeltaY();
 
-		g2.drawImage(bullet, x-width/2, y-height/2, width, height, null);
+		if(variant==0) g2.drawImage(bullet, x-width/2, y-height/2, width, height, null);
+		else if(variant==1) g2.drawImage(bulletFlipped, x-width/2, y-height/2, width, height, null);
 	}
 
     public int getX() {
@@ -98,4 +104,12 @@ public class Bullet {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+    public int getVariant() {
+        return variant;
+    }
+
+    public void setVariant(int variant) {
+        this.variant = variant;
+    }
 }
