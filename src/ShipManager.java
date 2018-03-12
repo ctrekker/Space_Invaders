@@ -14,6 +14,9 @@ public class ShipManager {
     private int shipsComplete=0;
     private int shipSpeed=9;
 
+    private int deltaMultiplier=1;
+    final private int deltaMultiplierEnd=60;
+
     private int[] variants={
             1, 2, 1, 2, 1, 2, 1, 2,
             2, 3, 2, 3, 2, 3, 2, 3,
@@ -89,6 +92,17 @@ public class ShipManager {
                 s.setPathfinding(false);
             }
             initStage++;
+        }
+        else if(initStage==7) {
+            for(Ship s : ships) {
+                if(!s.isPathfinding()) {
+                    int focusX=GameGUI.canvasWidth/2;
+                    int focusY=50;
+                    double offsetX=s.getX()-focusX;
+                    double offsetY=s.getY()-focusY;
+                    //double incX=
+                }
+            }
         }
 
 
