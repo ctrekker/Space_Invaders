@@ -251,6 +251,22 @@ public class Ship {
            }
         }
     }
+	
+    public void checkBulletPlayerCollision(){
+        for(int j = 0; j < bullets.size(); j++){
+          Bullet b = bullets.get(j);
+
+          // Check for x axis bounds
+          if(b.getX()+b.getWidth()/2>this.getX()-this.getWidth()/2&&b.getX()-b.getWidth()/2<this.getX()+this.getWidth()/2) {
+              // Check for y axis bounds
+              if(b.getY()+b.getHeight()/2>this.getY()-this.getHeight()/2&&b.getY()-b.getHeight()/2<this.getY()+this.getHeight()/2) {
+                  // Bullet collided, so handle bullet collision
+                  this.destroy();
+                  bullets.remove(j);
+              }
+          }
+       }
+    }
 
     public boolean followPath(Path path) {
         if(currentPoint==0) {
