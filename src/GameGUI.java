@@ -115,6 +115,7 @@ public class GameGUI extends JFrame implements KeyListener {
             scoreInvadersL2.draw(g2);
 
             player.checkBulletCollisions(shipManager);
+            //player.checkBulletPlayerCollision();
 
             //testPath.draw(g2);
         }

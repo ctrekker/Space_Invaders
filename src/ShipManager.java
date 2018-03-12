@@ -16,7 +16,8 @@ public class ShipManager {
     private static int Stage = 0;
 
     private int deltaMultiplier=1;
-    final private int deltaMultiplierEnd=60;
+    final private int deltaMultiplierEnd=200;
+    private boolean deltaOut=true;
 
     private int[] variants={
             1, 2, 1, 2, 1, 2, 1, 2,
@@ -95,14 +96,34 @@ public class ShipManager {
             initStage++;
         }
         else if(initStage==7) {
+            int i=0;
             for(Ship s : ships) {
                 if(!s.isPathfinding()) {
                     int focusX=GameGUI.canvasWidth/2;
                     int focusY=50;
-                    double offsetX=s.getX()-focusX;
-                    double offsetY=s.getY()-focusY;
-                    //double incX=
+                    double offsetX=Path.load("ship_locations").getRealPoint(i).getX()-focusX;
+                    double offsetY=Path.load("ship_locations").getRealPoint(i).getY()-focusY;
+                    double incX=(offsetX/deltaMultiplierEnd)*(deltaMultiplier/2);
+                    double incY=(offsetY/deltaMultiplierEnd)*(deltaMultiplier/2);
+                    System.out.println(s.getX());
+                    System.out.println(s.getX());
+
+                    s.setX(focusX+offsetX+incX);
+                    s.setY(focusY+offsetY+incY);
                 }
+                i++;
+            }
+            if(deltaMultiplier<deltaMultiplierEnd&&deltaOut) {
+                deltaMultiplier++;
+            }
+            else if(deltaMultiplier>=deltaMultiplierEnd&&deltaOut) {
+                deltaOut=false;
+            }
+            if(deltaMultiplier>0&&!deltaOut) {
+                deltaMultiplier++;
+            }
+            else if(deltaMultiplier<=0&&!deltaOut) {
+                deltaOut=true;
             }
         }
 
