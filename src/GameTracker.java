@@ -9,6 +9,7 @@ public class GameTracker  {
 	private int lives = 3;
 	private int width;
 	private int height;
+	public static int stage = 1;
 
 
 	public GameTracker(){
