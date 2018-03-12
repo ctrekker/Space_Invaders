@@ -13,6 +13,7 @@ public class ShipManager {
     // The number of ships which have reached their final position
     private int shipsComplete=0;
     private int shipSpeed=9;
+    private static int Stage = 0;
 
     private int deltaMultiplier=1;
     final private int deltaMultiplierEnd=60;
@@ -204,6 +205,9 @@ public class ShipManager {
             initStage=1;
             frame=0;
             ships.clear();
+            Stage++;
+            g2.drawString("STAGE " + Stage, GameGUI.canvasWidth/2, GameGUI.canvasHeight/2);
+
         }
     }
 }
