@@ -202,11 +202,11 @@ public class ShipManager {
             i++;
         }
         if(destroyedCount>=ships.size()) {
+            g2.drawString("STAGE " + Stage, GameGUI.canvasWidth/2, GameGUI.canvasHeight/2);
             initStage=1;
             frame=0;
             ships.clear();
             Stage++;
-            g2.drawString("STAGE " + Stage, GameGUI.canvasWidth/2, GameGUI.canvasHeight/2);
 
         }
     }
