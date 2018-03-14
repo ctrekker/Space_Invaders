@@ -106,7 +106,6 @@ public class GameGUI extends JFrame implements KeyListener {
                 firstTime=false;
             }
 
-            shipManager.moveShips();
 
             background.draw(g2, true);
 
@@ -115,6 +114,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
             player.draw(g2);
             shipManager.drawShips(g2);
+            shipManager.moveShips();
 
             scoreInvaders.draw(g2);
             scoreInvadersL1.draw(g2);
@@ -122,6 +122,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
             player.checkBulletCollisions(shipManager);
             player.checkBulletPlayerCollision(shipManager);
+            //player.checkBulletPlayerCollision(shipManager);
 
             //testPath.draw(g2);
         }
