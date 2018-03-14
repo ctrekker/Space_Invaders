@@ -14,10 +14,10 @@ public class GameTracker  {
 
 
 	public GameTracker(){
-		setName();
-		addToLeaderboard();
-		sortScore();
-		System.out.println(leaderboard);
+//		setName();
+//		addToLeaderboard();
+//		sortScore();
+//		System.out.println(leaderboard);
 	}
 	
 	public static void setName(){
@@ -76,8 +76,8 @@ public class GameTracker  {
 		return leaderboard;
 	}
 	
-	public static void main(String[] args){
-		GameTracker testing = new GameTracker();
-	}
+	//public static void main(String[] args){
+		//GameTracker testing = new GameTracker();
+	//}
 
 }
