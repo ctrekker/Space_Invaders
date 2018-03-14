@@ -269,7 +269,7 @@ public class Ship {
         }
     }
 	
-public void checkBulletPlayerCollision(ShipManager ships){
+   public void checkBulletPlayerCollision(ShipManager ships){
         for(int i = 0; i < ships.getShips().size(); i++){
               Ship s = ships.getShips().get(i);
               ArrayList<Bullet> bull = s.getBullets();
@@ -284,7 +284,8 @@ public void checkBulletPlayerCollision(ShipManager ships){
                 	  //need to program the life icons to disappear
                       if(GameTracker.getLives() == 0){
                     	  this.destroy();
-                    	  //end game here and show leader board?
+                    	  GameOver frame = new GameOver();
+                    	  frame.setVisible(true);
                       }
                       else{
                     	  GameTracker.killLife();
@@ -295,6 +296,7 @@ public void checkBulletPlayerCollision(ShipManager ships){
            }
         }
      }
+
 
 
     public boolean followPath(Path path) {

@@ -15,12 +15,12 @@ public class Bullet {
 	private static final Color DEFAULT_COLOR=Color.RED;//Setting The Color To Red
     private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED);
 
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	private int x; //Instantiating the x
+	private int y; //Instantiating the y
+	private int width; //Instantaiting the width
+	private int height; //Instantiaing the height
     private Vector2D direction;
-	private Color color;
+	private Color color; //Instantiating the color
 	private int variant=0;
 
     private static BufferedImage bullet = null;
@@ -70,32 +70,32 @@ public class Bullet {
 		else if(variant==1) g2.drawImage(bulletFlipped, x-width/2, y-height/2, width, height, null);
 	}
 
-    public int getX() {
-        return x;
+    public int getX() {//Making a get method for the x
+        return x; //Returning the x
     }
-    public void setX(int x) {
-        this.x = x;
+    public void setX(int x) { //Making a set method for the x
+        this.x = x; //Instantiating  the x
     }
-    public int getY() {
-        return y;
+    public int getY() { //Making a get method for y
+        return y; //Returning the y
     }
-    public void setY(int y) {
-        this.y = y;
+    public void setY(int y) { //Making a set mehtod for y
+        this.y = y; //Instantiating the y
     }
-	public int getWidth() {
-		return width;
+	public int getWidth() {//Making the get method for the width
+		return width; //Returning the width
 	}
-	public void setWidth(int width) {
-		this.width = width;
+	public void setWidth(int width) {//Making a set method for the width
+		this.width = width; //Instantaitng the width
 	}
-	public int getHeight() {
-		return height;
+	public int getHeight() { //Making a get method for the Height
+		return height; //Returning the height 
 	}
-	public void setHeight(int height) {
-		this.height = height;
+	public void setHeight(int height) {//Making a set method for the height
+		this.height = height;//Returning the height value
 	}
-	public Vector2D getDirection() {
-		return direction;
+	public Vector2D getDirection() {//Making a get Direction methdod
+		return direction; //Returning the direction method
 	}
 	public void setDirection(Vector2D direction) {
 		this.direction = direction;
