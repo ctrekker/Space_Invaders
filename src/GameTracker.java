@@ -3,7 +3,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class GameTracker  {
-	public int score = 0;
+	private int score = 0;
 	private ArrayList<String> leaderboard = new ArrayList<String>();
 	private String name;
 	private int lives = 3;
