@@ -39,7 +39,7 @@ public class GameOver extends JFrame implements KeyListener {
         label3.setForeground(Color.WHITE);
         
         label4.setFont(new Font("Courier New", Font.BOLD, 15));
-        label3.setText(GameTracker.finalString);
+        //label3.setText(GameTracker.finalString);
         label3.setForeground(Color.WHITE);
 
         panel.add(label);
