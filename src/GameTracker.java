@@ -3,12 +3,12 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class GameTracker  {
-	private int score = 0;
-	private ArrayList<String> leaderboard = new ArrayList<String>();
-	private String name;
-	private int lives = 3;
-	private int width;
-	private int height;
+	private static int score = 0;
+	private static ArrayList<String> leaderboard = new ArrayList<String>();
+	private Static String name;
+	private static int lives = 3;
+	private static int width;
+	private static int height;
 	public static int stage = 1;
 
 
@@ -19,35 +19,35 @@ public class GameTracker  {
 		System.out.println(leaderboard);
 	}
 	
-	public void setName(){
+	public static void setName(){
 		name = JOptionPane.showInputDialog("Enter your name:: ");
 	}
 	
-	public String getName(){
+	public static String getName(){
 		return name;
 	}
 	
-	public int getLives() {
+	public static int getLives() {
 		return lives;
 	}
 
-	public void killLife() {
+	public static void killLife() {
 		lives -= 1;
 	}
 	
-	public void setScore(Ship ship){
+	public static void setScore(Ship ship){
 		score += ship.getVariation() * 100;
 	}
 	
-	public int getScore(){
+	public static int getScore(){
 		return score;
 	}
 	
-	public void addToLeaderboard(){
+	public static void addToLeaderboard(){
 		leaderboard.add(getScore(), getName());
 	}
 	
-	public void sortScore(){
+	public static void sortScore(){
 		for(int i = 0; i < leaderboard.size() - 1; i++){
 			String temporary = leaderboard.get(i);
 			int thisNumber = Integer.parseInt(temporary.substring(0, temporary.indexOf(" ")));
@@ -62,7 +62,7 @@ public class GameTracker  {
 		}
 	}
 
-	public void draw(Graphics2D g2){
+	public static void draw(Graphics2D g2){
 		for( int i= 0; i <= lives; i++)
 		{
 			g2.drawImage(Ship.playerShip , -width/2, -height/2, width, height, null);
@@ -71,7 +71,7 @@ public class GameTracker  {
 
 	
 
-	public ArrayList<String> getLeaderboard(){
+	public static ArrayList<String> getLeaderboard(){
 		return leaderboard;
 	}
 	
