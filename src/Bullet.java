@@ -1,27 +1,27 @@
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO; //A package to import images
 import java.awt.*; // A Pacakge that has already been premade and we can just call them
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage; //To make images involved in the code
+import java.io.File; //Files that are on the Java System
+import java.io.IOException; //Tells when there is an input or output error
 
 
-public class Bullet {
-    public static final double DEFAULT_SPEED=10;
+public class Bullet { //The Bullet Class
+    public static final double DEFAULT_SPEED=10; //Setting the Bullet speed to 10
 
 	private static final int DEFAULT_X=0; //Setting the X Value Of The Bullet
 	private static final int DEFAULT_Y=0; //Setting the Y Value Of The Bullet
 	private static final int DEFAULT_WIDTH=11; //Setting the Width Value Of The Bullet
 	private static final int DEFAULT_HEIGHT=25;//Setting the Height Value Of The Bullet
 	private static final Color DEFAULT_COLOR=Color.RED;//Setting The Color To Red
-    private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED);
+    private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED); //Shows the direction of which the bullet will and continue to go in
 
 	private int x; //Instantiating the x
 	private int y; //Instantiating the y
 	private int width; //Instantaiting the width
 	private int height; //Instantiaing the height
-    private Vector2D direction;
+   private Vector2D direction; //Instantiaing the Vector2D direction
 	private Color color; //Instantiating the color
-	private int variant=0;
+	private int variant=0; //Setting the variant value to 0
 
     private static BufferedImage bullet = null;
 	private static BufferedImage lazerBeam = null;
@@ -100,21 +100,21 @@ public class Bullet {
 	public Vector2D getDirection() {//Making a get Direction methdod
 		return direction; //Returning the direction method
 	}
-	public void setDirection(Vector2D direction) {
-		this.direction = direction;
+	public void setDirection(Vector2D direction) {//Making a set method for the setDirection
+		this.direction = direction; //Returning the direction value
 	}
-	public Color getColor() {
-		return color;
+	public Color getColor() {//Making a get method for the color
+		return color; //Returning the color 
 	}
-	public void setColor(Color color) {
-		this.color = color;
+	public void setColor(Color color) {//Making a set method for the color
+		this.color = color;//Returning the color value
 	}
 
-    public int getVariant() {
-        return variant;
+    public int getVariant() { //Making a get method for the Variant
+        return variant;//Returning the variant
     }
 
-    public void setVariant(int variant) {
-        this.variant = variant;
+    public void setVariant(int variant) {//Making a set method for the Variant
+        this.variant = variant; //Returning the variant value
     }
 }
