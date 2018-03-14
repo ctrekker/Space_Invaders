@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 public class GameTracker  {
 	private static int score = 0;
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
-	private Static String name;
+	private static String name;
 	private static int lives = 3;
 	private static int width;
 	private static int height;
