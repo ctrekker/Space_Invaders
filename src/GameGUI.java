@@ -19,6 +19,9 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
     private Bullet bullet = new Bullet();
+    private ShipManager score = new ShipManager();
+    private Bullet lazer = new Bullet();
+
 
 
 
@@ -107,6 +110,9 @@ public class GameGUI extends JFrame implements KeyListener {
 
             background.draw(g2, true);
 
+            g2.setColor(Color.WHITE);
+            g2.drawString("SCORE " + GameTracker.Score,0, 25 );
+
             player.draw(g2);
             shipManager.drawShips(g2);
 
@@ -115,7 +121,7 @@ public class GameGUI extends JFrame implements KeyListener {
             scoreInvadersL2.draw(g2);
 
             player.checkBulletCollisions(shipManager);
-            //player.checkBulletPlayerCollision();
+            player.checkBulletPlayerCollision(shipManager);
 
             //testPath.draw(g2);
         }

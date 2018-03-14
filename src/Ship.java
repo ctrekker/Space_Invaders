@@ -36,7 +36,9 @@ public class Ship {
 
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
+    private ArrayList<Bullet> lazers=new ArrayList<>();
     private int lastBullet=0;
+    private int lastLazer=0;
     private int currentPoint=0;
     private Path path=null;
     private boolean pathfinding=false;
@@ -245,6 +247,18 @@ public class Ship {
                  if(b.getY()+b.getHeight()/2>s.getY()-s.getHeight()/2&&b.getY()-b.getHeight()/2<s.getY()+s.getHeight()/2) {
                      // Bullet collided, so handle bullet collision
                      s.destroy();
+                     if(s.variation == 1)
+                     {
+                       GameTracker.Score=GameTracker.Score+50;
+                     }
+                     if(s.variation == 2)
+                     {
+                         GameTracker.Score= GameTracker.Score+80;
+                     }
+                     if(s.variation == 3)
+                     {
+                         GameTracker.Score= GameTracker.Score+400;
+                     }
                      bullets.remove(j);
                  }
              }
@@ -252,26 +266,33 @@ public class Ship {
         }
     }
 	
-//    public void checkBulletPlayerCollision(ShipManager ships){
-//        for(int i = 0; i < ships.getShips().size(); i++){
-//              Ship s = ships.getShips().get(i);
+   public void checkBulletPlayerCollision(ShipManager ships){
+        for(int i = 0; i < ships.getShips().size(); i++){
+              Ship s = ships.getShips().get(i);
+              ArrayList<Bullet> bull = s.getBullets();
 
-//          for(int j = 0; j < bullets.size(); j++){
-//              ArrayList<Bullet> bull = s.getBullets();
-//              Bullet b = bull.get(j);
+          for(int j = 0; j < bull.size(); j++){
 
-//              // Check for x axis bounds
-//              if(b.getX()+b.getWidth()/2>this.getX()-this.getWidth()/2&&b.getX()-b.getWidth()/2<this.getX()+this.getWidth()/2) {
-//                  // Check for y axis bounds
-//                  if(b.getY()+b.getHeight()/2>this.getY()-this.getHeight()/2&&b.getY()-b.getHeight()/2<this.getY()+this.getHeight()/2) {
-//                      // Bullet collided, so handle bullet collision
-//                      this.destroy();
-//                      bullets.remove(j);
-//                  }
-//              }
-//           }
-//        }
-//     }
+              Bullet b = bull.get(j);
+
+              if(b.getX()+b.getWidth()/2>this.getX()-this.getWidth()/2&&b.getX()-b.getWidth()/2<this.getX()+this.getWidth()/2) {
+                  if(b.getY()+b.getHeight()/2>this.getY()-this.getHeight()/2&&b.getY()-b.getHeight()/2<this.getY()+this.getHeight()/2) {
+                	  //gets rid of a life in game tracker if hit
+                	  //need to program the life icons to disappear
+                      if(GameTracker.getLives() == 0){
+                    	  this.destroy();
+                    	  GameOver frame = new GameOver();
+                    	  frame.setVisible(true);
+                      }
+                      else{
+                    	  GameTracker.killLife();
+                      }
+                      bull.remove(j);
+                  }
+              }
+           }
+        }
+     }
 
 
     public boolean followPath(Path path) {
