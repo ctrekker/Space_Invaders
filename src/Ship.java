@@ -36,7 +36,9 @@ public class Ship {
 
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
+    private ArrayList<Bullet> lazers=new ArrayList<>();
     private int lastBullet=0;
+    private int lastLazer=0;
     private int currentPoint=0;
     private Path path=null;
     private boolean pathfinding=false;
@@ -162,7 +164,7 @@ public class Ship {
     public void shootBullet() {
 	    if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
 	        Bullet b=new Bullet((int)x, (int)y);
-
+            Bullet l=new Bullet((int)x, (int)y);
 	        double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
 	        if(playerDirection>5) {
 	            playerDirection=5;
@@ -177,6 +179,26 @@ public class Ship {
 	        Bullet b=new Bullet((int)x, (int)y);
 	        bullets.add(b);
 	        lastBullet=0;
+        }
+    }
+    public void shootLazer(){
+        if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
+
+            Bullet l =new Bullet((int)x, (int)y);
+            double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
+            if(playerDirection>5) {
+                playerDirection=5;
+            }
+
+            l.setDirection(new Vector2D(playerDirection, 3));
+            l.setVariant(2);
+            lazers.add(l);
+            lastBullet=0;
+        }
+        else if(variation==0&&lastBullet>15&&!isDestroyed()) {
+            Bullet l=new Bullet((int)x, (int)y);
+            lazers.add(l);
+            lastBullet=0;
         }
     }
 
