@@ -37,7 +37,9 @@ public class Ship {
 
     private Vector2D direction;
 	private ArrayList<Bullet> bullets=new ArrayList<>();
+    private ArrayList<Bullet> lazers=new ArrayList<>();
     private int lastBullet=0;
+    private int lastLazer=0;
     private int currentPoint=0;
     private Path path=null;
     private boolean pathfinding=false;
@@ -163,7 +165,7 @@ public class Ship {
     public void shootBullet() {
 	    if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
 	        Bullet b=new Bullet((int)x, (int)y);
-
+            Bullet l=new Bullet((int)x, (int)y);
 	        double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
 	        if(playerDirection>5) {
 	            playerDirection=5;
@@ -178,6 +180,26 @@ public class Ship {
 	        Bullet b=new Bullet((int)x, (int)y);
 	        bullets.add(b);
 	        lastBullet=0;
+        }
+    }
+    public void shootLazer(){
+        if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
+
+            Bullet l =new Bullet((int)x, (int)y);
+            double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
+            if(playerDirection>5) {
+                playerDirection=5;
+            }
+
+            l.setDirection(new Vector2D(playerDirection, 3));
+            l.setVariant(2);
+            lazers.add(l);
+            lastBullet=0;
+        }
+        else if(variation==0&&lastBullet>15&&!isDestroyed()) {
+            Bullet l=new Bullet((int)x, (int)y);
+            lazers.add(l);
+            lastBullet=0;
         }
     }
 
@@ -265,26 +287,32 @@ public class Ship {
         }
     }
 	
-//    public void checkBulletPlayerCollision(ShipManager ships){
-//        for(int i = 0; i < ships.getShips().size(); i++){
-//              Ship s = ships.getShips().get(i);
-             
-//          for(int j = 0; j < bullets.size(); j++){
-//              ArrayList<Bullet> bull = s.getBullets();
-//              Bullet b = bull.get(j);
+public void checkBulletPlayerCollision(ShipManager ships){
+        for(int i = 0; i < ships.getShips().size(); i++){
+              Ship s = ships.getShips().get(i);
+              ArrayList<Bullet> bull = s.getBullets();
+              
+          for(int j = 0; j < bull.size(); j++){
+
+              Bullet b = bull.get(j);
    
-//              // Check for x axis bounds
-//              if(b.getX()+b.getWidth()/2>this.getX()-this.getWidth()/2&&b.getX()-b.getWidth()/2<this.getX()+this.getWidth()/2) {
-//                  // Check for y axis bounds
-//                  if(b.getY()+b.getHeight()/2>this.getY()-this.getHeight()/2&&b.getY()-b.getHeight()/2<this.getY()+this.getHeight()/2) {
-//                      // Bullet collided, so handle bullet collision
-//                      this.destroy();
-//                      bullets.remove(j);
-//                  }
-//              }
-//           }
-//        }
-//     }
+              if(b.getX()+b.getWidth()/2>this.getX()-this.getWidth()/2&&b.getX()-b.getWidth()/2<this.getX()+this.getWidth()/2) {
+                  if(b.getY()+b.getHeight()/2>this.getY()-this.getHeight()/2&&b.getY()-b.getHeight()/2<this.getY()+this.getHeight()/2) {
+                	  //gets rid of a life in game tracker if hit
+                	  //need to program the life icons to disappear
+                      if(GameTracker.getLives() == 0){
+                    	  this.destroy();
+                    	  //end game here and show leader board?
+                      }
+                      else{
+                    	  GameTracker.killLife();
+                      }
+                      bull.remove(j);
+                  }
+              }
+           }
+        }
+     }
 
 
     public boolean followPath(Path path) {

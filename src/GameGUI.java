@@ -20,6 +20,8 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
     private Bullet bullet = new Bullet();
     private ShipManager score = new ShipManager();
+    private Bullet lazer = new Bullet();
+
 
 
 
@@ -120,6 +122,7 @@ public class GameGUI extends JFrame implements KeyListener {
             scoreInvadersL2.draw(g2);
 
             player.checkBulletCollisions(shipManager);
+            player.checkBulletPlayerCollision(shipManager);
 
             //testPath.draw(g2);
         }
@@ -157,6 +160,9 @@ public class GameGUI extends JFrame implements KeyListener {
         // Space bar
         if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
+        }
+        if(e.getKeyCode() == 88){
+            player.shootLazer();
         }
     }
 
