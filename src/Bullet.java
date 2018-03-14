@@ -24,7 +24,7 @@ public class Bullet {
 	private int variant=0;
 
     private static BufferedImage bullet = null;
-	private static BufferedImage lazerBeam = null;
+
     private static BufferedImage bulletFlipped = null;
 
 	public Bullet() {
@@ -49,14 +49,12 @@ public class Bullet {
 
 		try {
 			if (bullet == null) {
-				bullet = ImageIO.read(new File("res/img/Bullet.png"));
+				bullet = ImageIO.read(new File("res/img/lazerbeam.png"));
 			}
 			if(bulletFlipped == null) {
 			    bulletFlipped=ImageIO.read(new File("res/img/BulletFlipped.png"));
             }
-			if(lazerBeam == null) {
-				lazerBeam=ImageIO.read(new File("res/img/lazerbeam.png"));
-			}
+
 		}
 		catch (IOException e)
 		{
@@ -70,7 +68,6 @@ public class Bullet {
 
 		if(variant==0) g2.drawImage(bullet, x-width/2, y-height/2, width, height, null);
 		else if(variant==1) g2.drawImage(bulletFlipped, x-width/2, y-height/2, width, height, null);
-		else if(variant == 2) g2.drawImage(lazerBeam, x-width/2, y-height/2, width, height, null);
 	}
 
     public int getX() {

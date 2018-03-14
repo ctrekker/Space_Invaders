@@ -155,9 +155,7 @@ public class GameGUI extends JFrame implements KeyListener {
         if (e.getKeyCode() == 32 || e.getKeyCode() == 90) {
             player.shootBullet();
         }
-        if(e.getKeyCode() == 88){
-            player.shootLazer();
-        }
+
     }
 
     public void keyTyped(KeyEvent e) {

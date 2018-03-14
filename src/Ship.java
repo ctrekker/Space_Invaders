@@ -181,26 +181,7 @@ public class Ship {
 	        lastBullet=0;
         }
     }
-    public void shootLazer(){
-        if(variation!=0&&!isDestroyed()&&y<GameGUI.canvasHeight*((double)7/12)) {
 
-            Bullet l =new Bullet((int)x, (int)y);
-            double playerDirection=(Launcher.gui.player.getX()-x)*(3/(Launcher.gui.player.getY()-y));
-            if(playerDirection>5) {
-                playerDirection=5;
-            }
-
-            l.setDirection(new Vector2D(playerDirection, 3));
-            l.setVariant(2);
-            lazers.add(l);
-            lastBullet=0;
-        }
-        else if(variation==0&&lastBullet>15&&!isDestroyed()) {
-            Bullet l=new Bullet((int)x, (int)y);
-            lazers.add(l);
-            lastBullet=0;
-        }
-    }
 
     public void randomTick(boolean shouldAttack) {
         if(path==null&&!pathfinding) {
@@ -268,6 +249,7 @@ public class Ship {
                      // Bullet collided, so handle bullet collision
                      s.destroy();
                      bullets.remove(j);
+//
                  }
              }
            }
