@@ -16,6 +16,7 @@ public class Ship {
     public static final int DEFAULT_VALUE=1;
     public static final Color DEFAULT_COLOR=Color.WHITE;//Setting the color to white
 
+
     private static final int[] rotationOffsets={0, 90, 90, 90};
 
     public static BufferedImage playerShip = null;
@@ -245,6 +246,18 @@ public class Ship {
                  if(b.getY()+b.getHeight()/2>s.getY()-s.getHeight()/2&&b.getY()-b.getHeight()/2<s.getY()+s.getHeight()/2) {
                      // Bullet collided, so handle bullet collision
                      s.destroy();
+                     if(s.variation == 1)
+                     {
+                       GameTracker.Score=GameTracker.Score+50;
+                     }
+                     if(s.variation == 2)
+                     {
+                         GameTracker.Score= GameTracker.Score+80;
+                     }
+                     if(s.variation == 3)
+                     {
+                         GameTracker.Score= GameTracker.Score+400;
+                     }
                      bullets.remove(j);
                  }
              }

@@ -10,6 +10,7 @@ public class GameTracker  {
 	private int width;
 	private int height;
 	public static int stage = 1;
+	public static int Score = 0;
 
 
 	public GameTracker(){

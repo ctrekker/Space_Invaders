@@ -19,6 +19,7 @@ public class GameGUI extends JFrame implements KeyListener {
     private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
     private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
     private Bullet bullet = new Bullet();
+    private ShipManager score = new ShipManager();
 
 
 
@@ -89,6 +90,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
                 testPath=Path.load("ship_locations");
 
+
                 // 20 variant 1
                 // 16 variant 2
                 // 4 variant 3
@@ -106,6 +108,9 @@ public class GameGUI extends JFrame implements KeyListener {
             shipManager.moveShips();
 
             background.draw(g2, true);
+
+            g2.setColor(Color.WHITE);
+            g2.drawString("SCORE " + GameTracker.Score,0, 25 );
 
             player.draw(g2);
             shipManager.drawShips(g2);
