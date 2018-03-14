@@ -22,9 +22,10 @@ public class GameOver extends JFrame implements KeyListener {
         panel.setBackground(Color.BLACK);
         label.setFont(new Font("Courier New", Font.BOLD, 75));
         label.setForeground(Color.WHITE);
-        label2.setFont(new Font("Courier New", Font.BOLD, 50));
+        label2.setFont(new Font("Courier New", Font.BOLD, 20));
         label2.setText("Press enter to play to play again!");
         label2.setForeground(Color.WHITE);
+        //label3.setText(GameTracker.Score);
         this.setTitle("Game Over ");
 
 

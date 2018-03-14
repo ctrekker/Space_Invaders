@@ -3,22 +3,15 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class GameTracker  {
-	private static int score = 0;
+	public static int Score = 0;
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
 	private static String name;
 	private static int lives = 3;
 	private static int width;
 	private static int height;
 	public static int stage = 1;
-	public static int Score = 0;
 
 
-	public GameTracker(){
-//		setName();
-//		addToLeaderboard();
-//		sortScore();
-//		System.out.println(leaderboard);
-	}
 	
 	public static void setName(){
 		name = JOptionPane.showInputDialog("Enter your name:: ");
@@ -37,11 +30,11 @@ public class GameTracker  {
 	}
 	
 	public static void setScore(Ship ship){
-		score += ship.getVariation() * 100;
+		Score += ship.getVariation() * 100;
 	}
 	
 	public static int getScore(){
-		return score;
+		return Score;
 	}
 	
 	public static void addToLeaderboard(){
@@ -75,9 +68,6 @@ public class GameTracker  {
 	public static ArrayList<String> getLeaderboard(){
 		return leaderboard;
 	}
-	
-	//public static void main(String[] args){
-		//GameTracker testing = new GameTracker();
-	//}
+
 
 }
