@@ -6,9 +6,11 @@ public class GameTracker  {
 	public static int Score = 0;
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
 	private static String name;
-	public static int stage = 1;
+	public static int stage = 0;
 	private static int DEFAULT_LIVES=3;
 	private static int lives = DEFAULT_LIVES;
+	public static boolean showStage=false;
+	public static int showStageCounter=0;
 
 
 	public static void setName(){
@@ -70,6 +72,6 @@ public class GameTracker  {
 	public static void reset() {
 		Score=0;
 		lives=DEFAULT_LIVES;
-		stage=1;
+		stage=0;
 	}
 }

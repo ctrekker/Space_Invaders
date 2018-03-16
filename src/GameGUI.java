@@ -101,7 +101,15 @@ public class GameGUI extends JFrame implements KeyListener {
 
             GameTracker.drawLives(g2);
 
-            //testPath.draw(g2);
+            if(GameTracker.showStage) {
+                if(GameTracker.showStageCounter>180) {
+                    GameTracker.showStage=false;
+                    GameTracker.showStageCounter=0;
+                }
+                GameTracker.showStageCounter++;
+
+                g2.drawString("STAGE " + GameTracker.stage, GameGUI.canvasWidth/2-50, GameGUI.canvasHeight/2);
+            }
         }
     }
     public void keyPressed(KeyEvent e) {

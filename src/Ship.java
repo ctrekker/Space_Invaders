@@ -277,7 +277,6 @@ public class Ship {
                             Launcher.gui.dispose();
                         } else {
                             GameTracker.killLife();
-                            System.out.println(GameTracker.getLives());
                         }
                         bull.remove(j);
                     }
