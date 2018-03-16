@@ -15,12 +15,6 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
     public Player player = new Player("name");
-    private ScoreInvaders scoreInvaders = new ScoreInvaders("name");
-    private ScoreInvaders scoreInvadersL1 = new ScoreInvaders("name");
-    private ScoreInvaders scoreInvadersL2 = new ScoreInvaders("name");
-    private Bullet bullet = new Bullet();
-    private ShipManager score = new ShipManager();
-    private Bullet lazer = new Bullet();
 
 
 
@@ -75,21 +69,6 @@ public class GameGUI extends JFrame implements KeyListener {
                 player.setSpeed(3);
                 player.setDirection(0, 0);
 
-                scoreInvaders.setWidth(50);
-                scoreInvaders.setHeight(50);
-                scoreInvaders.setX(getWidth()/10);
-                scoreInvaders.setY(getHeight()-50);
-
-                scoreInvadersL1.setWidth(50);
-                scoreInvadersL1.setHeight(50);
-                scoreInvadersL1.setX(getWidth()/10 + 50);
-                scoreInvadersL1.setY(getHeight()-50);
-
-                scoreInvadersL2.setWidth(50);
-                scoreInvadersL2.setHeight(50);
-                scoreInvadersL2.setX(getWidth()/10 + 100);
-                scoreInvadersL2.setY(getHeight()-50);
-
                 testPath=Path.load("ship_locations");
 
                 // 20 variant 1
@@ -110,19 +89,17 @@ public class GameGUI extends JFrame implements KeyListener {
             background.draw(g2, true);
 
             g2.setColor(Color.WHITE);
-            g2.drawString("SCORE " + GameTracker.Score,0, 25 );
+            g2.setFont(new Font("Arial", Font.PLAIN, 24));
+            g2.drawString(GameTracker.Score+"",25, 25 );
 
             player.draw(g2);
             shipManager.drawShips(g2);
             shipManager.moveShips();
 
-            scoreInvaders.draw(g2);
-            scoreInvadersL1.draw(g2);
-            scoreInvadersL2.draw(g2);
-
             player.checkBulletCollisions(shipManager);
             player.checkBulletPlayerCollision(shipManager);
-            //player.checkBulletPlayerCollision(shipManager);
+
+            GameTracker.drawLives(g2);
 
             //testPath.draw(g2);
         }

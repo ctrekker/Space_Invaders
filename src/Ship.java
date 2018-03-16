@@ -271,11 +271,13 @@ public class Ship {
                         //gets rid of a life in game tracker if hit
                         //need to program the life icons to disappear
                         if (GameTracker.getLives() == 0) {
-                            //this.destroy();
-                            //GameOver frame = new GameOver();
-                            //frame.setVisible(true);
+                            this.destroy();
+                            GameOver frame = new GameOver();
+                            frame.setVisible(true);
+                            Launcher.gui.dispose();
                         } else {
                             GameTracker.killLife();
+                            System.out.println(GameTracker.getLives());
                         }
                         bull.remove(j);
                     }

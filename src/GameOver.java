@@ -18,7 +18,7 @@ public class GameOver extends JFrame implements KeyListener {
 //    	GameTracker.addToLeaderboard();
 //    	GameTracker.sortScore();
     	
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 700);
         setBackground(Color.BLACK);
         setResizable(false);
@@ -57,6 +57,7 @@ public class GameOver extends JFrame implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_ENTER)
         {
             this.dispose();
+            GameTracker.reset();
             GameGUI frame = new GameGUI();
             frame.setVisible(true);
         }

@@ -235,9 +235,10 @@ public class ShipManager {
             g2.drawString("STAGE " + Stage, GameGUI.canvasWidth/2, GameGUI.canvasHeight/2);
             initStage=1;
             frame=0;
+            deltaMultiplier=1;
+            deltaOut=true;
             ships.clear();
             Stage++;
-
         }
     }
 }
