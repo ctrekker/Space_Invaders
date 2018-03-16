@@ -1,5 +1,5 @@
 public class Launcher {
-    public static final boolean DEBUG_MODE=true;
+    public static final boolean DEBUG_MODE=false;
 
     private static Launcher instance;
     public static GameGUI gui;

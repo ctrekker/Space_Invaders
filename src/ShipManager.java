@@ -16,7 +16,8 @@ public class ShipManager {
     private static int Stage = 0;
 
     private int deltaMultiplier=1;
-    final private int deltaMultiplierEnd=60;
+    final private int deltaMultiplierEnd=200;
+    private boolean deltaOut=true;
 
     private int[] variants={
             1, 2, 1, 2, 1, 2, 1, 2,
@@ -35,35 +36,7 @@ public class ShipManager {
     public void removeShip(int i) {
         ships.remove(i);
     }
-    
-//    public boolean didCollideBullet(){
-//        boolean collided = false;
-//       ArrayList<Bullet> bullets = getBullets();
-//       for(int i = 0; i < ships.size(); i++){
-//          Ship s = ships.get(i);
-//
-//          for(int j = 0; j < bullets.size(); j++){
-//             Bullet b = bullets.get(j);
-//
-//             //on top and to the right
-//             if(b.getX() + b.getWidth() >= s.getX() && b.getY() >= s.getY() &&
-//                b.getY() <= s.getY() + s.getHeight() || b.getY() + b.getHeight() >= s.getY() &&
-//                b.getY() + b.getHeight() <= s.getY() + s.getHeight()){
-//                  collided = true;
-//             }
-//
-//             //on bottom and to the left
-//             else if(b.getX() <= s.getX() + s.getWidth() &&
-//               (b.getY() >= s.getY() && b.getY()<= s.getY() + s.getHeight() ||
-//                b.getY() + b.getHeight() >= s.getY() &&
-//                b.getY() + b.getHeight() <= s.getY() + s.getHeight())){
-//                  collided = true;
-//             }
-//           }
-//        }
-//        //System.out.println(collided);
-//        return collided;
-//    }
+
 
     public ArrayList<Ship> getShips() {
         return ships;
@@ -95,14 +68,32 @@ public class ShipManager {
             initStage++;
         }
         else if(initStage==7) {
+            int i=0;
             for(Ship s : ships) {
-                if(!s.isPathfinding()) {
+                if(!s.isPathfinding()&&s.getPath()==null) {
                     int focusX=GameGUI.canvasWidth/2;
                     int focusY=50;
-                    double offsetX=s.getX()-focusX;
-                    double offsetY=s.getY()-focusY;
-                    //double incX=
+                    double offsetX=Path.load("ship_locations").getRealPoint(i).getX()-focusX;
+                    double offsetY=Path.load("ship_locations").getRealPoint(i).getY()-focusY;
+                    double incX=(offsetX/deltaMultiplierEnd)*(deltaMultiplier/2);
+                    double incY=(offsetY/deltaMultiplierEnd)*(deltaMultiplier/2);
+
+                    s.setX(focusX+offsetX+incX);
+                    s.setY(focusY+offsetY+incY);
                 }
+                i++;
+            }
+            if(deltaMultiplier<deltaMultiplierEnd&&deltaOut) {
+                deltaMultiplier++;
+            }
+            else if(deltaMultiplier>=deltaMultiplierEnd&&deltaOut) {
+                deltaOut=false;
+            }
+            if(deltaMultiplier>0&&!deltaOut) {
+                deltaMultiplier--;
+            }
+            else if(deltaMultiplier<=0&&!deltaOut) {
+                deltaOut=true;
             }
         }
 
@@ -178,21 +169,32 @@ public class ShipManager {
         int i=0;
         for(Ship s : ships) {
             if(s.getPath()!=null) {
-                if(s.getPath().getName().equals("attack-run")&&!s.isPathfinding()) {
-                    if(s.getY()>GameGUI.canvasHeight) {
-                        s.setY(-50);
-                    }
-
-                    Path toSpot=new Path();
-                    toSpot.add(new DoublePoint(s.getX()/GameGUI.canvasWidth, s.getY()/GameGUI.canvasHeight));
-                    toSpot.add(Path.load("ship_locations").get(i));
-                    toSpot.setName("attack-retreat");
-                    s.setPath(toSpot);
-                }
                 if(s.getPath().getName().equals("attack-retreat")&&!s.isPathfinding()) {
                     s.setPath((Path)null);
                     s.setRotation(-90);
                     s.setSpeed(s.getSpeed()*2);
+                }
+                try {
+                    if ((s.getPath().getName().equals("attack-run") && !s.isPathfinding()) || s.getPath().getName().equals("attack-retreat")) {
+                        if (s.getY() > GameGUI.canvasHeight) {
+                            s.setY(-50);
+                        }
+
+                        int focusX = GameGUI.canvasWidth / 2;
+                        int focusY = 50;
+                        double offsetX = Path.load("ship_locations").getRealPoint(i).getX() - focusX;
+                        double offsetY = Path.load("ship_locations").getRealPoint(i).getY() - focusY;
+                        double incX = (offsetX / deltaMultiplierEnd) * (deltaMultiplier / 2);
+                        double incY = (offsetY / deltaMultiplierEnd) * (deltaMultiplier / 2);
+
+                        Path toSpot = new Path();
+                        toSpot.add(new DoublePoint(s.getX() / GameGUI.canvasWidth, s.getY() / GameGUI.canvasHeight));
+                        toSpot.add(new DoublePoint((focusX + offsetX + incX) / GameGUI.canvasWidth, (focusY + offsetY + incY) / GameGUI.canvasHeight));
+                        toSpot.setName("attack-retreat");
+                        s.setPath(toSpot);
+                    }
+                } catch(NullPointerException e) {
+
                 }
             }
             s.draw(g2);
@@ -202,12 +204,14 @@ public class ShipManager {
             i++;
         }
         if(destroyedCount>=ships.size()) {
-            g2.drawString("STAGE " + Stage, GameGUI.canvasWidth/2, GameGUI.canvasHeight/2);
+            GameTracker.showStage=true;
+            GameTracker.showStageCounter=0;
             initStage=1;
             frame=0;
+            deltaMultiplier=1;
+            deltaOut=true;
             ships.clear();
-            Stage++;
-
+            GameTracker.stage++;
         }
     }
 }

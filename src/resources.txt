@@ -1,10 +1,15 @@
 BarkerBoss.jpeg
 Bullet.png
+BulletFlipped.png
 EnemyShip1.png
 EnemyShip2.png
 EnemyShip3a.png
 EnemyShip3b.png
+EnemyShip3a_shot.png
+EnemyShip3b_shot.png
+lazerbeam.png
 ship_player.png
+ship_captured.png
 1-1a.dat
 1-1b.dat
 1-2.dat
