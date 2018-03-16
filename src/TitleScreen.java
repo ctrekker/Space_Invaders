@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -45,6 +44,7 @@ public class TitleScreen extends JFrame implements KeyListener {
         {
             this.dispose();
             GameGUI frame = new GameGUI();
+            Launcher.gui=frame;
             frame.setVisible(true);
         }
 

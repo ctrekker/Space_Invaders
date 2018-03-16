@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -216,6 +217,7 @@ public class Ship {
             }
         } else if (path != null && pathfinding) {
             double randBullet = Math.random();
+            bulletTrigger=0.0007*GameTracker.stage;
             double multiplier = 1;
             if (path.getName().equals("attack-run")) multiplier = 10;
 
@@ -274,7 +276,7 @@ public class Ship {
                             this.destroy();
                             GameOver frame = new GameOver();
                             frame.setVisible(true);
-                            Launcher.gui.dispose();
+                            Launcher.gui.dispatchEvent(new WindowEvent(Launcher.gui, WindowEvent.WINDOW_CLOSING));
                         } else {
                             GameTracker.killLife();
                         }

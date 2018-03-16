@@ -1,6 +1,6 @@
+import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 public class GameTracker  {
 	public static int Score = 0;
@@ -11,6 +11,7 @@ public class GameTracker  {
 	private static int lives = DEFAULT_LIVES;
 	public static boolean showStage=false;
 	public static int showStageCounter=0;
+	public static boolean paused=false;
 
 
 	public static void setName(){
