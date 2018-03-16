@@ -52,6 +52,12 @@ public class GameOver extends JFrame implements KeyListener {
         setVisible(true);
     }
 
+    /*
+    These next three methods are for
+    the key pressed actions so when
+    the game over sign comes up, you need to
+    press enter to end the game.
+     */
     public void keyPressed(KeyEvent e) {
         //Enter
         if(e.getKeyCode() == KeyEvent.VK_ENTER)

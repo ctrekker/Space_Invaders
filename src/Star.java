@@ -3,7 +3,7 @@ import java.awt.*;// A Pacakge that has already been premade and we can just cal
 public class Star extends Point { //This class is when we start to make the stars
     private Color color; //Starting to set the color
     private int radius; //Making an int radius
-    public Star(int x, int y, int radius, Color color)//Saying the demension units for the star 
+    public Star(int x, int y, int radius, Color color)//Saying the demensions units for the star
      {
         super(x, y); //Call it from another class
 
@@ -16,6 +16,7 @@ public class Star extends Point { //This class is when we start to make the star
         g2.fillArc(x-radius, y-radius, radius*2, radius*2, 0, 360);
     }
 
+    //Getter and Setter methods to set the variables.
     public Color getColor() {
         return color;
     }
