@@ -1,13 +1,7 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*; // A Pacakge that has already been premade and we can just call them
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,11 +10,8 @@ public class GameGUI extends JFrame implements KeyListener {
     public static int canvasHeight;
     public Player player = new Player("name");
 
-
-
-
     public GameGUI() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800, 700);
         this.setResizable(false);
         this.addKeyListener(this);

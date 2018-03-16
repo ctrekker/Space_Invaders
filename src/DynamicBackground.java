@@ -2,7 +2,8 @@ import java.awt.*;// A Pacakge that has already been premade and we can just cal
 import java.util.ArrayList;//We Are Importing an array list from the package
 
 public class  DynamicBackground {
-    private double entropy=0.3;
+    private final double slowFactor=2.5;
+    private double entropy=0.1;
     private int colorMin=100;
 
     private ArrayList<Star> stars;
@@ -17,7 +18,7 @@ public class  DynamicBackground {
         }
 
         for(int i=0; i<stars.size(); i++) {
-            stars.get(i).setLocation(stars.get(i).x, stars.get(i).y+stars.get(i).getRadius());
+            stars.get(i).setLocation(stars.get(i).x, stars.get(i).y+(stars.get(i).getRadius()/slowFactor));
             if(stars.get(i).y>GameGUI.canvasHeight+stars.get(i).getRadius()) {
                 stars.remove(i);
             }

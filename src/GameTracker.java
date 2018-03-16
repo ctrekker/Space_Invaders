@@ -1,6 +1,6 @@
+import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 public class GameTracker  {
 	public static int Score = 0;
@@ -11,6 +11,8 @@ public class GameTracker  {
 	private static int lives = DEFAULT_LIVES;
 	public static boolean showStage=false;
 	public static int showStageCounter=0;
+	public static boolean paused=false;
+	public static String finalString;
 
 	//Getter and setter methods to set scores and names.
 	public static void setName(){
@@ -39,7 +41,8 @@ public class GameTracker  {
 	}
 	
 	public static void addToLeaderboard(){
-		leaderboard.add(getScore(), getName());
+		String leaderLine = getName() + ":: " + getScore();
+		leaderboard.add(leaderLine);
 	}
 
 	public static void sortScore(){
@@ -55,6 +58,24 @@ public class GameTracker  {
 				leaderboard.set(i+1, temporary);
 			}
 		}
+	}
+	
+	public static String printLeaderboard(){
+		finalString = "";
+		
+		if(leaderboard.size() < 10)
+			looper = leaderboard.size();
+		else
+			looper = 10;
+		
+		for(int i = 0; i < looper; i++){
+			String line = (i+1) + ". " + leaderboard.get(i) + "\n";
+			finalString += line;
+		}
+		
+		System.out.println(finalString);
+		
+		return finalString;
 	}
 
 	//This method draws the lives on the gui and sets the location of the lives on the screen.
