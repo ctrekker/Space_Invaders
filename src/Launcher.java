@@ -14,6 +14,8 @@ public class Launcher {
     public Launcher() {
 
     }
+
+    //This method runs the game gui which runs the gui which runs the all of the graphics.
     public void launch() {
         //ResourceLoader.init();
         gui = new GameGUI();

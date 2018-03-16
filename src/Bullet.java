@@ -1,3 +1,4 @@
+
 import javax.imageio.ImageIO; //A package to import images
 import java.awt.*; // A Pacakge that has already been premade and we can just call them
 import java.awt.image.BufferedImage; //To make images involved in the code
@@ -27,6 +28,11 @@ public class Bullet { //The Bullet Class
 
     private static BufferedImage bulletFlipped = null;
 
+    /*
+    These constructors set the basic demensions for all of
+    the bullets shot by the player, and by the
+    enemy ships.
+     */
 	public Bullet() {
 		this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIRECTION, DEFAULT_COLOR);
 	}

@@ -49,6 +49,7 @@ public class Ship {
     private double randomTrigger = 0.0003;
     private double bulletTrigger = 0.001;
 
+    //Ship constructors based on default constraints.
     public Ship() {
         this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_VARIATION, DEFAULT_VALUE, new Vector2D());
     }
@@ -101,6 +102,7 @@ public class Ship {
         }
     }
 
+    //This method makes the method where various items can be drawn using this.
     public void draw(Graphics2D g2) {
         if (path != null && pathfinding) {
             pathfinding = !followPath(path);
@@ -157,10 +159,12 @@ public class Ship {
         g2.setTransform(preTransform);
     }
 
+    //Destroys the ship.
     public void destroy() {
         destroyed = 0;
     }
 
+    //Sets the bullet picture, and shoots it.
     public void shootBullet() {
         if (variation != 0 && !isDestroyed() && y < GameGUI.canvasHeight * ((double) 7 / 12)) {
             Bullet b = new Bullet((int) x, (int) y);
@@ -228,6 +232,12 @@ public class Ship {
     }
 
 
+    /*
+    This method adds the bullet picture, then shoots the bullet.
+    Then it checks which ship the bullet collided with the different
+    variations of each ship, and adds the points based on the
+    variation of the ship.
+     */
     public void checkBulletCollisions(ShipManager ships) {
         for (int i = 0; i < ships.getShips().size(); i++) {
             Ship s = ships.getShips().get(i);
@@ -258,6 +268,11 @@ public class Ship {
             }
         }
     }
+    /*
+    This method checks the collision of the bullet when
+    it hits the player. When the player is hit, the method
+    also subtracts one of the lives on the bottom left.
+     */
 
     public void checkBulletPlayerCollision(ShipManager ships) {
         for (int i = 0; i < ships.getShips().size(); i++) {
@@ -287,6 +302,11 @@ public class Ship {
         }
     }
 
+    /*
+    This method contains lots of trigonometry
+    so the ships can turn and follow the path made
+    in the pathfinder.
+     */
 
     public boolean followPath(Path path) {
         if (currentPoint == 0) {
@@ -336,6 +356,7 @@ public class Ship {
     }
 
 
+    //These are a bunch of getter and setter methods for the different values needed for the ships.
     public double getX() {
         return x;
     }
