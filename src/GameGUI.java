@@ -57,7 +57,7 @@ public class GameGUI extends JFrame implements KeyListener {
                 player.setHeight(75);
                 player.setX(getWidth()/2);
                 player.setY(getHeight()-player.getWidth());
-                player.setSpeed(3);
+                player.setSpeed(5);
                 player.setDirection(0, 0);
 
                 testPath=Path.load("ship_locations");

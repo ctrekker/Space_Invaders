@@ -7,7 +7,7 @@ public class GameTracker  {
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
 	private static String name;
 	public static int stage = 0;
-	private static int DEFAULT_LIVES=3;
+	private static int DEFAULT_LIVES=2;
 	private static int lives = DEFAULT_LIVES;
 	public static boolean showStage=false;
 	public static int showStageCounter=0;
@@ -76,4 +76,8 @@ public class GameTracker  {
 		lives=DEFAULT_LIVES;
 		stage=0;
 	}
+
+    public static void addLife() {
+        lives++;
+    }
 }

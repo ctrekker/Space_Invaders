@@ -1,12 +1,23 @@
+import java.awt.*;
+
 public class Player extends Ship {  //This is the class where we are making the ship
     private Ship ship; //Instantiating The Ship
     private String name;
-    private int score;
+    private int latestExtraLifeScore=0;
 
     public Player(String name) {
         this.ship=new Ship();
         this.name=name;
-        this.score=0;
+    }
+
+    @Override
+    public void draw(Graphics2D g2, boolean move) {
+        super.draw(g2, move);
+
+        if(GameTracker.Score-latestExtraLifeScore>20000) {
+            GameTracker.addLife();
+            latestExtraLifeScore+=20000;
+        }
     }
 
     public Ship getShip() {
@@ -20,11 +31,5 @@ public class Player extends Ship {  //This is the class where we are making the 
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public int getScore() {
-        return score;
-    }
-    public void setScore(int score) {
-        this.score = score;
     }
 }

@@ -1,8 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class ShipManager {
+    private static final int maxShipSpeed=15;
     private ArrayList<Ship> ships = new ArrayList<>();
     // Current frame of the movement
     private int frame=0;
@@ -65,6 +65,7 @@ public class ShipManager {
             for(Ship s : ships) {
                 s.setPathfinding(false);
             }
+            if(shipSpeed<maxShipSpeed) shipSpeed++;
             initStage++;
         }
         else if(initStage==7) {

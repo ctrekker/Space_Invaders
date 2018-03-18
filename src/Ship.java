@@ -46,7 +46,7 @@ public class Ship {
     // Is -1 if the ship is not destroyed
     // Is 0 or above if in destruction animation sequence
     private int destroyed = -1;
-    private double randomTrigger = 0.0003;
+    private double randomTrigger = 0.0075;
     private double bulletTrigger = 0.001;
 
     //Ship constructors based on default constraints.
@@ -127,7 +127,7 @@ public class Ship {
             if (((x - width / 2 >= 0 || (x - width / 2 <= 0 && getDeltaX() > 0)) && (x + width / 2 <= GameGUI.canvasWidth || (x + width / 2 >= GameGUI.canvasWidth && getDeltaX() < 0))) || variation != 0) {
                 x += direction.getDeltaX();
             }
-            if (((y - height / 2 >= 0 || (y - height / 2 <= 0 && getDeltaY() > 0)) && (y + height / 2 <= GameGUI.canvasHeight || (y + height / 2 >= GameGUI.canvasHeight && getDeltaY() < 0))) || variation != 0) {
+            if (((y - height / 2 >= GameGUI.canvasHeight*((double)3/4) || (y - height / 2 <= GameGUI.canvasHeight*((double)3/4) && getDeltaY() > 0)) && (y + height / 2 <= GameGUI.canvasHeight || (y + height / 2 >= GameGUI.canvasHeight && getDeltaY() < 0))) || variation != 0) {
                 y += direction.getDeltaY();
             }
         }
@@ -167,7 +167,7 @@ public class Ship {
 
     //Sets the bullet picture, and shoots it.
     public void shootBullet() {
-        if (variation != 0 && !isDestroyed() && y < GameGUI.canvasHeight * ((double) 7 / 12)) {
+        if (variation != 0 && lastBullet > 5 && !isDestroyed() && y < GameGUI.canvasHeight * ((double) 7 / 12)) {
             Bullet b = new Bullet((int) x, (int) y);
 
             double playerDirection = (Launcher.gui.player.getX() - x) * (3 / (Launcher.gui.player.getY() - y));
@@ -222,7 +222,7 @@ public class Ship {
             }
         } else if (path != null && pathfinding) {
             double randBullet = Math.random();
-            bulletTrigger=0.0007*GameTracker.stage;
+            bulletTrigger=0.00083*GameTracker.stage;
             double multiplier = 1;
             if (path.getName().equals("attack-run")) multiplier = 10;
 
