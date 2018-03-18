@@ -61,23 +61,23 @@ public class GameTracker  {
 		}
 	}
 
-	public static String printLeaderboard(){
-		finalString = "";
-
-		if(leaderboard.size() < 10)
-			looper = leaderboard.size();
-		else
-			looper = 10;
-
-		for(int i = 0; i < looper; i++){
-			String line = (i+1) + ". " + leaderboard.get(i) + "\n";
-			finalString += line;
-		}
-
-		System.out.println(finalString);
-
-		return finalString;
-	}
+//	public static String printLeaderboard(){
+//		finalString = "";
+//
+//		if(leaderboard.size() < 10)
+//			looper = leaderboard.size();
+//		else
+//			looper = 10;
+//
+//		for(int i = 0; i < looper; i++){
+//			String line = (i+1) + ". " + leaderboard.get(i) + "\n";
+//			finalString += line;
+//		}
+//
+//		System.out.println(finalString);
+//
+//		return finalString;
+//	}
 
 	//This method draws the lives on the gui and sets the location of the lives on the screen.
 	public static void drawLives(Graphics2D g2) {
