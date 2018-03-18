@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ShipManager {
-    private static final int maxShipSpeed=15;
+    private static final int maxShipSpeed=13;
     private ArrayList<Ship> ships = new ArrayList<>();
     // Current frame of the movement
     private int frame=0;

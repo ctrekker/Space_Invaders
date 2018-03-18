@@ -7,6 +7,7 @@ public class Player extends Ship {
     private Ship ship; //Instantiating The Ship
     private String name;
     private int latestExtraLifeScore=0;
+    private final int extraLifeThreshold=10000;
 
     //This constructor calls the ship because that class draws the ship.
     public Player(String name) {
@@ -18,9 +19,9 @@ public class Player extends Ship {
     public void draw(Graphics2D g2, boolean move) {
         super.draw(g2, move);
 
-        if(GameTracker.Score-latestExtraLifeScore>20000) {
+        if(GameTracker.Score-latestExtraLifeScore>extraLifeThreshold) {
             GameTracker.addLife();
-            latestExtraLifeScore+=20000;
+            latestExtraLifeScore+=extraLifeThreshold;
         }
     }
 

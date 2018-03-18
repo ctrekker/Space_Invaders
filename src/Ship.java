@@ -27,6 +27,8 @@ public class Ship {
     private static BufferedImage enemyShip3a_shot = null;
     private static BufferedImage enemyShip3b_shot = null;
 
+    private double hitboxFactor=0.5;
+
     private double x;
     private double y;
     private int width;
@@ -75,7 +77,6 @@ public class Ship {
     }
 
     public Ship(int x, int y, int width, int height, int variation, int value, Vector2D direction) {
-
         this.x = x;
         this.y = y;
         this.width = width;
@@ -126,7 +127,7 @@ public class Ship {
             shipChangeCounter++;
         }
         if(variation==4||variation==6) {
-            if(shipChangeCounter<60*9*4) {
+            if(shipChangeCounter<60*8*4) {
                 variation--;
                 shipChangeCounter=0;
             }
@@ -319,8 +320,8 @@ public class Ship {
 
                 Bullet b = bull.get(j);
 
-                if (b.getX() + b.getWidth() / 2 > this.getX() - this.getWidth() / 2 && b.getX() - b.getWidth() / 2 < this.getX() + this.getWidth() / 2) {
-                    if (b.getY() + b.getHeight() / 2 > this.getY() - this.getHeight() / 2 && b.getY() - b.getHeight() / 2 < this.getY() + this.getHeight() / 2) {
+                if (b.getX() + b.getWidth() / 2 > this.getX() - (this.getWidth()*hitboxFactor) / 2 && b.getX() - b.getWidth() / 2 < this.getX() + (this.getWidth()*hitboxFactor) / 2) {
+                    if (b.getY() + b.getHeight() / 2 > this.getY() - (this.getHeight()*hitboxFactor) / 2 && b.getY() - b.getHeight() / 2 < this.getY() + (this.getHeight()*hitboxFactor) / 2) {
                         //gets rid of a life in game tracker if hit
                         //need to program the life icons to disappear
                         if (GameTracker.getLives() == 0) {
