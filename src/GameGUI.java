@@ -8,7 +8,7 @@ import java.util.TimerTask;
 public class GameGUI extends JFrame implements KeyListener {
     public static int canvasWidth;
     public static int canvasHeight;
-    public Player player = new Player("name");
+    public Player player = new Player(Launcher.playerName);
 
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,8 +59,6 @@ public class GameGUI extends JFrame implements KeyListener {
                 player.setY(getHeight()-player.getWidth());
                 player.setSpeed(5);
                 player.setDirection(0, 0);
-
-                testPath=Path.load("ship_locations");
 
                 // 20 variant 1
                 // 16 variant 2
