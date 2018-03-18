@@ -13,9 +13,11 @@ public class GameOver extends JFrame implements KeyListener {
     JLabel label4 = new JLabel();
 
     public GameOver() { //Constructor for the class
-//    	name = GameTracker.getName();
-//    	GameTracker.addToLeaderboard();
-//    	GameTracker.sortScore();
+//    	GameTracker.setName();
+//     	GameTracker.addToLeaderboard();
+//     	GameTracker.sortScore();
+//     	GameTracker.printLeaderboard();
+	    //there is something very wrong with the input name thing?
     	
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 700);
@@ -38,8 +40,8 @@ public class GameOver extends JFrame implements KeyListener {
         label3.setForeground(Color.WHITE);
         
         label4.setFont(new Font("Courier New", Font.BOLD, 15));
-        //label3.setText(GameTracker.finalString);
-        label3.setForeground(Color.WHITE);
+        //label4.setText(GameTracker.finalString);
+        label4.setForeground(Color.WHITE);
 
         panel.add(label);
         panel.add(label2);

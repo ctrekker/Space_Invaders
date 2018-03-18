@@ -13,8 +13,9 @@ public class GameTracker  {
 	public static int showStageCounter=0;
 	public static boolean paused=false;
 	public static int pausedCount=0;
+	public static String finalString;
 
-
+	//Getter and setter methods to set scores and names.
 	public static void setName(){
 		name = JOptionPane.showInputDialog("Enter your name:: ");
 	}
@@ -27,6 +28,7 @@ public class GameTracker  {
 		return lives;
 	}
 
+	//Subtracts lives when the player ship is hit.
 	public static void killLife() {
 		lives -= 1;
 	}
@@ -40,7 +42,8 @@ public class GameTracker  {
 	}
 	
 	public static void addToLeaderboard(){
-		leaderboard.add(getScore(), getName());
+		String leaderLine = getName() + ":: " + getScore();
+		leaderboard.add(leaderLine);
 	}
 	
 	public static void sortScore(){
@@ -58,6 +61,25 @@ public class GameTracker  {
 		}
 	}
 
+	public static String printLeaderboard(){
+		finalString = "";
+
+		if(leaderboard.size() < 10)
+			looper = leaderboard.size();
+		else
+			looper = 10;
+
+		for(int i = 0; i < looper; i++){
+			String line = (i+1) + ". " + leaderboard.get(i) + "\n";
+			finalString += line;
+		}
+
+		System.out.println(finalString);
+
+		return finalString;
+	}
+
+	//This method draws the lives on the gui and sets the location of the lives on the screen.
 	public static void drawLives(Graphics2D g2) {
 		for( int i= 0; i < lives; i++)
 		{
