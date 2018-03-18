@@ -17,13 +17,15 @@ public class Ship {
     public static final int DEFAULT_VALUE = 1;
     public static final Color DEFAULT_COLOR = Color.WHITE;//Setting the color to white
 
-    private static final int[] rotationOffsets = {0, 90, 90, 90};
+    private static final int[] rotationOffsets = {0, 90, 90, 90, 90, 90, 90};
 
     public static BufferedImage playerShip = null;
     private static BufferedImage enemyShip1 = null;
     private static BufferedImage enemyShip2 = null;
     private static BufferedImage enemyShip3a = null;
     private static BufferedImage enemyShip3b = null;
+    private static BufferedImage enemyShip3a_shot = null;
+    private static BufferedImage enemyShip3b_shot = null;
 
     private double x;
     private double y;
@@ -48,6 +50,8 @@ public class Ship {
     private int destroyed = -1;
     private double randomTrigger = 0.0075;
     private double bulletTrigger = 0.001;
+
+    public static int shipChangeCounter=0;
 
     //Ship constructors based on default constraints.
     public Ship() {
@@ -96,6 +100,12 @@ public class Ship {
             if (enemyShip3b == null) {
                 enemyShip3b = ImageIO.read(new File("res/img/EnemyShip3b.png"));
             }
+            if (enemyShip3a_shot == null) {
+                enemyShip3a_shot = ImageIO.read(new File("res/img/EnemyShip3a_shot.png"));
+            }
+            if (enemyShip3b_shot == null) {
+                enemyShip3b_shot = ImageIO.read(new File("res/img/EnemyShip3b_shot.png"));
+            }
 
         } catch (IOException e) {
             System.out.println("Missing image resource!");
@@ -107,6 +117,20 @@ public class Ship {
         if (path != null && pathfinding) {
             pathfinding = !followPath(path);
             if (Launcher.DEBUG_MODE && !isDestroyed()) path.draw(g2);
+        }
+
+        if(variation==3||variation==5) {
+            if(shipChangeCounter>60*10*4) {
+                variation++;
+            }
+            shipChangeCounter++;
+        }
+        if(variation==4||variation==6) {
+            if(shipChangeCounter<60*9*4) {
+                variation--;
+                shipChangeCounter=0;
+            }
+            shipChangeCounter--;
         }
 
         lastBullet++;
@@ -150,6 +174,10 @@ public class Ship {
                 g2.drawImage(enemyShip3b, -width / 2, -height / 2, width, height, null);
             } else if (variation == 4) {
                 g2.drawImage(enemyShip3a, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 5) {
+                g2.drawImage(enemyShip3b_shot, -width / 2, -height / 2, width, height, null);
+            } else if (variation == 6) {
+                g2.drawImage(enemyShip3a_shot, -width / 2, -height / 2, width, height, null);
             } else {
                 Color c = Color.GREEN;
                 g2.setColor(c);
@@ -180,7 +208,7 @@ public class Ship {
             bullets.add(b);
             lastBullet = 0;
         } else if (variation == 0 && lastBullet > 15 && !isDestroyed()) {
-            Bullet b = new Bullet((int) x, (int) y);
+            Bullet b = new Bullet((int) x, (int) y, Player.DEFAULT_BULLET_WIDTH, Player.DEFAULT_BULLET_HEIGHT);
             bullets.add(b);
             lastBullet = 0;
         }
@@ -253,15 +281,23 @@ public class Ship {
                     // Check for y axis bounds
                     if (b.getY() + b.getHeight() / 2 > s.getY() - s.getHeight() / 2 && b.getY() - b.getHeight() / 2 < s.getY() + s.getHeight() / 2) {
                         // Bullet collided, so handle bullet collision
-                        s.destroy();
-                        if (s.variation == 1) {
-                            GameTracker.Score = GameTracker.Score + 50;
+                        if(s.variation==3) {
+                            s.variation=5;
                         }
-                        if (s.variation == 2) {
-                            GameTracker.Score = GameTracker.Score + 80;
+                        else if(s.variation==4) {
+                            s.variation=6;
                         }
-                        if (s.variation == 3) {
-                            GameTracker.Score = GameTracker.Score + 400;
+                        else {
+                            s.destroy();
+                            if (s.variation == 1) {
+                                GameTracker.Score = GameTracker.Score + 50;
+                            }
+                            if (s.variation == 2) {
+                                GameTracker.Score = GameTracker.Score + 80;
+                            }
+                            if (s.variation == 3) {
+                                GameTracker.Score = GameTracker.Score + 400;
+                            }
                         }
                         bullets.remove(j);
                     }

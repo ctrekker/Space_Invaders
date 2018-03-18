@@ -1,6 +1,9 @@
 import java.awt.*;
 
-public class Player extends Ship {  //This is the class where we are making the ship
+//This is the class where we are making the ship
+public class Player extends Ship {
+    public static final int DEFAULT_BULLET_WIDTH = 7;
+    public static final int DEFAULT_BULLET_HEIGHT = 25;
     private Ship ship; //Instantiating The Ship
     private String name;
     private int latestExtraLifeScore=0;

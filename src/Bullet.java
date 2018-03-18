@@ -11,7 +11,7 @@ public class Bullet { //The Bullet Class
 
 	private static final int DEFAULT_X=0; //Setting the X Value Of The Bullet
 	private static final int DEFAULT_Y=0; //Setting the Y Value Of The Bullet
-	private static final int DEFAULT_WIDTH=11; //Setting the Width Value Of The Bullet
+	private static final int DEFAULT_WIDTH=10; //Setting the Width Value Of The Bullet
 	private static final int DEFAULT_HEIGHT=25;//Setting the Height Value Of The Bullet
 	private static final Color DEFAULT_COLOR=Color.RED;//Setting The Color To Red
     private static final Vector2D DEFAULT_DIRECTION=new Vector2D(0, -DEFAULT_SPEED); //Shows the direction of which the bullet will and continue to go in
@@ -20,7 +20,7 @@ public class Bullet { //The Bullet Class
 	private int y; //Instantiating the y
 	private int width; //Instantaiting the width
 	private int height; //Instantiaing the height
-   private Vector2D direction; //Instantiaing the Vector2D direction
+    private Vector2D direction; //Instantiaing the Vector2D direction
 	private Color color; //Instantiating the color
 	private int variant=0; //Setting the variant value to 0
 

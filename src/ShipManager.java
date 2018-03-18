@@ -13,10 +13,12 @@ public class ShipManager {
     // The number of ships which have reached their final position
     private int shipsComplete=0;
     private int shipSpeed=9;
+    private final int shipWidth =41;
+    private final int shipHeight=41;
     private static int Stage = 0;
 
     private int deltaMultiplier=1;
-    final private int deltaMultiplierEnd=200;
+    final private int deltaMultiplierEnd=250;
     private boolean deltaOut=true;
 
     private int[] variants={
@@ -64,6 +66,7 @@ public class ShipManager {
         else if(initStage==6) {
             for(Ship s : ships) {
                 s.setPathfinding(false);
+                s.shipChangeCounter=0;
             }
             if(shipSpeed<maxShipSpeed) shipSpeed++;
             initStage++;
@@ -76,8 +79,8 @@ public class ShipManager {
                     int focusY=50;
                     double offsetX=Path.load("ship_locations").getRealPoint(i).getX()-focusX;
                     double offsetY=Path.load("ship_locations").getRealPoint(i).getY()-focusY;
-                    double incX=(offsetX/deltaMultiplierEnd)*(deltaMultiplier/2);
-                    double incY=(offsetY/deltaMultiplierEnd)*(deltaMultiplier/2);
+                    double incX=(offsetX/deltaMultiplierEnd)*(deltaMultiplier/1.4);
+                    double incY=(offsetY/deltaMultiplierEnd)*(deltaMultiplier/1.4);
 
                     s.setX(focusX+offsetX+incX);
                     s.setY(focusY+offsetY+incY);
@@ -137,6 +140,8 @@ public class ShipManager {
             s1.setVariation(1);
             s1.setSpeed(shipSpeed);
             s1.setVariation(variants[ships.size()]);
+            s1.setWidth(shipWidth);
+            s1.setHeight(shipHeight);
             ships.add(s1);
             shipAddCount++;
 
@@ -146,6 +151,8 @@ public class ShipManager {
                 s2.setVariation(2);
                 s2.setSpeed(shipSpeed);
                 s2.setVariation(variants[ships.size()]);
+                s2.setWidth(shipWidth);
+                s2.setHeight(shipHeight);
                 ships.add(s2);
                 shipAddCount++;
             }
