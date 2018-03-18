@@ -91,6 +91,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
             player.checkBulletCollisions(shipManager);
             player.checkBulletPlayerCollision(shipManager);
+            player.checkShipPlayerCollisions(shipManager);
 
             GameTracker.drawLives(g2);
 

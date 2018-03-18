@@ -282,24 +282,7 @@ public class Ship {
                     // Check for y axis bounds
                     if (b.getY() + b.getHeight() / 2 > s.getY() - s.getHeight() / 2 && b.getY() - b.getHeight() / 2 < s.getY() + s.getHeight() / 2) {
                         // Bullet collided, so handle bullet collision
-                        if(s.variation==3) {
-                            s.variation=5;
-                        }
-                        else if(s.variation==4) {
-                            s.variation=6;
-                        }
-                        else {
-                            s.destroy();
-                            if (s.variation == 1) {
-                                GameTracker.Score = GameTracker.Score + 50;
-                            }
-                            if (s.variation == 2) {
-                                GameTracker.Score = GameTracker.Score + 80;
-                            }
-                            if (s.variation == 3) {
-                                GameTracker.Score = GameTracker.Score + 400;
-                            }
-                        }
+                        doShipCollision(s);
                         bullets.remove(j);
                     }
                 }
@@ -324,22 +307,56 @@ public class Ship {
                     if (b.getY() + b.getHeight() / 2 > this.getY() - (this.getHeight()*hitboxFactor) / 2 && b.getY() - b.getHeight() / 2 < this.getY() + (this.getHeight()*hitboxFactor) / 2) {
                         //gets rid of a life in game tracker if hit
                         //need to program the life icons to disappear
-                        if (GameTracker.getLives() == 0) {
-                            this.destroy();
-                            GameOver frame = new GameOver();
-                            frame.setVisible(true);
-                            Launcher.gui.dispatchEvent(new WindowEvent(Launcher.gui, WindowEvent.WINDOW_CLOSING));
-                        } else {
-                            GameTracker.killLife();
-                            Player player=Launcher.gui.player;
-                            player.setX(GameGUI.canvasWidth/2);
-                            player.setY(GameGUI.canvasHeight-player.getHeight()*1.5);
-                            GameTracker.paused=true;
-                            GameTracker.pausedCount=0;
-                        }
+                        doPlayerCollision();
                         bull.remove(j);
                     }
                 }
+            }
+        }
+    }
+    public void checkShipPlayerCollisions(ShipManager ships) {
+        for (int i = 0; i < ships.getShips().size(); i++) {
+            Ship s=ships.getShips().get(i);
+            if(s.getX()+s.getWidth()/2>this.getX()-(this.getWidth()*hitboxFactor)/2&&s.getX()-s.getWidth()/2<this.getX()-(this.getWidth()*hitboxFactor)/2) {
+                if(s.getY()+s.getHeight()/2>this.getY()-(this.getHeight()*hitboxFactor)/2&&s.getY()-s.getHeight()/2<this.getY()-(this.getHeight()*hitboxFactor)/2) {
+                    doPlayerCollision();
+                    s.destroy();
+                }
+            }
+        }
+    }
+    private void doPlayerCollision() {
+        if (GameTracker.getLives() == 0) {
+            this.destroy();
+            GameOver frame = new GameOver();
+            frame.setVisible(true);
+            Launcher.gui.dispatchEvent(new WindowEvent(Launcher.gui, WindowEvent.WINDOW_CLOSING));
+        } else {
+            GameTracker.killLife();
+            Player player=Launcher.gui.player;
+            player.setX(GameGUI.canvasWidth/2);
+            player.setY(GameGUI.canvasHeight-player.getHeight()*1.5);
+            GameTracker.paused=true;
+            GameTracker.pausedCount=0;
+        }
+    }
+    private void doShipCollision(Ship s) {
+        if(s.variation==3) {
+            s.variation=5;
+        }
+        else if(s.variation==4) {
+            s.variation=6;
+        }
+        else {
+            s.destroy();
+            if (s.variation == 1) {
+                GameTracker.Score = GameTracker.Score + 50;
+            }
+            if (s.variation == 2) {
+                GameTracker.Score = GameTracker.Score + 80;
+            }
+            if (s.variation == 3) {
+                GameTracker.Score = GameTracker.Score + 400;
             }
         }
     }
