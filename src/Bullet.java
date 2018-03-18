@@ -68,9 +68,11 @@ public class Bullet { //The Bullet Class
 		}
 	}
 
-	public void draw(Graphics2D g2) {
-	    x+=direction.getDeltaX();
-	    y+=direction.getDeltaY();
+	public void draw(Graphics2D g2, boolean move) {
+		if(move) {
+			x += direction.getDeltaX();
+			y += direction.getDeltaY();
+		}
 
 		if(variant==0) g2.drawImage(bullet, x-width/2, y-height/2, width, height, null);
 		else if(variant==1) g2.drawImage(bulletFlipped, x-width/2, y-height/2, width, height, null);

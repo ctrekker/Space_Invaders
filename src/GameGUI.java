@@ -83,9 +83,11 @@ public class GameGUI extends JFrame implements KeyListener {
             g2.setFont(new Font("Arial", Font.PLAIN, 24));
             g2.drawString(GameTracker.Score+"",25, 25 );
 
-            player.draw(g2);
-            shipManager.drawShips(g2);
-            shipManager.moveShips();
+            player.draw(g2, !GameTracker.paused);
+            shipManager.drawShips(g2, !GameTracker.paused);
+            if(!GameTracker.paused) {
+                shipManager.moveShips();
+            }
 
             player.checkBulletCollisions(shipManager);
             player.checkBulletPlayerCollision(shipManager);
@@ -100,6 +102,13 @@ public class GameGUI extends JFrame implements KeyListener {
                 GameTracker.showStageCounter++;
 
                 g2.drawString("STAGE " + GameTracker.stage, GameGUI.canvasWidth/2-50, GameGUI.canvasHeight/2);
+            }
+
+            if(GameTracker.paused) {
+                if(GameTracker.pausedCount>180) {
+                    GameTracker.paused=false;
+                }
+                GameTracker.pausedCount++;
             }
         }
     }

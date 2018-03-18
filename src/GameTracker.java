@@ -12,6 +12,7 @@ public class GameTracker  {
 	public static boolean showStage=false;
 	public static int showStageCounter=0;
 	public static boolean paused=false;
+	public static int pausedCount=0;
 
 
 	public static void setName(){

@@ -103,7 +103,7 @@ public class Ship {
     }
 
     //This method makes the method where various items can be drawn using this.
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, boolean move) {
         if (path != null && pathfinding) {
             pathfinding = !followPath(path);
             if (Launcher.DEBUG_MODE && !isDestroyed()) path.draw(g2);
@@ -123,16 +123,17 @@ public class Ship {
         //else rotation+=-(360-Math.abs(desiredRotation-rotation))/5;
         rotation = desiredRotation;
 
-
-        if (((x - width / 2 >= 0 || (x - width / 2 <= 0 && getDeltaX() > 0)) && (x + width / 2 <= GameGUI.canvasWidth || (x + width / 2 >= GameGUI.canvasWidth && getDeltaX() < 0))) || variation != 0) {
-            x += direction.getDeltaX();
-        }
-        if (((y - height / 2 >= 0 || (y - height / 2 <= 0 && getDeltaY() > 0)) && (y + height / 2 <= GameGUI.canvasHeight || (y + height / 2 >= GameGUI.canvasHeight && getDeltaY() < 0))) || variation != 0) {
-            y += direction.getDeltaY();
+        if(move) {
+            if (((x - width / 2 >= 0 || (x - width / 2 <= 0 && getDeltaX() > 0)) && (x + width / 2 <= GameGUI.canvasWidth || (x + width / 2 >= GameGUI.canvasWidth && getDeltaX() < 0))) || variation != 0) {
+                x += direction.getDeltaX();
+            }
+            if (((y - height / 2 >= 0 || (y - height / 2 <= 0 && getDeltaY() > 0)) && (y + height / 2 <= GameGUI.canvasHeight || (y + height / 2 >= GameGUI.canvasHeight && getDeltaY() < 0))) || variation != 0) {
+                y += direction.getDeltaY();
+            }
         }
 
         for (Bullet bullet : bullets) {
-            bullet.draw(g2);
+            bullet.draw(g2, move);
         }
 
         AffineTransform preTransform = g2.getTransform();
@@ -273,7 +274,6 @@ public class Ship {
     it hits the player. When the player is hit, the method
     also subtracts one of the lives on the bottom left.
      */
-
     public void checkBulletPlayerCollision(ShipManager ships) {
         for (int i = 0; i < ships.getShips().size(); i++) {
             Ship s = ships.getShips().get(i);
@@ -294,6 +294,11 @@ public class Ship {
                             Launcher.gui.dispatchEvent(new WindowEvent(Launcher.gui, WindowEvent.WINDOW_CLOSING));
                         } else {
                             GameTracker.killLife();
+                            Player player=Launcher.gui.player;
+                            player.setX(GameGUI.canvasWidth/2);
+                            player.setY(GameGUI.canvasHeight-player.getHeight()*1.5);
+                            GameTracker.paused=true;
+                            GameTracker.pausedCount=0;
                         }
                         bull.remove(j);
                     }

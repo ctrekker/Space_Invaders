@@ -151,7 +151,7 @@ public class ShipManager {
         }
         return false;
     }
-    public void drawShips(Graphics2D g2) {
+    public void drawShips(Graphics2D g2, boolean move) {
         int destroyedCount=0;
         int attackingCount=0;
         for(Ship s : ships) {
@@ -197,7 +197,7 @@ public class ShipManager {
 
                 }
             }
-            s.draw(g2);
+            s.draw(g2, move);
             s.setRandomTrigger((0.005/ships.size())*destroyedCount);
             s.randomTick(attackingCount<2);
 
