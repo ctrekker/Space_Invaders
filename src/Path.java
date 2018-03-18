@@ -121,12 +121,10 @@ public class Path extends ArrayList<DoublePoint> {
 
         Path out=new Path();
 
-        String path="res/path/"+name+".dat";
-        File file=new File(path);
         try {
             DataInputStream in=new DataInputStream(
                     new BufferedInputStream(
-                            new FileInputStream(file)));
+                            Launcher.getInstance().getClass().getResourceAsStream("/res/path/"+name+".dat")));
 
             boolean eof=false;
             while(!eof) {
@@ -142,7 +140,7 @@ public class Path extends ArrayList<DoublePoint> {
 
             loaded.put(name, out);
         }
-        catch(FileNotFoundException e) {
+        catch(Exception e) {
             System.out.println("Missing resource with name of \""+name+"\"");
         }
         out.setName(name);

@@ -1,9 +1,8 @@
 
-import javax.imageio.ImageIO; //A package to import images
-import java.awt.*; // A Pacakge that has already been premade and we can just call them
-import java.awt.image.BufferedImage; //To make images involved in the code
-import java.io.File; //Files that are on the Java System
-import java.io.IOException; //Tells when there is an input or output error
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 
 public class Bullet { //The Bullet Class
@@ -55,10 +54,10 @@ public class Bullet { //The Bullet Class
 
 		try {
 			if (bullet == null) {
-				bullet = ImageIO.read(new File("res/img/lazerbeam.png"));
+				bullet = ImageIO.read(getClass().getResourceAsStream("res/img/lazerbeam.png"));
 			}
 			if(bulletFlipped == null) {
-			    bulletFlipped=ImageIO.read(new File("res/img/BulletFlipped.png"));
+			    bulletFlipped=ImageIO.read(getClass().getResourceAsStream("res/img/BulletFlipped.png"));
             }
 
 		}

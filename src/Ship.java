@@ -1,11 +1,10 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.*;// A Package that has already been premade and we can just call them
 
 public class Ship {
     public static final int DEFAULT_SPEED = 6;
@@ -87,25 +86,25 @@ public class Ship {
 
         try {
             if (playerShip == null) {
-                playerShip = ImageIO.read(new File("res/img/ship_player.png"));
+                playerShip = ImageIO.read(getClass().getResourceAsStream("/res/img/ship_player.png"));
             }
             if (enemyShip1 == null) {
-                enemyShip1 = ImageIO.read(new File("res/img/EnemyShip1.png"));
+                enemyShip1 = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip1.png"));
             }
             if (enemyShip2 == null) {
-                enemyShip2 = ImageIO.read(new File("res/img/EnemyShip2.png"));
+                enemyShip2 = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip2.png"));
             }
             if (enemyShip3a == null) {
-                enemyShip3a = ImageIO.read(new File("res/img/EnemyShip3a.png"));
+                enemyShip3a = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip3a.png"));
             }
             if (enemyShip3b == null) {
-                enemyShip3b = ImageIO.read(new File("res/img/EnemyShip3b.png"));
+                enemyShip3b = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip3b.png"));
             }
             if (enemyShip3a_shot == null) {
-                enemyShip3a_shot = ImageIO.read(new File("res/img/EnemyShip3a_shot.png"));
+                enemyShip3a_shot = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip3a_shot.png"));
             }
             if (enemyShip3b_shot == null) {
-                enemyShip3b_shot = ImageIO.read(new File("res/img/EnemyShip3b_shot.png"));
+                enemyShip3b_shot = ImageIO.read(getClass().getResourceAsStream("res/img/EnemyShip3b_shot.png"));
             }
 
         } catch (IOException e) {
