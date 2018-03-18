@@ -11,16 +11,18 @@ public class  DynamicBackground {
     public DynamicBackground() {
         stars=new ArrayList<>();
     }
-    public void draw(Graphics2D g2, boolean show) {
-        if(Math.random()<entropy) {
+    public void draw(Graphics2D g2, boolean show, boolean move) {
+        if(Math.random()<entropy&&move) {
             int col=Util.random(colorMin, 255);
             stars.add(new Star(Util.random(0, GameGUI.canvasWidth), 0, Util.random(2, 4), new Color(col, col, col)));
         }
 
-        for(int i=0; i<stars.size(); i++) {
-            stars.get(i).setLocation(stars.get(i).x, stars.get(i).y+(stars.get(i).getRadius()/slowFactor));
-            if(stars.get(i).y>GameGUI.canvasHeight+stars.get(i).getRadius()) {
-                stars.remove(i);
+        if(move) {
+            for (int i = 0; i < stars.size(); i++) {
+                stars.get(i).setLocation(stars.get(i).x, stars.get(i).y + (stars.get(i).getRadius() / slowFactor));
+                if (stars.get(i).y > GameGUI.canvasHeight + stars.get(i).getRadius()) {
+                    stars.remove(i);
+                }
             }
         }
 
@@ -35,5 +37,8 @@ public class  DynamicBackground {
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, GameGUI.canvasWidth, GameGUI.canvasHeight);
         }
+    }
+    public void draw(Graphics2D g2, boolean show) {
+        draw(g2, show, true);
     }
 }

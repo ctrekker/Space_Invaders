@@ -250,7 +250,7 @@ public class Ship {
             }
         } else if (path != null && pathfinding) {
             double randBullet = Math.random();
-            bulletTrigger=0.00083*GameTracker.stage;
+            bulletTrigger=0.0007*GameTracker.stage;
             double multiplier = 1;
             if (path.getName().equals("attack-run")) multiplier = 10;
 
@@ -316,6 +316,7 @@ public class Ship {
     public void checkShipPlayerCollisions(ShipManager ships) {
         for (int i = 0; i < ships.getShips().size(); i++) {
             Ship s=ships.getShips().get(i);
+            if(s.isDestroyed()) continue;
             if(s.getX()+s.getWidth()/2>this.getX()-(this.getWidth()*hitboxFactor)/2&&s.getX()-s.getWidth()/2<this.getX()-(this.getWidth()*hitboxFactor)/2) {
                 if(s.getY()+s.getHeight()/2>this.getY()-(this.getHeight()*hitboxFactor)/2&&s.getY()-s.getHeight()/2<this.getY()-(this.getHeight()*hitboxFactor)/2) {
                     doPlayerCollision();

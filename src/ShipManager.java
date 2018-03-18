@@ -68,7 +68,7 @@ public class ShipManager {
                 s.setPathfinding(false);
                 s.shipChangeCounter=0;
             }
-            if(shipSpeed<maxShipSpeed) shipSpeed++;
+            if(shipSpeed<maxShipSpeed&&GameTracker.stage%3==0) shipSpeed++;
             initStage++;
         }
         else if(initStage==7) {
