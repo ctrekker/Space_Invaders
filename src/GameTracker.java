@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameTracker  {
+    public static boolean shouldClose=true;
 	public static int Score = 0;
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
 	private static String name;

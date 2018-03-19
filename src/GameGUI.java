@@ -17,6 +17,13 @@ public class GameGUI extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.add(new GameGraphics());
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if(GameTracker.shouldClose) System.exit(0);
+            }
+        });
+
         this.setVisible(true);
     }
 

@@ -330,7 +330,9 @@ public class Ship {
             this.destroy();
             GameOver frame = new GameOver();
             frame.setVisible(true);
+            GameTracker.shouldClose=false;
             Launcher.gui.dispatchEvent(new WindowEvent(Launcher.gui, WindowEvent.WINDOW_CLOSING));
+            GameTracker.shouldClose=true;
         } else {
             GameTracker.killLife();
             Player player=Launcher.gui.player;

@@ -124,6 +124,13 @@ public class GameOver extends JFrame implements KeyListener {
 
         add(panel);
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if(GameTracker.shouldClose) System.exit(0);
+            }
+        });
+
         setVisible(true);
     }
 
