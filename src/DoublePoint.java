@@ -1,3 +1,8 @@
+//A+ Computer Science  -  www.apluscompsci.com
+//Names - Amber, Akash, Arjun, Connor, Nihal, Narendhar, Sonia
+//Date - 3/24/18
+//Class - AP Comp Sci Period 7
+//Lab  - Galaga
 public class DoublePoint { //Class for the Double Point
     private double x; //Making x a double
     private double y; //Making y a double

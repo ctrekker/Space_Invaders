@@ -1,3 +1,9 @@
+//A+ Computer Science  -  www.apluscompsci.com
+//Names - Amber, Akash, Arjun, Connor, Nihal, Narendhar, Sonia
+//Date - 3/24/18
+//Class - AP Comp Sci Period 7
+//Lab  - Galaga
+
 // Stores double values corresponding on a 2D plane
 public class Vector2D {
     private double deltaX;

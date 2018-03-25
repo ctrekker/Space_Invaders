@@ -1,3 +1,8 @@
+//A+ Computer Science  -  www.apluscompsci.com
+//Names - Amber, Akash, Arjun, Connor, Nihal, Narendhar, Sonia
+//Date - 3/24/18
+//Class - AP Comp Sci Period 7
+//Lab  - Galaga
 import java.awt.*;
 
 //This is the class where we are making the ship

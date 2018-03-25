@@ -1,3 +1,8 @@
+//A+ Computer Science  -  www.apluscompsci.com
+//Names - Amber, Akash, Arjun, Connor, Nihal, Narendhar, Sonia
+//Date - 3/24/18
+//Class - AP Comp Sci Period 7
+//Lab  - Galaga
 import java.awt.*;// A Pacakge that has already been premade and we can just call them
 import java.util.ArrayList;//We Are Importing an array list from the package
 
