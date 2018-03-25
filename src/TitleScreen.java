@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+// Not used
+// Could be used in the future for startup
 public class TitleScreen extends JFrame implements KeyListener {
 
 
@@ -38,6 +40,7 @@ public class TitleScreen extends JFrame implements KeyListener {
 
     }
 
+    // Handle when the user presses a key (specifically enter)
     public void keyPressed(KeyEvent e) {
         //Enter
         if(e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -50,11 +53,11 @@ public class TitleScreen extends JFrame implements KeyListener {
 
     }
 
-
+    // Dummy interface implementation
     public void keyReleased(KeyEvent e) {
 
     }
-
+    // Dummy interface implementation
     public void keyTyped(KeyEvent e) {
 
     }

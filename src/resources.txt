@@ -1,4 +1,3 @@
-BarkerBoss.jpeg
 Bullet.png
 BulletFlipped.png
 EnemyShip1.png

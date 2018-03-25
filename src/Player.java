@@ -15,10 +15,12 @@ public class Player extends Ship {
         this.name=name;
     }
 
+    // Draws the player, as well as the underlying ship
     @Override
     public void draw(Graphics2D g2, boolean move) {
         super.draw(g2, move);
 
+        // Handle extra life stuff
         if(GameTracker.Score-latestExtraLifeScore>extraLifeThreshold) {
             GameTracker.addLife();
             latestExtraLifeScore+=extraLifeThreshold;

@@ -2,7 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+// Tracks almost all game properties within one mostly-static class
+// Provides a standardized way of storing and accessing game-specific details and info
 public class GameTracker  {
+	// Various instance methods, declared public/private based
+	// on external needs
     public static boolean shouldClose=true;
 	public static int Score = 0;
 	private static ArrayList<String> leaderboard = new ArrayList<String>();
@@ -20,11 +24,9 @@ public class GameTracker  {
 	public static void setName(){
 		name = JOptionPane.showInputDialog("Enter your name:: ");
 	}
-	
 	public static String getName(){
 		return name;
 	}
-	
 	public static int getLives() {
 		return lives;
 	}
@@ -33,20 +35,24 @@ public class GameTracker  {
 	public static void killLife() {
 		lives -= 1;
 	}
-	
 	public static void setScore(Ship ship){
 		Score += ship.getVariation() * 100;
 	}
-	
 	public static int getScore(){
 		return Score;
 	}
-	
+
+	// Unused
+	// Proof-of-concept leaderboard system
+	// Didn't get used due to server-side nature of the worldwide leaderboard
 	public static void addToLeaderboard(){
 		String leaderLine = getName() + ":: " + getScore();
 		leaderboard.add(leaderLine);
 	}
-	
+
+	// Unused
+	// Proof-of-concept leaderboard sorting algorithm
+	// Didn't get used for same reasons as addToLeaderboard()
 	public static void sortScore(){
 		for(int i = 0; i < leaderboard.size() - 1; i++){
 			String temporary = leaderboard.get(i);
@@ -62,6 +68,7 @@ public class GameTracker  {
 		}
 	}
 
+	// USED FOR DEBUGGING
 //	public static String printLeaderboard(){
 //		finalString = "";
 //
@@ -89,17 +96,19 @@ public class GameTracker  {
 	}
 
 	
-
+	// Returns the leaderboard as an arrayList (UNUSED)
 	public static ArrayList<String> getLeaderboard(){
 		return leaderboard;
 	}
 
+	// Resets various game properties
 	public static void reset() {
 		Score=0;
 		lives=DEFAULT_LIVES;
 		stage=0;
 	}
 
+	// Add a life to the life tracker
     public static void addLife() {
         lives++;
     }

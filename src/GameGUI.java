@@ -5,11 +5,17 @@ import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+Main class responsible for managing all things involving the front-end game interface
+ */
 public class GameGUI extends JFrame implements KeyListener {
+    // Stores the width and height of the canvas so other classes can use those values
     public static int canvasWidth;
     public static int canvasHeight;
+    // Player object which stores info about the player
     public Player player = new Player(Launcher.playerName);
 
+    // Construct the frame
     public GameGUI() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800, 700);
@@ -27,12 +33,16 @@ public class GameGUI extends JFrame implements KeyListener {
         this.setVisible(true);
     }
 
-    
+    // Sub-class which takes care of all things custom graphics related
     class GameGraphics extends Component {
+        // See ShipManager class for info on this EXTREMELY COMPLEX class
         public ShipManager shipManager;
+        // Background object (see DynamicBackground for more info)
         DynamicBackground background;
+        // Whether or not its the first frame since startup
         boolean firstTime=true;
 
+        // Constructor (init stuff)
         public GameGraphics() {
             background=new DynamicBackground();
 
@@ -45,7 +55,10 @@ public class GameGUI extends JFrame implements KeyListener {
             }, 10, (int)(1000.0/60));
         }
 
+        // Variable used in testing for path stuff
         Path testPath;
+        // Draw the component given a graphics object
+        // Run theoretically, 60 times a second
         public void paint(Graphics g) {
             Graphics2D g2=(Graphics2D)g;
             super.paint(g);
@@ -118,6 +131,7 @@ public class GameGUI extends JFrame implements KeyListener {
             }
         }
     }
+    // Key handler for when keys are pushed DOWN
     public void keyPressed(KeyEvent e) {
         // Left arrow
         if (e.getKeyCode() == 37 || e.getKeyCode() == 65) {
@@ -138,7 +152,7 @@ public class GameGUI extends JFrame implements KeyListener {
 
     }
 
-
+    // Key handler for when keys are let UP
     public void keyReleased(KeyEvent e) {
         // Left arrow or right arrow
         if (e.getKeyCode() == 37 || e.getKeyCode() == 39 || e.getKeyCode() == 65 || e.getKeyCode() == 68 ) {
@@ -154,6 +168,7 @@ public class GameGUI extends JFrame implements KeyListener {
         }
     }
 
+    // Dummy implemented method (unused)
     public void keyTyped(KeyEvent e) {
 
     }

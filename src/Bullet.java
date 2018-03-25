@@ -67,6 +67,11 @@ public class Bullet { //The Bullet Class
 		}
 	}
 
+	/*
+	Draws the Bullet object on a given canvas.
+	Move boolean instructs whether or not movement calculations
+	should be performed.
+	 */
 	public void draw(Graphics2D g2, boolean move) {
 		if(move) {
 			x += direction.getDeltaX();
@@ -77,6 +82,7 @@ public class Bullet { //The Bullet Class
 		else if(variant==1) g2.drawImage(bulletFlipped, x-width/2, y-height/2, width, height, null);
 	}
 
+	// Lots of getters and setters...
     public int getX() {//Making a get method for the x
         return x; //Returning the x
     }
@@ -113,11 +119,9 @@ public class Bullet { //The Bullet Class
 	public void setColor(Color color) {//Making a set method for the color
 		this.color = color;//Returning the color value
 	}
-
     public int getVariant() { //Making a get method for the Variant
         return variant;//Returning the variant
     }
-
     public void setVariant(int variant) {//Making a set method for the Variant
         this.variant = variant; //Returning the variant value
     }

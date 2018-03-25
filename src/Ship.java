@@ -313,6 +313,10 @@ public class Ship {
             }
         }
     }
+    /*
+    Checks for collisions between the game's player and every other ship on
+    the screen.
+     */
     public void checkShipPlayerCollisions(ShipManager ships) {
         for (int i = 0; i < ships.getShips().size(); i++) {
             Ship s=ships.getShips().get(i);
@@ -325,6 +329,7 @@ public class Ship {
             }
         }
     }
+    // Handle a collision, whether it be a bullet or another ship, with the main player
     private void doPlayerCollision() {
         if (GameTracker.getLives() == 0) {
             this.destroy();
@@ -342,6 +347,7 @@ public class Ship {
             GameTracker.pausedCount=0;
         }
     }
+    // Handle a collision with another ship by a player's bullet
     private void doShipCollision(Ship s) {
         if(s.variation==3) {
             s.variation=5;
@@ -368,7 +374,6 @@ public class Ship {
     so the ships can turn and follow the path made
     in the pathfinder.
      */
-
     public boolean followPath(Path path) {
         if (currentPoint == 0) {
             x = path.getRealPoint(0).x;
@@ -418,157 +423,120 @@ public class Ship {
 
 
     //These are a bunch of getter and setter methods for the different values needed for the ships.
+    // Holy cow that's a lot of them!
     public double getX() {
         return x;
     }
-
     public void setX(double x) {
         this.x = x;
     }
-
     public double getY() {
         return y;
     }
-
     public void setY(double y) {
         this.y = y;
     }
-
     public int getWidth() {
         return width;
     }
-
     public void setWidth(int width) {
         this.width = width;
     }
-
     public int getHeight() {
         return height;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
-
     public int getVariation() {
         return variation;
     }
-
     public void setVariation(int variation) {
         this.variation = variation;
     }
-
     public int getValue() {
         return value;
     }
-
     public void setValue(int value) {
         this.value = value;
     }
-
     public Vector2D getDirection() {
         return direction;
     }
-
     public void setDirection(Vector2D direction) {
         this.direction = direction;
     }
-
     public void setDirection(double dX, double dY) {
         direction.setDeltaX(dX);
         direction.setDeltaY(dY);
     }
-
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
-
     public void setBullets(ArrayList<Bullet> bullets) {
         this.bullets = bullets;
     }
-
     public double getDeltaX() {
         return direction.getDeltaX();
     }
-
     public double getDeltaY() {
         return direction.getDeltaY();
     }
-
     public void setDeltaX(double deltaX) {
         direction.setDeltaX(deltaX);
     }
-
     public void setDeltaY(double deltaY) {
         direction.setDeltaY(deltaY);
     }
-
     public int getSpeed() {
         return speed;
     }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
     public double getRotation() {
         return rotation;
     }
-
     public void setRotation(double rotation) {
         this.rotation = rotation;
         this.desiredRotation = rotation;
     }
-
     public int getCurrentPoint() {
         return currentPoint;
     }
-
     public void setCurrentPoint(int currentPoint) {
         this.currentPoint = currentPoint;
     }
-
     public void setPath(Path path) {
         pathfinding = path != null;
         this.path = path;
     }
-
     public void setPath(String strPath) {
         setPath(Path.load(strPath));
     }
-
     public Path getPath() {
         return path;
     }
-
     public boolean isPathfinding() {
         return pathfinding;
     }
-
     public void setPathfinding(boolean pathfinding) {
         this.pathfinding = pathfinding;
     }
-
     public void calculateDirection(int dX, int dY) {
-
     }
-
     public int getDestroyed() {
         return destroyed;
     }
-
     public boolean isDestroyed() {
         return destroyed > -1;
     }
-
     public void setDestroyed(int destroyed) {
         this.destroyed = destroyed;
     }
-
     public double getRandomTrigger() {
         return randomTrigger;
     }
-
     public void setRandomTrigger(double randomTrigger) {
         this.randomTrigger = randomTrigger;
     }

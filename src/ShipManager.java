@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+// VERY IMPORTANT CLASS
+// Responsible for managing every single enemy ship you EVER see in the game!
 public class ShipManager {
     private static final int maxShipSpeed=13;
     private ArrayList<Ship> ships = new ArrayList<>();
@@ -21,6 +23,7 @@ public class ShipManager {
     final private int deltaMultiplierEnd=250;
     private boolean deltaOut=true;
 
+    // List of variants which ships should be initialized to when they enter the screen
     private int[] variants={
             1, 2, 1, 2, 1, 2, 1, 2,
             2, 3, 2, 3, 2, 3, 2, 3,
@@ -28,10 +31,12 @@ public class ShipManager {
             1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
     };
+    // Dummy constructor
     public ShipManager() {
 
     }
 
+    // ArrayList encapsulation methods
     public void addShip(Ship s) {
         ships.add(s);
     }
@@ -39,7 +44,7 @@ public class ShipManager {
         ships.remove(i);
     }
 
-
+    // Getters and setters for anti-encapsulation
     public ArrayList<Ship> getShips() {
         return ships;
     }
@@ -47,6 +52,7 @@ public class ShipManager {
         this.ships = ships;
     }
 
+    // Moves and handles ships per-frame according to the saved game state
     public void moveShips() {
         if(initStage==1) {
             shipFrame("1-1a", "1-1b");
@@ -104,6 +110,7 @@ public class ShipManager {
 
         frame++;
     }
+    // Run a ship frame which handles all of the ships on the screen's paths and actions
     private boolean shipFrame(String p1, String p2) {
         int i=0;
         for(Ship s : ships) {
@@ -159,6 +166,8 @@ public class ShipManager {
         }
         return false;
     }
+    // Draws all the ships contained in the class
+    // Also does some path handling stuff
     public void drawShips(Graphics2D g2, boolean move) {
         int destroyedCount=0;
         int attackingCount=0;

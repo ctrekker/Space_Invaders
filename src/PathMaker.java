@@ -4,6 +4,12 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 
+/*
+Some of those in-game paths seem pretty complex for hardcoding, huh!
+Well, turns out they weren't hardcoded! I decided it would be much more
+worthwhile to make an actual path EDITOR so I can draw paths and use them
+in-game through code.
+ */
 public class PathMaker extends JFrame {
     public static void main(String[] args) {
         new PathMaker();
@@ -13,6 +19,7 @@ public class PathMaker extends JFrame {
     private ArrayList<DoublePoint> points;
     private int lastPoint=0;
 
+    // Init some frame stuff... all pretty boring so far...
     public PathMaker() {
         setSize(800, 700);
         setTitle("Path Maker for init game");
@@ -27,11 +34,15 @@ public class PathMaker extends JFrame {
         setVisible(true);
     }
 
+    // Class designated to graphics stuff
+    // That pretty much is all of this...
     private class PathMakerGraphics extends Component implements MouseListener, MouseMotionListener, KeyListener {
         private boolean moveMode=false;
+        // Constructor
         public PathMakerGraphics() {
             points=new ArrayList<>();
         }
+        // Draw on the graphics object based on the data-layer
         public void paint(Graphics g) {
             Graphics2D g2=(Graphics2D) g;
 
@@ -54,16 +65,26 @@ public class PathMaker extends JFrame {
         }
 
 
+        // Dummy method
         @Override
         public void mouseClicked(MouseEvent e) {
 
         }
+        // Respond to any type of mouse click
+        // Left click adds a point
+        // Middle click (on scrollbar) clears all the points on the screen
+        // Right click saves the current path as a file. This part is my favorite ;)
         @Override
         public void mousePressed(MouseEvent e) {
             moveMode=false;
             if(e.getButton()==1) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
             if(e.getButton()==2) points.clear();
             if(e.getButton()==3) {
+                // Do some cool stuff with dat files here
+                // Please note that just because dat files are random characters DOES NOT MEAN THEY ARE ENCRYPTED
+                // In fact, dat files are almost NEVER encrypted. The reason random characters appear is because
+                // editors don't understand that a dat file doesn't just store string data, so it tries to read
+                // double, int, float, long, etc. data as a string, which doesn't work out in binary...
                 String fileName=JOptionPane.showInputDialog("Enter file save name");
                 File file=new File("res/path/"+fileName+".dat");
                 DataOutputStream out=null;
@@ -97,24 +118,30 @@ public class PathMaker extends JFrame {
             }
             repaint();
         }
+        // Reset the lastPoint count when the mouse is released
         @Override
         public void mouseReleased(MouseEvent e) {
             lastPoint=10;
         }
+        // Dummy method
         @Override
         public void mouseEntered(MouseEvent e) {
 
         }
+        // Dummy method
         @Override
         public void mouseExited(MouseEvent e) {
 
         }
+        // Handle mouse drag, so a line can be "drawn" using a drag
         @Override
         public void mouseDragged(MouseEvent e) {
             if(lastPoint%25==0) points.add(new DoublePoint((double)e.getX()/getWidth(), (double)e.getY()/getHeight()));
             lastPoint++;
             repaint();
         }
+        // Handle mouse movement, only in certain conditions though.
+        // Can translate in pre-processing here
         @Override
         public void mouseMoved(MouseEvent e) {
             if(moveMode) {
@@ -133,10 +160,17 @@ public class PathMaker extends JFrame {
             repaint();
         }
 
+        // Dummy method
         @Override
         public void keyTyped(KeyEvent e) {
 
         }
+        // Handle key "shortcuts"
+        // x -> reflect shape over x axis
+        // y -> reflect shape over y axis
+        // m -> activate whole-shape translation mode
+        // l -> manually enter a point's relative coordinates
+        // NOTE: pressing ctrl or command is not necessary to perform these keystroke actions
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyChar()=='x') {
@@ -164,20 +198,24 @@ public class PathMaker extends JFrame {
 
             repaint();
         }
+        // Dummy method
         @Override
         public void keyReleased(KeyEvent e) {
 
         }
     }
 
+    // Simple class (kind of redundant) for storing points as relative doubles
     private class DoublePoint {
         private double x;
         private double y;
 
+        // Constructor
         public DoublePoint(double x, double y) {
             this.x=x;
             this.y=y;
         }
+        // Getters and setters
         public double getX() {
             return x;
         }
@@ -191,6 +229,7 @@ public class PathMaker extends JFrame {
             this.y = y;
         }
 
+        // Methods which calculates inverted (reflected) values across certain axis
         public DoublePoint getInvertedX() {
             return new DoublePoint(1-getX(), getY());
         }

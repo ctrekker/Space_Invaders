@@ -11,6 +11,7 @@ public class Star extends Point { //This class is when we start to make the star
         this.color=color; //Instantiated the color
     }
 
+    // Draws a star based on its instance variables
     public void draw(Graphics2D g2) {
         g2.setColor(color);
         g2.fillArc(x-radius, y-radius, radius*2, radius*2, 0, 360);
